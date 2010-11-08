@@ -1,0 +1,2 @@
+#!/bin/sh
+/Applications/smcFanControl.app/Contents/Resources/smc -k F0Mx -w 3e80
