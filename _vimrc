@@ -10,21 +10,21 @@ autocmd FileType * setlocal formatoptions-=ro
 
 " vim-update-bundles {{{
 "vim-scripts
-" BUNDLE: http://github.com/vim-scripts/desert256.vim.git
-" BUNDLE: http://github.com/vim-scripts/scala.vim.git
-" BUNDLE: http://github.com/vim-scripts/jQuery.git
-" BUNDLE: http://github.com/vim-scripts/neocomplcache.git
-" BUNDLE: http://github.com/vim-scripts/quickrun.vim.git
-" BUNDLE: http://github.com/vim-scripts/snipMate.git
-" BUNDLE: http://github.com/vim-scripts/Gist.vim.git
-" BUNDLE: http://github.com/vim-scripts/The-NERD-tree.git
-" #BUNDLE: http://github.com/vim-scripts/The-NERD-Commenter.git
-" #BUNDLE: http://github.com/vim-scripts/NERD_tree-Project.git
-" #BUNDLE: http://github.com/vim-scripts/FindInNERDTree.git
-" #BUNDLE: http://github.com/vim-scripts/trinity.vim.git
+" BUNDLE: https://github.com/vim-scripts/desert256.vim.git
+" BUNDLE: https://github.com/vim-scripts/scala.vim.git
+" BUNDLE: https://github.com/vim-scripts/jQuery.git
+" BUNDLE: https://github.com/vim-scripts/neocomplcache.git
+" BUNDLE: https://github.com/vim-scripts/quickrun.vim.git
+" BUNDLE: https://github.com/vim-scripts/snipMate.git
+" BUNDLE: https://github.com/vim-scripts/Gist.vim.git
+" #BUNDLE: https://github.com/vim-scripts/The-NERD-tree.git
+" #BUNDLE: https://github.com/vim-scripts/The-NERD-Commenter.git
+" #BUNDLE: https://github.com/vim-scripts/NERD_tree-Project.git
+" #BUNDLE: https://github.com/vim-scripts/FindInNERDTree.git
+" #BUNDLE: https://github.com/vim-scripts/trinity.vim.git
 "not vim-scripts
-" BUNDLE: http://github.com/motemen/git-vim.git
-" BUNDLE: http://github.com/thinca/vim-ref.git
+" BUNDLE: https://github.com/motemen/git-vim.git
+" BUNDLE: https://github.com/thinca/vim-ref.git
 " BUNDLE: https://github.com/Shougo/unite.vim.git
 " BUNDLE: https://github.com/Shougo/vimfiler.git
 " BUNDLE: https://github.com/Shougo/vimproc.git
@@ -51,6 +51,7 @@ set laststatus=2
 set cmdheight=2
 set showcmd
 set wrap
+set showmatch
 " }}}
 
 " search {{{
@@ -58,7 +59,6 @@ set history=1000
 set incsearch
 set ignorecase
 set smartcase
-set showmatch
 set hlsearch
 " }}}
 
@@ -102,15 +102,17 @@ set listchars=tab:\ \
 highlight SpecialKey cterm=underline ctermfg=lightgreen
 " }}}
 
+"バッファの自動保存
+"http://vim-users.jp/2009/07/hack36/
+set autowrite
+" set autowriteall
+autocmd CursorHold *  wall
+autocmd CursorHoldI *  wall
+
 " ctags {{{
-if has("autochdir")
-  set autochdir
-  set tags=tags;
-else
-  set tags=./tags
-  set tags+=tags;
-  set tags+=./**/tags
-endif
+set tags=./tags
+set tags+=tags;
+set tags+=./**/tags
 " }}}
 
 "表示行単位で行移動する
@@ -124,13 +126,6 @@ vnoremap k gk
 nnoremap zz ZZ
 nnoremap ZZ zz
 
-"バッファの自動保存
-"http://vim-users.jp/2009/07/hack36/
-set autowrite
-" set autowriteall
-autocmd CursorHold *  wall
-autocmd CursorHoldI *  wall
-
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
 "外部のエディタで編集中のファイルが変更されたら自動で読み直す
@@ -138,54 +133,19 @@ set autoread
 " }}}
 
 "<Space>e でそのコマンドを実行
-nnoremap <Space>r :execute '!' &ft ' %'<Enter>
+"nnoremap <Space>r :execute '!' &ft ' %'<Enter>
+nnoremap <Space>r :QuickRun<Enter>
 
 "vimrcを読んだり書いたり
 nnoremap <Space>.. :<C-u>source ~/.vimrc<Enter>
 nnoremap <Space>.e :<C-u>vnew ~/.vimrc<Enter>
-
-" html escape function
-function! HtmlEscape() 
-    silent s/&/\&amp;/eg 
-    silent s/</\&lt;/eg 
-    silent s/>/\&gt;/eg 
-endfunction 
-
-function! HtmlUnEscape() 
-    silent s/&lt;/</eg 
-    silent s/&gt;/>/eg 
-    silent s/&amp;/\&/eg 
-endfunction 
-
-" Gist.vim {{{
-if has('mac')
-    let g:gist_clip_command = 'pbcopy'
-else
-    let g:gist_clip_command = 'xclip -selection clipboard'
-endif
-"}}}
-
-" shell-like guyon cd {{{
-command! CD call CD()
-function! CD()
-  let b:old_dir = getcwd()
-  execute "lcd " . expand("%:p:h")
-endfunction
-
-command! CDB call CDB()
-function! CDB()
-  let tmp = getcwd()
-  execute "lcd " . b:old_dir
-  let b:old_dir = tmp
-endfunction
-" }}}
+nnoremap <Space>.E :<C-u>edit ~/.vimrc<Enter>
 
 " tab {{{
-nnoremap <Space>ta  :<C-u>tabnew<Enter>:pwd<Enter>
-nnoremap <Space>tn  :<C-u>tabnew<Enter>:CD ~/<Enter>
+nnoremap <Space>tn  :<C-u>tabnew<Enter>:pwd<Enter>
 nnoremap <Space>tz  :<C-u>tabclose<Enter>
-nnoremap <Space>tj  :<C-u>execute 'tabnext' 1 + (tabpagenr() + v:count1 - 1) % tabpagenr('$')<Enter>:redraw<Enter>
-nnoremap <Space>tk  gT
+nnoremap <Space>tj  :<C-u>tabnext<Enter>
+nnoremap <Space>tk  :<C-u>tabprevious<Enter>
 " }}}
 
 " toggle {{{
@@ -199,7 +159,29 @@ endfunction
 nnoremap <Space>n :call ToggleNumber()<Enter>
 " }}}
 
-" for git-vim (motemen) {{{
+" html escape function
+"function! HtmlEscape() 
+"    silent s/&/\&amp;/eg 
+"    silent s/</\&lt;/eg 
+"    silent s/>/\&gt;/eg 
+"endfunction 
+"
+"function! HtmlUnEscape() 
+"    silent s/&lt;/</eg 
+"    silent s/&gt;/>/eg 
+"    silent s/&amp;/\&/eg 
+"endfunction 
+
+" ---- plugin ----
+" Gist.vim {{{
+if has('mac')
+    let g:gist_clip_command = 'pbcopy'
+else
+    let g:gist_clip_command = 'xclip -selection clipboard'
+endif
+" }}}
+
+" git-vim (motemen) {{{
 "let g:git_command_edit = 'rightbelow vnew'
 nnoremap <Space>gd :<C-u>GitDiff --no-prefix --cached<Enter>
 nnoremap <Space>gD :<C-u>GitDiff --no-prefix<Enter>
@@ -332,8 +314,17 @@ let g:vimfiler_as_default_explorer = 1
 
 " Enable file operation commands.
 "let g:vimfiler_safe_mode_by_default = 0 
+
+nnoremap <Space>e :<C-u>VimFilerSplit<Enter>
+" }}}
+
+" vimshell {{{
+nnoremap <Space>ss :<C-u>VimShellPop<Enter>
+nnoremap <Space>st :<C-u>VimShellTerminal 
+nnoremap <Space>py :<C-u>VimShellTerminal python<Enter>
+nnoremap <Space>sh :<C-u>VimShellTerminal bash<Enter>
 " }}}
 
 " NERDTree {{{
-nnoremap <Space>e :<C-u>NERDTreeToggle<Enter>
+"nnoremap <Space>e :<C-u>NERDTreeToggle<Enter>
 " }}}
