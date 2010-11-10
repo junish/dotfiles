@@ -4,6 +4,9 @@ call pathogen#runtime_append_all_bundles()
 filetype indent plugin on
 " }}}
 
+" 現在の autocommand を全て削除する
+autocmd!
+
 "http://d.hatena.ne.jp/yuichi_katahira/20090117/1232209418
 "vimの改行時に自動でコメントが挿入されるのをやめたい
 autocmd FileType * setlocal formatoptions-=ro
@@ -31,10 +34,10 @@ autocmd FileType * setlocal formatoptions-=ro
 " BUNDLE: https://github.com/Shougo/vimshell.git
 " }}}
 
-" charactor code {{{
+" encode {{{
 set encoding=utf-8
 set termencoding=utf-8
-set fileencodings=ucs-bom,euc-jp,cp932,iso-2022-jp
+set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp
 set fileformats=unix,dos,mac
 " }}}
 
@@ -43,26 +46,27 @@ set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V
 set wildmode=list:longest
 " }}}
 
-" display {{{
+" basic setting {{{
+let mapleader = "\<Space>"
 set number
 syntax on
-filetype on
+filetype plugin on
+filetype indent on
 set laststatus=2
 set cmdheight=2
 set showcmd
 set wrap
-set showmatch
 " }}}
 
 " search {{{
-set history=1000
+set history=256
 set incsearch
 set ignorecase
 set smartcase
 set hlsearch
 " }}}
 
-" tab {{{
+" tabkey {{{
 set expandtab
 set shiftwidth=4
 set softtabstop=4
@@ -91,23 +95,23 @@ set nobackup
 if exists('&ambiwidth')
     set ambiwidth=double
 endif
-highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
-match ZenkakuSpace /　/
-autocmd WinEnter * match ZenkakuSpace /　/
+highlight ZenkakuLeader cterm=underline ctermfg=lightblue guibg=darkgray
+match ZenkakuLeader /　/
+autocmd WinEnter * match ZenkakuLeader /　/
 
 " タブに緑の下線を引く
 set list
 "set listchars=tab:\ \ ,trail:\ 
-set listchars=tab:\ \ 
+set listchars=tab:__
 highlight SpecialKey cterm=underline ctermfg=lightgreen
 " }}}
 
 "バッファの自動保存
 "http://vim-users.jp/2009/07/hack36/
-set autowrite
+"set autowrite
 " set autowriteall
-autocmd CursorHold *  wall
-autocmd CursorHoldI *  wall
+"autocmd CursorHold *  wall
+"autocmd CursorHoldI *  wall
 
 " ctags {{{
 set tags=./tags
@@ -121,10 +125,22 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
+"Insert Mode での移動
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
+"Command Mode での移動
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+
 " open/close {{{
-"zzとZZを入れ替える
-nnoremap zz ZZ
-nnoremap ZZ zz
+"zzとZQを入れ替える
+nnoremap zz ZQ
+nnoremap ZQ zz
 
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
@@ -132,20 +148,36 @@ set hidden
 set autoread
 " }}}
 
-"<Space>e でそのコマンドを実行
-"nnoremap <Space>r :execute '!' &ft ' %'<Enter>
-nnoremap <Space>r :QuickRun<Enter>
+"<Leader>e でそのコマンドを実行
+"nnoremap <Leader>r :execute '!' &ft ' %'<Enter>
+nnoremap <Leader>r :QuickRun<Enter>
 
 "vimrcを読んだり書いたり
-nnoremap <Space>.. :<C-u>source ~/.vimrc<Enter>
-nnoremap <Space>.e :<C-u>vnew ~/.vimrc<Enter>
-nnoremap <Space>.E :<C-u>edit ~/.vimrc<Enter>
+nnoremap <Leader>.. :<C-u>source ~/.vimrc<Enter>
+nnoremap <Leader>.e :<C-u>vnew ~/.vimrc<Enter>
+nnoremap <Leader>.E :<C-u>edit ~/.vimrc<Enter>
 
 " tab {{{
-nnoremap <Space>tn  :<C-u>tabnew<Enter>:pwd<Enter>
-nnoremap <Space>tz  :<C-u>tabclose<Enter>
-nnoremap <Space>tj  :<C-u>tabnext<Enter>
-nnoremap <Space>tk  :<C-u>tabprevious<Enter>
+"https://github.com/cooldaemon/myhome.git
+"nnoremap <Leader>tn  :<C-u>tabnew<Enter>:pwd<Enter>
+"nnoremap <Leader>tz  :<C-u>tabclose<Enter>
+"nnoremap <Leader>tj  :<C-u>tabnext<Enter>
+"nnoremap <Leader>tk  :<C-u>tabprevious<Enter>
+nnoremap t :tabnew<Enter>
+nnoremap T :tabclose<Enter>
+nnoremap <RIGHT> :tabn<Enter>
+nnoremap <LEFT> :tabp<Enter>
+nnoremap gl :tabn<Enter>
+nnoremap gh :tabp<Enter>
+" }}}
+
+" buffer {{{
+"https://github.com/cooldaemon/myhome.git
+
+nnoremap <DOWN> :bn!<Enter>
+nnoremap <UP> :bp!<Enter>
+nnoremap gj :bn!<Enter>
+nnoremap gk :bp!<Enter>
 " }}}
 
 " toggle {{{
@@ -156,7 +188,12 @@ function! ToggleNumber()
         set nonumber
     endif
 endfunction
-nnoremap <Space>n :call ToggleNumber()<Enter>
+nnoremap <Leader>n :call ToggleNumber()<Enter>
+" }}}
+
+" pair {{{
+"https://github.com/cooldaemon/myhome.git
+set showmatch
 " }}}
 
 " html escape function
@@ -183,20 +220,20 @@ endif
 
 " git-vim (motemen) {{{
 "let g:git_command_edit = 'rightbelow vnew'
-nnoremap <Space>gd :<C-u>GitDiff --no-prefix --cached<Enter>
-nnoremap <Space>gD :<C-u>GitDiff --no-prefix<Enter>
-nnoremap <Space>gs :<C-u>GitStatus<Enter>
-nnoremap <Space>gl :<C-u>GitLog<Enter>
-nnoremap <Space>gL :<C-u>GitLog -u \| head -10000<Enter>
+nnoremap <Leader>gd :<C-u>GitDiff --no-prefix --cached<Enter>
+nnoremap <Leader>gD :<C-u>GitDiff --no-prefix<Enter>
+nnoremap <Leader>gs :<C-u>GitStatus<Enter>
+nnoremap <Leader>gl :<C-u>GitLog<Enter>
+nnoremap <Leader>gL :<C-u>GitLog -u \| head -10000<Enter>
 if globpath(&rtp, 'plugin/shadow.vim') != ''
-  nnoremap <Space>ga :<C-u>call GitAddBoth()<Enter>
+  nnoremap <Leader>ga :<C-u>call GitAddBoth()<Enter>
 else
-  nnoremap <Space>ga :<C-u>GitAdd<Enter>
+  nnoremap <Leader>ga :<C-u>GitAdd<Enter>
 endif
-nnoremap <Space>gA :<C-u>GitAdd <cfile><Enter>
-nnoremap <Space>gc :<C-u>GitCommit<Enter>
-nnoremap <Space>gC :<C-u>GitCommit --amend<Enter>
-nnoremap <Space>gp :<C-u>Git push
+nnoremap <Leader>gA :<C-u>GitAdd <cfile><Enter>
+nnoremap <Leader>gc :<C-u>GitCommit<Enter>
+nnoremap <Leader>gC :<C-u>GitCommit --amend<Enter>
+nnoremap <Leader>gp :<C-u>Git push
 " }}}
 
 " unite.vim {{{
@@ -212,9 +249,6 @@ call unite#set_substitute_pattern('file', '^\\', '~/*')
 
 call unite#set_substitute_pattern('file', '^;v', '~/.vim/*')
 call unite#set_substitute_pattern('file', '^;r', '\=$VIMRUNTIME."/*"')
-if has('win32') || has('win64')
-  call unite#set_substitute_pattern('file', '^;p', 'C:/Program Files/*')
-endif
 
 call unite#set_substitute_pattern('file', '\*\*\+', '*', -1)
 call unite#set_substitute_pattern('file', '^\~', escape($HOME, '\'), -2)
@@ -222,16 +256,16 @@ call unite#set_substitute_pattern('file', '\\\@<! ', '\\ ', -20)
 call unite#set_substitute_pattern('file', '\\ \@!', '/', -30)
 
 " http://d.hatena.ne.jp/basyura/20101005/p1
-nnoremap <Space>uu  :<C-u>Unite bookmark buffer_tab file_mru file<Enter>
-nnoremap <Space>ub  :<C-u>Unite buffer<Enter>
-nnoremap <Space>uk  :<C-u>Unite bookmark<Enter>
-nnoremap <Space>uf  :<C-u>Unite file<Enter>
-nnoremap <Space>um  :<C-u>Unite file_mru<Enter>
-nnoremap <Space>ur  :<C-u>Unite file_rec<Enter>
-"nnoremap <Space>ut  :<C-u>Unite tab<Enter>
-nnoremap <Space>ut  :<C-u>Unite buffer_tab<Enter>
-nnoremap <Space>ua  :<C-u>UniteBookmarkAdd 
-nnoremap <Space>ui  :<C-u>UniteWithInput 
+nnoremap <Leader>uu  :<C-u>Unite bookmark buffer_tab file_mru file<Enter>
+nnoremap <Leader>ub  :<C-u>Unite buffer<Enter>
+nnoremap <Leader>uk  :<C-u>Unite bookmark<Enter>
+nnoremap <Leader>uf  :<C-u>Unite file<Enter>
+nnoremap <Leader>um  :<C-u>Unite file_mru<Enter>
+nnoremap <Leader>ur  :<C-u>Unite file_rec<Enter>
+"nnoremap <Leader>ut  :<C-u>Unite tab<Enter>
+nnoremap <Leader>ut  :<C-u>Unite buffer_tab<Enter>
+nnoremap <Leader>ua  :<C-u>UniteBookmarkAdd 
+nnoremap <Leader>ui  :<C-u>UniteWithInput 
 " }}}
 
 " neocomplcache {{{
@@ -315,16 +349,31 @@ let g:vimfiler_as_default_explorer = 1
 " Enable file operation commands.
 "let g:vimfiler_safe_mode_by_default = 0 
 
-nnoremap <Space>e :<C-u>VimFilerSplit<Enter>
+nnoremap <Leader>e :<C-u>VimFilerSplit<Enter>
 " }}}
 
 " vimshell {{{
-nnoremap <Space>ss :<C-u>VimShellPop<Enter>
-nnoremap <Space>st :<C-u>VimShellTerminal 
-nnoremap <Space>py :<C-u>VimShellTerminal python<Enter>
-nnoremap <Space>sh :<C-u>VimShellTerminal bash<Enter>
+let g:vimshell_split_command = 'split'
+let g:vimshell_smart_case = 1
+let g:vimshell_prompt = $USER."% "
+"let g:vimshell_user_prompt = 'printf("%s %s", fnamemodify(getcwd(), ":~"), vimshell#vcs#info("(%s)-[%b]"))'
+
+autocmd FileType vimshell
+  \ call vimshell#hook#set('chpwd', ['g:chpwd_for_vimshell'])
+
+function! g:chpwd_for_vimshell(args, context)
+  call vimshell#execute('ls')
+endfunction
+
+nnoremap <Leader>ss :<C-u>VimShellPop<Enter>
+nnoremap <Leader>st :<C-u>VimShellTerminal 
+nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
+nnoremap <Leader>sh :<C-u>VimShellTerminal bash<Enter>
 " }}}
 
-" NERDTree {{{
-"nnoremap <Space>e :<C-u>NERDTreeToggle<Enter>
+" vim-ref {{{
+let g:ref_open = 'tabnew'
+" }}}
+
+" NERDTree {{{nnoremap <Leader>e :<C-u>NERDTreeToggle<Enter>
 " }}}
