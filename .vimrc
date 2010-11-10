@@ -102,7 +102,7 @@ autocmd WinEnter * match ZenkakuLeader /　/
 " タブに緑の下線を引く
 set list
 "set listchars=tab:\ \ ,trail:\ 
-set listchars=tab:__
+set listchars=tab:\ \ 
 highlight SpecialKey cterm=underline ctermfg=lightgreen
 " }}}
 
@@ -117,6 +117,10 @@ highlight SpecialKey cterm=underline ctermfg=lightgreen
 set tags=./tags
 set tags+=tags;
 set tags+=./**/tags
+
+nnoremap <Leader>] <C-w>]
+noremap <Leader>j <C-f>
+noremap <Leader>k <C-b>
 " }}}
 
 "表示行単位で行移動する
@@ -126,21 +130,17 @@ vnoremap j gj
 vnoremap k gk
 
 "Insert Mode での移動
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
+inoremap <C-h> <LEFT>
+inoremap <C-l> <RIGHT>
 
 "Command Mode での移動
-cnoremap <C-j> <Down>
-cnoremap <C-k> <Up>
-cnoremap <C-h> <Left>
-cnoremap <C-l> <Right>
+cnoremap <C-h> <LEFT>
+cnoremap <C-l> <RIGHT>
 
-" open/close {{{
-"zzとZQを入れ替える
-nnoremap zz ZQ
-nnoremap ZQ zz
+" Vim Open /close {{{
+nnoremap <Leader>w :<C-u>write<Return>
+nnoremap <Leader>q :<C-u>quit<Return>
+nnoremap <Leader>Q :<C-u>quit!<Return>
 
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
@@ -163,21 +163,23 @@ nnoremap <Leader>.E :<C-u>edit ~/.vimrc<Enter>
 "nnoremap <Leader>tz  :<C-u>tabclose<Enter>
 "nnoremap <Leader>tj  :<C-u>tabnext<Enter>
 "nnoremap <Leader>tk  :<C-u>tabprevious<Enter>
-nnoremap t :tabnew<Enter>
-nnoremap T :tabclose<Enter>
-nnoremap <RIGHT> :tabn<Enter>
-nnoremap <LEFT> :tabp<Enter>
-nnoremap gl :tabn<Enter>
-nnoremap gh :tabp<Enter>
+nnoremap <Leader>t :tabnew<Enter>
+nnoremap <Leader>T :tabclose<Enter>
+"nnoremap <RIGHT> :tabn<Enter>
+"nnoremap <LEFT> :tabp<Enter>
+nnoremap <Leader>l :tabn<Enter>
+nnoremap <Leader>h :tabp<Enter>
 " }}}
 
 " buffer {{{
 "https://github.com/cooldaemon/myhome.git
-
-nnoremap <DOWN> :bn!<Enter>
-nnoremap <UP> :bp!<Enter>
-nnoremap gj :bn!<Enter>
-nnoremap gk :bp!<Enter>
+"nnoremap <DOWN> :bn!<Enter>
+"nnoremap <UP> :bp!<Enter>
+nnoremap <Leader>b :<C-u>buffers<Enter>:buffer 
+nnoremap <C-n> :bn!<Enter>
+nnoremap <C-p> :bp!<Enter>
+nnoremap <Leader>j :bn!<Enter>
+nnoremap <Leader>k :bp!<Enter>
 " }}}
 
 " toggle {{{
@@ -264,8 +266,8 @@ nnoremap <Leader>um  :<C-u>Unite file_mru<Enter>
 nnoremap <Leader>ur  :<C-u>Unite file_rec<Enter>
 "nnoremap <Leader>ut  :<C-u>Unite tab<Enter>
 nnoremap <Leader>ut  :<C-u>Unite buffer_tab<Enter>
-nnoremap <Leader>ua  :<C-u>UniteBookmarkAdd 
-nnoremap <Leader>ui  :<C-u>UniteWithInput 
+nnoremap <Leader>uB  :<C-u>UniteBookmarkAdd 
+nnoremap <Leader>uI  :<C-u>UniteWithInput 
 " }}}
 
 " neocomplcache {{{
@@ -365,15 +367,31 @@ function! g:chpwd_for_vimshell(args, context)
   call vimshell#execute('ls')
 endfunction
 
-nnoremap <Leader>ss :<C-u>VimShellPop<Enter>
-nnoremap <Leader>st :<C-u>VimShellTerminal 
-nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
+"nnoremap <Leader>ss :<C-u>VimShellPop<Enter>
+nnoremap <Leader>ss :<C-u>VimShellTerminal bash<Enter>
+nnoremap <Leader>sS :<C-u>VimShellTerminal 
 nnoremap <Leader>sh :<C-u>VimShellTerminal bash<Enter>
+nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
 " }}}
 
 " vim-ref {{{
 let g:ref_open = 'tabnew'
-" }}}
-
-" NERDTree {{{nnoremap <Leader>e :<C-u>NERDTreeToggle<Enter>
+nnoremap <Leader>hh :<C-u>Ref pydoc<Enter>
+nnoremap <Leader>hH :<C-u>Ref 
+nnoremap <Leader>hm :<C-u>Ref man<Enter>
+nnoremap <Leader>hM :<C-u>Ref man 
+nnoremap <Leader>hp :<C-u>Ref pydoc<Enter>
+nnoremap <Leader>hP :<C-u>Ref pydoc 
+nnoremap <Leader>he :<C-u>Ref erlang<Enter>
+nnoremap <Leader>hE :<C-u>Ref erlang 
+"nnoremap <Leader>hv :<C-u>Ref vimdoc<Enter>
+"nnoremap <Leader>hV :<C-u>Ref vimdoc 
+"nnoremap <Leader>hj :<C-u>Ref jsdoc<Enter>
+"nnoremap <Leader>hJ :<C-u>Ref jsdoc 
+"nnoremap <Leader>hsc :<C-u>Ref scaladoc<Enter>
+"nnoremap <Leader>hSC :<C-u>Ref scaladoc 
+"nnoremap <Leader>hr :<C-u>Ref rubydoc<Enter>
+"nnoremap <Leader>hR :<C-u>Ref rubydoc 
+"nnoremap <Leader>hph :<C-u>Ref phpdoc<Enter>
+"nnoremap <Leader>hPH :<C-u>Ref phpdoc 
 " }}}
