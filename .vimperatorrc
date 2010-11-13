@@ -1,5 +1,3 @@
-"2.0 (created: 2009/03/28 23:48:07)
-
 " prefs
 " ======================================================================
 " caretのサイズ
@@ -85,7 +83,6 @@ map ,l <A-d>
 noremap ++ <C-a>
 noremap -- <C-x>
 
-
 "Ctrl+rで再起動,Ctrl+hでヘルプ ,sで設定ファイル再読込
 map <C-r> :restart<CR>
 map ,s :so ~/.vimperatorrc<CR>
@@ -132,32 +129,19 @@ let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 " migemo_hint.js
 set hintmatching=custom
 
-" sbmcommentsviewer.js
-let g:def_sbm_format = "timestamp,id,tagsAndComment"
-let g:def_sbms = "h"
-map bb :viewSBMComments<CR>
-
-" direct_bookmark.js
-let g:direct_sbm_use_services_by_tag = "h"
-let g:direct_sbm_use_services_by_post = "h"
-let g:direct_sbm_is_normalize = "false"
-let g:direct_sbm_is_use_migemo = "true"
-map B :bentry<CR>
-map a :sbm<CR>
-map A :sbm<Space>
-map ,a :btags<CR>
-
 "google-search.js
 map s :gsearch!<Space>
-
-" lookupDictionary.js
-map e :eijiro<Space>
 
 " browser_object.js
 map x dd
 
 " multi_requester.js
-map ,m,s :so<Space>~/.vimperator/plugin/multi_requester.js
+map ,m,s :so<Space>$RUNTIME/plugin/multi_requester.js
+
+" twitter.js
+map ,t :twitter<Space>
+map ,T :twitter!<Space>
+map ,@ :twitter!@<CR>
 
 javascript <<EOF
 /* DEFAULT SITES */
@@ -209,26 +193,5 @@ liberator.globalVariables.multi_requester_mappings = [
     [',Mw', 'wikipedia-jp', '!']
 ];
 EOF
-
-" hatena bookmark
-javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
-
-
-" feedSomeKeys_2.js
-autocmd LocationChange .* :fmapc
-" Tumblr (要dashboard+tombloo.user.js, ReblogCommand.user.js)
-autocmd LocationChange ^http://.*\.tumblr\.com/ :fmap i,tj
-" はてブ
-autocmd LocationChange ^http://b\.hatena\.ne\.jp/bokuju :fmap j k o e b
-
-" colorscheme
-" ======================================================================
-colorscheme BrewBlue
-style -name tab-style-fix chrome://* <<EOM
-.tab-text-shadow,
-.tabs-newtab-button {
-  display: none !important;
-}
-EOM
 
 " vim: set ft=vimperator:

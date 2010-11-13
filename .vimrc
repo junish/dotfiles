@@ -1,11 +1,15 @@
 " pathogen {{{
 filetype off
 call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 filetype indent plugin on
 " }}}
 
 " 現在の autocommand を全て削除する
 autocmd!
+
+"Escの2回押しでハイライト消去
+nmap <ESC><ESC> :nohlsearch<Enter><ESC>
 
 "http://d.hatena.ne.jp/yuichi_katahira/20090117/1232209418
 "vimの改行時に自動でコメントが挿入されるのをやめたい
@@ -20,6 +24,8 @@ autocmd FileType * setlocal formatoptions-=ro
 " BUNDLE: https://github.com/vim-scripts/quickrun.vim.git
 " BUNDLE: https://github.com/vim-scripts/snipMate.git
 " BUNDLE: https://github.com/vim-scripts/Gist.vim.git
+" BUNDLE: https://github.com/vim-scripts/sudo.vim.git
+" BUNDLE: https://github.com/vim-scripts/surround.vim.git
 " #BUNDLE: https://github.com/vim-scripts/The-NERD-tree.git
 " #BUNDLE: https://github.com/vim-scripts/The-NERD-Commenter.git
 " #BUNDLE: https://github.com/vim-scripts/NERD_tree-Project.git
@@ -86,11 +92,17 @@ endif
 set nobackup
 "set writebackup
 "set backup
-"set backupdir=$HOME . '/.vimbak'
-"set directory=$HOME . '/.vimswp'
+"set backupdir=~/.vimbak
+"set directory=~/.vimswp
 " }}}
 
 " highlight {{{
+" カーソル行をハイライト
+set cursorline
+":highlight clear CursorLine
+":highlight CursorLine gui=underline
+"highlight CursorLine ctermbg=blue guibg=blue
+
 " 全角スペースに青い下線を引く
 if exists('&ambiwidth')
     set ambiwidth=double
@@ -129,6 +141,12 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
+"Windowの移動
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+
 "Insert Mode での移動
 inoremap <C-h> <LEFT>
 inoremap <C-l> <RIGHT>
@@ -136,6 +154,10 @@ inoremap <C-l> <RIGHT>
 "Command Mode での移動
 cnoremap <C-h> <LEFT>
 cnoremap <C-l> <RIGHT>
+
+" vimのヘルプを素早く引く
+nnoremap <Leader>hh :<C-u>help<Space><C-r><C-w><Enter>
+nnoremap <Leader>HH :<C-u>help<Space>
 
 " Vim Open /close {{{
 nnoremap <Leader>w :<C-u>write<Return>
@@ -175,7 +197,8 @@ nnoremap <Leader>h :tabp<Enter>
 "https://github.com/cooldaemon/myhome.git
 "nnoremap <DOWN> :bn!<Enter>
 "nnoremap <UP> :bp!<Enter>
-nnoremap <Leader>b :<C-u>buffers<Enter>:buffer 
+nnoremap <Leader>bb :<C-u>buffers<Enter>
+nnoremap <Leader>BB :<C-u>buffers<Enter>:buffer 
 nnoremap <C-n> :bn!<Enter>
 nnoremap <C-p> :bp!<Enter>
 nnoremap <Leader>j :bn!<Enter>
@@ -191,6 +214,15 @@ function! ToggleNumber()
     endif
 endfunction
 nnoremap <Leader>n :call ToggleNumber()<Enter>
+
+function! ToggleCursorLine()
+    if &cursorline == 0
+        set cursorline
+    else
+        set nocursorline
+    endif
+endfunction
+nnoremap <Leader>c :call ToggleCursorLine()<Enter>
 " }}}
 
 " pair {{{
@@ -210,6 +242,16 @@ set showmatch
 "    silent s/&gt;/>/eg 
 "    silent s/&amp;/\&/eg 
 "endfunction 
+
+"vimを終了してもUndoする
+"http://vim-users.jp/2010/07/hack162/
+if has('persistent_undo')
+  set undodir=~/.vimundo
+  augroup vimrc-undofile
+    autocmd!
+    autocmd BufReadPre ~/* setlocal undofile
+  augroup END
+endif
 
 " ---- plugin ----
 " Gist.vim {{{
@@ -346,7 +388,8 @@ let g:vimfiler_external_copy_directory_command = 'cp -r $src $dest'
 let g:vimfiler_external_copy_file_command = 'cp $src $dest'
 let g:vimfiler_external_delete_command = 'rm -r $srcs'
 let g:vimfiler_external_move_command = 'mv $srcs $dest'
-let g:vimfiler_as_default_explorer = 1
+"let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_as_default_explorer = 0
 
 " Enable file operation commands.
 "let g:vimfiler_safe_mode_by_default = 0 
@@ -368,30 +411,26 @@ function! g:chpwd_for_vimshell(args, context)
 endfunction
 
 "nnoremap <Leader>ss :<C-u>VimShellPop<Enter>
-nnoremap <Leader>ss :<C-u>VimShellTerminal bash<Enter>
-nnoremap <Leader>sS :<C-u>VimShellTerminal 
+nnoremap <Leader>ss :<C-u>VimShell<Enter>
+nnoremap <Leader>SS :<C-u>VimShellTerminal 
 nnoremap <Leader>sh :<C-u>VimShellTerminal bash<Enter>
 nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
 " }}}
 
 " vim-ref {{{
 let g:ref_open = 'tabnew'
-nnoremap <Leader>hh :<C-u>Ref pydoc<Enter>
-nnoremap <Leader>hH :<C-u>Ref 
-nnoremap <Leader>hm :<C-u>Ref man<Enter>
-nnoremap <Leader>hM :<C-u>Ref man 
-nnoremap <Leader>hp :<C-u>Ref pydoc<Enter>
-nnoremap <Leader>hP :<C-u>Ref pydoc 
-nnoremap <Leader>he :<C-u>Ref erlang<Enter>
-nnoremap <Leader>hE :<C-u>Ref erlang 
-"nnoremap <Leader>hv :<C-u>Ref vimdoc<Enter>
-"nnoremap <Leader>hV :<C-u>Ref vimdoc 
-"nnoremap <Leader>hj :<C-u>Ref jsdoc<Enter>
-"nnoremap <Leader>hJ :<C-u>Ref jsdoc 
-"nnoremap <Leader>hsc :<C-u>Ref scaladoc<Enter>
-"nnoremap <Leader>hSC :<C-u>Ref scaladoc 
-"nnoremap <Leader>hr :<C-u>Ref rubydoc<Enter>
-"nnoremap <Leader>hR :<C-u>Ref rubydoc 
-"nnoremap <Leader>hph :<C-u>Ref phpdoc<Enter>
-"nnoremap <Leader>hPH :<C-u>Ref phpdoc 
+nnoremap <Leader>hm :<C-u>Ref man <C-r><C-w><Enter>
+nnoremap <Leader>HM :<C-u>Ref man 
+nnoremap <Leader>hp :<C-u>Ref pydoc <C-r><C-w><Enter>
+nnoremap <Leader>HP :<C-u>Ref pydoc 
+nnoremap <Leader>he :<C-u>Ref erlang <C-r><C-w><Enter>
+nnoremap <Leader>HE :<C-u>Ref erlang 
+"nnoremap <Leader>hj :<C-u>Ref jsdoc <C-r><C-w><Enter>
+"nnoremap <Leader>HJ :<C-u>Ref jsdoc 
+"nnoremap <Leader>hsc :<C-u>Ref scaladoc <C-r><C-w><Enter>
+"nnoremap <Leader>HSC :<C-u>Ref scaladoc 
+"nnoremap <Leader>hr :<C-u>Ref rubydoc <C-r><C-w><Enter>
+"nnoremap <Leader>HR :<C-u>Ref rubydoc 
+"nnoremap <Leader>hph :<C-u>Ref phpdoc <C-r><C-w><Enter>
+"nnoremap <Leader>HPH :<C-u>Ref phpdoc 
 " }}}
