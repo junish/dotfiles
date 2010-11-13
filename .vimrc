@@ -1,55 +1,63 @@
-" pathogen {{{
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 filetype indent plugin on
-" }}}
 
 " 現在の autocommand を全て削除する
 autocmd!
 
-"Escの2回押しでハイライト消去
-nmap <ESC><ESC> :nohlsearch<Enter><ESC>
-
-"http://d.hatena.ne.jp/yuichi_katahira/20090117/1232209418
-"vimの改行時に自動でコメントが挿入されるのをやめたい
-autocmd FileType * setlocal formatoptions-=ro
-
 " vim-update-bundles {{{
-"vim-scripts
+"---------------------------------------------
+"管理系
+"---------------------------------------------
+" #BUNDLE: https://github.com/vim-scripts/pathogen.vim.git
+"---------------------------------------------
+"表示系
+"---------------------------------------------
 " BUNDLE: https://github.com/vim-scripts/desert256.vim.git
 " BUNDLE: https://github.com/vim-scripts/scala.vim.git
 " BUNDLE: https://github.com/vim-scripts/jQuery.git
-" BUNDLE: https://github.com/vim-scripts/neocomplcache.git
-" BUNDLE: https://github.com/vim-scripts/quickrun.vim.git
-" BUNDLE: https://github.com/vim-scripts/snipMate.git
-" BUNDLE: https://github.com/vim-scripts/Gist.vim.git
-" BUNDLE: https://github.com/vim-scripts/sudo.vim.git
+" BUNDLE: https://github.com/vim-scripts/Smooth-Scroll.git
+"---------------------------------------------
+"編集系
+"---------------------------------------------
+" BUNDLE: https://github.com/vim-scripts/Align.git
 " BUNDLE: https://github.com/vim-scripts/surround.vim.git
-" #BUNDLE: https://github.com/vim-scripts/The-NERD-tree.git
-" #BUNDLE: https://github.com/vim-scripts/The-NERD-Commenter.git
+" BUNDLE: https://github.com/vim-scripts/The-NERD-Commenter.git
+" BUNDLE: https://github.com/vim-scripts/YankRing.vim.git
+" BUNDLE: https://github.com/vim-scripts/quickrun.vim.git
+" BUNDLE: https://github.com/vim-scripts/neocomplcache.git
+" BUNDLE: https://github.com/vim-scripts/snipMate.git
+" BUNDLE: https://github.com/vim-scripts/sudo.vim.git
+"---------------------------------------------
+"検索系
+"---------------------------------------------
+" BUNDLE: https://github.com/vim-scripts/eregex.vim.git
+" BUNDLE: https://github.com/vim-scripts/grep.vim.git
+"---------------------------------------------
+"バッファ管理系
+"---------------------------------------------
+" BUNDLE: https://github.com/Shougo/unite.vim.git
+"---------------------------------------------
+"ファイル系
+"---------------------------------------------
+" BUNDLE: https://github.com/vim-scripts/The-NERD-tree.git
+" BUNDLE: https://github.com/Shougo/vimfiler.git
+" BUNDLE: https://github.com/Shougo/vimshell.git
+"---------------------------------------------
+"開発系
+"---------------------------------------------
+" BUNDLE: https://github.com/thinca/vim-ref.git
+" BUNDLE: https://github.com/motemen/git-vim.git
+" BUNDLE: https://github.com/vim-scripts/Gist.vim.git
+"---------------------------------------------
+"その他
+"---------------------------------------------
+" BUNDLE: https://github.com/Shougo/vimproc.git
+" BUNDLE: https://github.com/guyon/quiz-vim.git
 " #BUNDLE: https://github.com/vim-scripts/NERD_tree-Project.git
 " #BUNDLE: https://github.com/vim-scripts/FindInNERDTree.git
 " #BUNDLE: https://github.com/vim-scripts/trinity.vim.git
-"not vim-scripts
-" BUNDLE: https://github.com/motemen/git-vim.git
-" BUNDLE: https://github.com/thinca/vim-ref.git
-" BUNDLE: https://github.com/Shougo/unite.vim.git
-" BUNDLE: https://github.com/Shougo/vimfiler.git
-" BUNDLE: https://github.com/Shougo/vimproc.git
-" BUNDLE: https://github.com/Shougo/vimshell.git
-" }}}
-
-" encode {{{
-set encoding=utf-8
-set termencoding=utf-8
-set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp
-set fileformats=unix,dos,mac
-" }}}
-
-" status line {{{
-set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-set wildmode=list:longest
 " }}}
 
 " basic setting {{{
@@ -62,6 +70,19 @@ set laststatus=2
 set cmdheight=2
 set showcmd
 set wrap
+set showmatch
+" }}}
+
+" encode {{{
+set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp
+set fileformats=unix,dos,mac
+" }}}
+
+" status line {{{
+set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+set wildmode=list:longest
 " }}}
 
 " search {{{
@@ -97,6 +118,9 @@ set nobackup
 " }}}
 
 " highlight {{{
+"Escの2回押しでハイライト消去
+nmap <ESC><ESC> :nohlsearch<Enter><ESC>
+
 " カーソル行をハイライト
 set cursorline
 ":highlight clear CursorLine
@@ -117,6 +141,10 @@ set list
 set listchars=tab:\ \ 
 highlight SpecialKey cterm=underline ctermfg=lightgreen
 " }}}
+
+"http://d.hatena.ne.jp/yuichi_katahira/20090117/1232209418
+"vimの改行時に自動でコメントが挿入されるのをやめたい
+autocmd FileType * setlocal formatoptions-=ro
 
 "バッファの自動保存
 "http://vim-users.jp/2009/07/hack36/
@@ -162,7 +190,9 @@ nnoremap <Leader>HH :<C-u>help<Space>
 " Vim Open /close {{{
 nnoremap <Leader>w :<C-u>write<Return>
 nnoremap <Leader>q :<C-u>quit<Return>
+nnoremap <Leader>qa :<C-u>quitall<Return>
 nnoremap <Leader>Q :<C-u>quit!<Return>
+nnoremap <Leader>QA :<C-u>quitall!<Return>
 
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
@@ -181,10 +211,6 @@ nnoremap <Leader>.E :<C-u>edit ~/.vimrc<Enter>
 
 " tab {{{
 "https://github.com/cooldaemon/myhome.git
-"nnoremap <Leader>tn  :<C-u>tabnew<Enter>:pwd<Enter>
-"nnoremap <Leader>tz  :<C-u>tabclose<Enter>
-"nnoremap <Leader>tj  :<C-u>tabnext<Enter>
-"nnoremap <Leader>tk  :<C-u>tabprevious<Enter>
 nnoremap <Leader>t :tabnew<Enter>
 nnoremap <Leader>T :tabclose<Enter>
 "nnoremap <RIGHT> :tabn<Enter>
@@ -223,11 +249,6 @@ function! ToggleCursorLine()
     endif
 endfunction
 nnoremap <Leader>c :call ToggleCursorLine()<Enter>
-" }}}
-
-" pair {{{
-"https://github.com/cooldaemon/myhome.git
-set showmatch
 " }}}
 
 " html escape function
@@ -394,7 +415,7 @@ let g:vimfiler_as_default_explorer = 0
 " Enable file operation commands.
 "let g:vimfiler_safe_mode_by_default = 0 
 
-nnoremap <Leader>e :<C-u>VimFilerSplit<Enter>
+nnoremap <Leader>E :<C-u>VimFilerSplit<Enter>
 " }}}
 
 " vimshell {{{
@@ -433,4 +454,19 @@ nnoremap <Leader>HE :<C-u>Ref erlang
 "nnoremap <Leader>HR :<C-u>Ref rubydoc 
 "nnoremap <Leader>hph :<C-u>Ref phpdoc <C-r><C-w><Enter>
 "nnoremap <Leader>HPH :<C-u>Ref phpdoc 
+" }}}
+
+" NERD_tree {{{
+nnoremap <Leader>e :<C-u>NERDTreeToggle<Enter>
+" }}}
+
+" surround {{{
+" 選択範囲を指定文字でくくる
+nmap s <Plug>Ysurround
+nmap ss <Plug>Yssurround
+" }}}
+
+" grep {{{
+" カーソル下の単語をGrepBufferする
+nnoremap <C-g><C-b> :<C-u>GrepBuffer <C-r><C-w><Enter>
 " }}}
