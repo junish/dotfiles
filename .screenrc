@@ -1,0 +1,114 @@
+# lang
+defc1 off
+
+# shell
+shell bash
+
+# escape
+escape ^Tt
+
+# window list
+caption splitonly "%?%F%{= bW}%:%{= wk}%?%2n%f%07=%t%="
+hardstatus alwayslastline "%{= Wb}[%m/%d %02c] %016=%{= WK}%-w%50>%{= bW}%n %t%{-}%+w%-0< %="
+
+# auto detach
+autodetach on
+
+# scroll
+defscrollback 10000
+#wrap on
+
+# bell off
+vbell off
+
+# encode
+defkanji utf8
+defencoding utf8
+encoding utf8
+bind u eval 'encoding utf8' 'info'
+bind e eval 'encoding eucjp' 'info'
+
+# startup
+startup_message off
+
+# mouse cursor
+bindkey -m -t ;b stuff "g/:^M^F^B"
+
+# default keybind
+bind \\
+
+# debug
+#verbose on
+
+# 256color
+#term xterm-256color
+#defbce "on"
+#attrcolor b ".I"
+termcapinfo xterm* 'Co#256:pa#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm:'
+
+# term not resize
+termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+
+
+# check when window exited
+zombie kr # k: destory window, r: resurrect window
+
+# select
+bind 0 eval 'select 0'
+bind 1 eval 'select 1'
+bind 2 eval 'select 2'
+bind 3 eval 'select 3'
+bind 4 eval 'select 4'
+bind 5 eval 'select 5'
+bind 6 eval 'select 6'
+bind 7 eval 'select 7'
+bind 8 eval 'select 8'
+bind 9 eval 'select 9'
+
+# window mode (like vim)
+bind w eval 'echo "Window mode: "' 'command -c cwindow'
+bind -c cwindow s eval 'split' 'focus' 'select 0'
+bind -c cwindow v eval 'split -v' 'focus' 'select 0'
+bind -c cwindow o eval 'only'
+bind -c cwindow c eval 'remove'
+bind -c cwindow w eval 'focus'
+bind -c cwindow h eval 'focus down'
+bind -c cwindow l eval 'focus up'
+bind -c cwindow j eval 'focus down'
+bind -c cwindow k eval 'focus up'
+bind -c cwindow t eval 'focus top'
+bind -c cwindow b eval 'focus bottom'
+
+# window resize
+bind \^ resize
+bind r eval 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize j eval 'resize +1' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize k eval 'resize -1' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize J eval 'resize +10' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize K eval 'resize -10' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 1 eval 'resize 10' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 2 eval 'resize 20' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 3 eval 'resize 30' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 4 eval 'resize 40' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 5 eval 'resize 50' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 6 eval 'resize 60' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 7 eval 'resize 70' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 8 eval 'resize 80' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 9 eval 'resize 90' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize 0 eval 'resize 100' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize = eval 'resize =' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize m eval 'resize min' 'echo "Resize region:"' 'command -c cresize'
+bind -c cresize x eval 'resize max' 'echo "Resize region:"' 'command -c cresize'
+
+# logging
+logfile ".log/%H_%Y%m%d%_%n.log"
+deflog on
+hardcopydir .log/
+
+# screen clipboard to X clipboard
+bufferfile "${HOME}/.screen-exchange"
+
+bindkey -m ' ' eval 'msgwait 0' 'stuff \040' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard${HOME}/.screen-exchange' 'msgwait 0'
+bindkey -m W eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'

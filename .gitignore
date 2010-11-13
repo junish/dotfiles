@@ -1,0 +1,14 @@
+*.py[co]
+*.o
+\#*#
+*#
+.#*
+.*~
+*~
+.DS_Store
+*.sw[po]
+tags
+TAGS
+.svn
+*.log
+*.elc
