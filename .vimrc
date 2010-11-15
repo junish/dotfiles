@@ -167,9 +167,8 @@ nnoremap <Leader>HH :<C-u>help<Space>
 " Vim Open /close {{{
 nnoremap <Leader>w :<C-u>write<Return>
 nnoremap <Leader>q :<C-u>quit<Return>
-nnoremap <Leader>qa :<C-u>quitall<Return>
-nnoremap <Leader>Q :<C-u>quit!<Return>
-nnoremap <Leader>QA :<C-u>quitall!<Return>
+nnoremap <Leader>Q :<C-u>quitall<Return>
+
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
 "外部のエディタで編集中のファイルが変更されたら自動で読み直す
