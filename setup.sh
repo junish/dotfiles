@@ -15,6 +15,8 @@ EOM`
 
 for target_file in $TARGET_FILES
 do
-    mv -f $HOME/$target_file{,.orig}
+    if [ -e $HOME/$target_file ]; then
+        mv -f $HOME/$target_file{,.orig}
+    fi
     ln -s $HOME/dotfiles/$target_file $HOME/$target_file
 done

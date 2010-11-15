@@ -158,9 +158,9 @@ set tags=./tags
 set tags+=tags;
 set tags+=./**/tags
 
-nnoremap <Leader>] <C-w>]
-noremap <Leader>j <C-f>
-noremap <Leader>k <C-b>
+"nnoremap <Leader>] <C-w>]
+"noremap <Leader>j <C-f>
+"noremap <Leader>k <C-b>
 " }}}
 
 "表示行単位で行移動する
@@ -468,5 +468,5 @@ nmap ss <Plug>Yssurround
 
 " grep {{{
 " カーソル下の単語をGrepBufferする
-nnoremap <C-g><C-b> :<C-u>GrepBuffer <C-r><C-w><Enter>
+nnoremap <Leader>gg :<C-u>GrepBuffer <C-r><C-w><Enter>
 " }}}
