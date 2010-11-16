@@ -2,8 +2,10 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 filetype indent plugin on
+
 " 現在の autocommand を全て削除する
 autocmd!
+
 " vim-update-bundles {{{
 "---------------------------------------------
 "管理系
@@ -57,6 +59,7 @@ autocmd!
 " #BUNDLE: https://github.com/vim-scripts/FindInNERDTree.git
 " #BUNDLE: https://github.com/vim-scripts/trinity.vim.git
 " }}}
+
 " basic setting {{{
 let mapleader = "\<Space>"
 set number
@@ -69,16 +72,19 @@ set showcmd
 set wrap
 set showmatch
 " }}}
+
 " encode {{{
 set encoding=utf-8
 set termencoding=utf-8
 set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp
 set fileformats=unix,dos,mac
 " }}}
+
 " status line {{{
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 set wildmode=list:longest
 " }}}
+
 " search {{{
 set history=256
 set incsearch
@@ -86,6 +92,7 @@ set ignorecase
 set smartcase
 set hlsearch
 " }}}
+
 " tabkey {{{
 set expandtab
 set shiftwidth=4
@@ -93,6 +100,7 @@ set softtabstop=4
 set tabstop=4
 set noautoindent
 " }}}
+
 " colorscheme {{{
 "colorscheme desert
 if &t_Co > 2
@@ -100,6 +108,7 @@ if &t_Co > 2
     colorscheme desert256
 endif
 " }}}
+
 " backup {{{
 set nobackup
 "set writebackup
@@ -107,6 +116,7 @@ set nobackup
 "set backupdir=~/.vimbak
 "set directory=~/.vimswp
 " }}}
+
 " highlight {{{
 "Escの2回押しでハイライト消去
 nmap <ESC><ESC> :nohlsearch<Enter><ESC>
@@ -128,15 +138,18 @@ highlight ZenkakuLeader cterm=underline ctermfg=lightblue
 highlight TabLeader cterm=underline ctermfg=lightgreen
 3match TabLeader /	/
 " }}}
+
 "http://d.hatena.ne.jp/yuichi_katahira/20090117/1232209418
 "vimの改行時に自動でコメントが挿入されるのをやめたい
 autocmd FileType * setlocal formatoptions-=ro
+
 "バッファの自動保存
 "http://vim-users.jp/2009/07/hack36/
 "set autowrite
 " set autowriteall
 "autocmd CursorHold *  wall
 "autocmd CursorHoldI *  wall
+
 " ctags {{{
 set tags=./tags
 if has('path_extra')
@@ -153,6 +166,8 @@ nnoremap <Leader>] <C-w>]
 "noremap <Leader>j <C-f>
 "noremap <Leader>k <C-b>
 " }}}
+
+" move {{{
 "表示行単位で行移動する
 nnoremap j gj
 nnoremap k gk
@@ -170,6 +185,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-o> :<C-u>call <SID>good_width()<Enter>
+nnoremap <C-c><C-c> :<C-u>quit<Enter>
 nnoremap + <C-w>+
 nnoremap - <C-w>-
 nnoremap = <C-w>=
@@ -179,22 +195,27 @@ inoremap <C-l> <RIGHT>
 "Command Mode での移動
 cnoremap <C-h> <LEFT>
 cnoremap <C-l> <RIGHT>
+" }}}
+
 " vimのヘルプを素早く引く
 nnoremap <Leader>hh :<C-u>help<Space><C-r><C-w><Enter>
 nnoremap <Leader>HH :<C-u>help<Space>
-" Vim Open /close {{{
-nnoremap <Leader>w :<C-u>write<Return>
-nnoremap <Leader>q :<C-u>quit<Return>
-nnoremap <Leader>Q :<C-u>quitall<Return>
 
+" Vim Open /close {{{
+"素早く保存、終了
+nnoremap <Leader>w :<C-u>write<Enter>
+nnoremap <Leader>q :<C-u>quit<Enter>
+nnoremap <Leader>Q :<C-u>quitall<Enter>
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
 "外部のエディタで編集中のファイルが変更されたら自動で読み直す
 set autoread
 " }}}
+
 "<Leader>e でそのコマンドを実行
 "nnoremap <Leader>r :execute '!' &ft ' %'<Enter>
 nnoremap <Leader>r :QuickRun<Enter>
+
 "vimrcを読んだり書いたり
 "nnoremap <Leader>.. :<C-u>source ~/.vimrc<Enter>
 "nnoremap <Leader>.e :<C-u>vnew ~/.vimrc<Enter>
@@ -212,6 +233,7 @@ nnoremap <Leader>T :tabclose<Enter>
 nnoremap <Leader>l :tabn<Enter>
 nnoremap <Leader>h :tabp<Enter>
 " }}}
+
 " buffer {{{
 "https://github.com/cooldaemon/myhome.git
 "nnoremap <DOWN> :bn!<Enter>
@@ -223,6 +245,7 @@ nnoremap <C-p> :bp!<Enter>
 nnoremap <Leader>j :bn!<Enter>
 nnoremap <Leader>k :bp!<Enter>
 " }}}
+
 " toggle {{{
 function! ToggleNumber()
     if &number == 0
@@ -241,6 +264,7 @@ function! ToggleCursorLine()
 endfunction
 nnoremap <Leader>c :call ToggleCursorLine()<Enter>
 " }}}
+
 " html escape function
 "function! HtmlEscape() 
 "    silent s/&/\&amp;/eg 
@@ -253,6 +277,7 @@ nnoremap <Leader>c :call ToggleCursorLine()<Enter>
 "    silent s/&gt;/>/eg 
 "    silent s/&amp;/\&/eg 
 "endfunction 
+
 "vimを終了してもUndoする
 "http://vim-users.jp/2010/07/hack162/
 if has('persistent_undo')
@@ -262,6 +287,7 @@ if has('persistent_undo')
     autocmd BufReadPre ~/* setlocal undofile
   augroup END
 endif
+
 "vim戦闘力を測る
 "http://d.hatena.ne.jp/thinca/20091031/1257001194
 function! Scouter(file, ...)
@@ -274,7 +300,8 @@ function! Scouter(file, ...)
 endfunction
 command! -bar -bang -nargs=? -complete=file Scouter
 \        echo Scouter(empty(<q-args>) ? $MYVIMRC : expand(<q-args>), <bang>0)
-" ---- plugin ----
+
+" -------- plugin --------
 " Gist.vim {{{
 if has('mac')
     let g:gist_clip_command = 'pbcopy'
@@ -282,6 +309,7 @@ else
     let g:gist_clip_command = 'xclip -selection clipboard'
 endif
 " }}}
+
 " git-vim (motemen) {{{
 "let g:git_command_edit = 'rightbelow vnew'
 nnoremap <Leader>gd :<C-u>GitDiff --no-prefix --cached<Enter>
@@ -299,6 +327,7 @@ nnoremap <Leader>gc :<C-u>GitCommit<Enter>
 nnoremap <Leader>gC :<C-u>GitCommit --amend<Enter>
 nnoremap <Leader>gp :<C-u>Git push
 " }}}
+
 " unite.vim {{{
 " http://d.hatena.ne.jp/thinca/20101027/1288190498
 call unite#set_substitute_pattern('file', '\$\w\+', '\=eval(submatch(0))', 200)
@@ -330,6 +359,7 @@ function! s:unite_my_settings()"{{{
 endfunction"}}}
 let g:unite_source_file_mru_limit = 200
 " }}}
+
 " neocomplcache {{{
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -385,6 +415,7 @@ endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 " }}}
+
 " vimfiler {{{
 " :help vimfiler-examples
 call vimfiler#set_execute_file('vim', 'vim')
@@ -402,6 +433,7 @@ let g:vimfiler_as_default_explorer = 0
 "let g:vimfiler_safe_mode_by_default = 0 
 nnoremap <Leader>E :<C-u>VimFilerSplit<Enter>
 " }}}
+
 " vimshell {{{
 let g:vimshell_split_command = 'split'
 let g:vimshell_smart_case = 1
@@ -418,6 +450,7 @@ nnoremap <Leader>SS :<C-u>VimShellTerminal
 nnoremap <Leader>sh :<C-u>VimShellTerminal bash<Enter>
 nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
 " }}}
+
 " vim-ref {{{
 let g:ref_open = 'tabnew'
 nnoremap <Leader>hm :<C-u>Ref man <C-r><C-w><Enter>
@@ -435,14 +468,17 @@ nnoremap <Leader>HE :<C-u>Ref erlang
 "nnoremap <Leader>hph :<C-u>Ref phpdoc <C-r><C-w><Enter>
 "nnoremap <Leader>HPH :<C-u>Ref phpdoc 
 " }}}
+
 " NERD_tree {{{
 nnoremap <Leader>e :<C-u>NERDTreeToggle<Enter>
 " }}}
+
 " surround {{{
 " 選択範囲を指定文字でくくる
 nmap s <Plug>Ysurround
 nmap ss <Plug>Yssurround
 " }}}
+
 " grep {{{
 " カーソル下の単語をGrepBufferする
 nnoremap <Leader>gg :<C-u>GrepBuffer <C-r><C-w><Enter>
