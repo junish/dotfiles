@@ -139,9 +139,17 @@ autocmd FileType * setlocal formatoptions-=ro
 "autocmd CursorHoldI *  wall
 " ctags {{{
 set tags=./tags
-set tags+=tags;
-set tags+=./**/tags
-"nnoremap <Leader>] <C-w>]
+if has('path_extra')
+    ":help file-search
+    "親ディレクトリにあるタグファイルを指定
+    set tags+=tags;
+    "子ディレクトリにあるタグファイルを指定
+    set tags+=./**/tags
+
+    set tags+=~/**/android
+    set tags+=~/**/java6
+endif
+nnoremap <Leader>] <C-w>]
 "noremap <Leader>j <C-f>
 "noremap <Leader>k <C-b>
 " }}}
@@ -151,10 +159,20 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 "Windowの移動
+function! s:good_width()
+  let size = 80
+  if winwidth(0) < size
+    execute "vertical resize" size
+  endif
+endfunction
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
+nnoremap <C-o> :<C-u>call <SID>good_width()<Enter>
+nnoremap + <C-w>+
+nnoremap - <C-w>-
+nnoremap = <C-w>=
 "Insert Mode での移動
 inoremap <C-h> <LEFT>
 inoremap <C-l> <RIGHT>
@@ -181,9 +199,9 @@ nnoremap <Leader>r :QuickRun<Enter>
 "nnoremap <Leader>.. :<C-u>source ~/.vimrc<Enter>
 "nnoremap <Leader>.e :<C-u>vnew ~/.vimrc<Enter>
 "nnoremap <Leader>.E :<C-u>edit ~/.vimrc<Enter>
-nnoremap <Leader>.. :<C-u>source ~/dotfiles/.vimrc<Enter>
-nnoremap <Leader>.e :<C-u>vnew ~/dotfiles/.vimrc<Enter>
-nnoremap <Leader>.E :<C-u>edit ~/dotfiles/.vimrc<Enter>
+nnoremap <Leader>.. :<C-u>lcd ~/dotfiles<Enter>:source .vimrc<Enter>
+nnoremap <Leader>.e :<C-u>lcd ~/dotfiles<Enter>:vnew .vimrc<Enter>
+nnoremap <Leader>.E :<C-u>lcd ~/dotfiles<Enter>:edit .vimrc<Enter>
 
 " tab {{{
 "https://github.com/cooldaemon/myhome.git
