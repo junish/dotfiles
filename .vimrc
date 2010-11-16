@@ -295,17 +295,22 @@ call unite#set_substitute_pattern('file', '\*\*\+', '*', -1)
 call unite#set_substitute_pattern('file', '^\~', escape($HOME, '\'), -2)
 call unite#set_substitute_pattern('file', '\\\@<! ', '\\ ', -20)
 call unite#set_substitute_pattern('file', '\\ \@!', '/', -30)
-" http://d.hatena.ne.jp/basyura/20101005/p1
-nnoremap <Leader>uu  :<C-u>Unite bookmark buffer_tab file_mru file<Enter>
-nnoremap <Leader>ub  :<C-u>Unite buffer<Enter>
-nnoremap <Leader>uk  :<C-u>Unite bookmark<Enter>
-nnoremap <Leader>uf  :<C-u>Unite file<Enter>
-nnoremap <Leader>um  :<C-u>Unite file_mru<Enter>
-nnoremap <Leader>ur  :<C-u>Unite file_rec<Enter>
-"nnoremap <Leader>ut  :<C-u>Unite tab<Enter>
-nnoremap <Leader>ut  :<C-u>Unite buffer_tab<Enter>
-nnoremap <Leader>uB  :<C-u>UniteBookmarkAdd 
-nnoremap <Leader>uI  :<C-u>UniteWithInput 
+
+nnoremap <Leader>fu :<C-u>Unite buffer file_mru bookmark file<Enter>
+nnoremap <Leader>FU :<C-u>Unite 
+nnoremap <Leader>ff :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<Enter>
+nnoremap <Leader>fb :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Enter>
+
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()"{{{
+    " Overwrite settings.
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+    imap <buffer> jj <Plug>(unite_insert_leave)
+    "imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+    " Start insert.
+    "let g:unite_enable_start_insert = 1
+endfunction"}}}
+let g:unite_source_file_mru_limit = 200
 " }}}
 " neocomplcache {{{
 " Disable AutoComplPop.

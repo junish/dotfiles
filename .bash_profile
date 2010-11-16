@@ -12,7 +12,7 @@ if [ -d $HOME/bin ]; then
 fi
 
 if [ -d $HOME/android-sdk-mac_x86 ]; then
-    export PATH=$PATH:$HOME/android-sdk-mac_x86/tool
+    export PATH=$PATH:$HOME/android-sdk-mac_x86/tools
 fi
 
 if [ -f $HOME/.bashrc ]; then
