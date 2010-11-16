@@ -120,17 +120,20 @@ set nobackup
 " highlight {{{
 "Escの2回押しでハイライト消去
 nmap <ESC><ESC> :nohlsearch<Enter><ESC>
+
 " カーソル行をハイライト
 set cursorline
 ":highlight clear CursorLine
 ":highlight CursorLine gui=underline
 "highlight CursorLine ctermbg=blue guibg=blue
+
 " 全角スペースに青い下線を引く
 if exists('&ambiwidth')
     set ambiwidth=double
 endif
 highlight ZenkakuLeader cterm=underline ctermfg=lightblue
 3match ZenkakuLeader /　/
+
 " タブに緑の下線を引く
 "set list
 "set listchars=tab:\ \ ,trail:\ 
@@ -152,15 +155,15 @@ autocmd FileType * setlocal formatoptions-=ro
 
 " ctags {{{
 set tags=./tags
+set tags+=~/tags/android
+set tags+=~/tags/java6
+set tags+=~/tags/python27
 if has('path_extra')
     ":help file-search
     "親ディレクトリにあるタグファイルを指定
     set tags+=tags;
     "子ディレクトリにあるタグファイルを指定
     set tags+=./**/tags
-
-    set tags+=~/**/android
-    set tags+=~/**/java6
 endif
 nnoremap <Leader>] <C-w>]
 "noremap <Leader>j <C-f>
@@ -173,25 +176,36 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
+
 "Windowの移動
 function! s:good_width()
-  let size = 80
-  if winwidth(0) < size
-    execute "vertical resize" size
+  let width = 80
+  if winwidth(0) < width
+    execute "vertical resize" width
+  endif
+endfunction
+function! s:good_height()
+  let height = 40
+  if winheight(0) < height
+    execute "resize" height
   endif
 endfunction
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
-nnoremap <C-o> :<C-u>call <SID>good_width()<Enter>
+nnoremap <C-o> :<C-u>call <SID>good_width()<Enter>:<C-u>call <SID>good_height()<Enter>
 nnoremap <C-c><C-c> :<C-u>quit<Enter>
 nnoremap + <C-w>+
 nnoremap - <C-w>-
+nnoremap > <C-w>>
+nnoremap < <C-w><
 nnoremap = <C-w>=
+
 "Insert Mode での移動
 inoremap <C-h> <LEFT>
 inoremap <C-l> <RIGHT>
+
 "Command Mode での移動
 cnoremap <C-h> <LEFT>
 cnoremap <C-l> <RIGHT>
@@ -238,10 +252,10 @@ nnoremap <Leader>h :tabp<Enter>
 "https://github.com/cooldaemon/myhome.git
 "nnoremap <DOWN> :bn!<Enter>
 "nnoremap <UP> :bp!<Enter>
-nnoremap <Leader>bb :<C-u>buffers<Enter>
-nnoremap <Leader>BB :<C-u>buffers<Enter>:buffer 
-nnoremap <C-n> :bn!<Enter>
-nnoremap <C-p> :bp!<Enter>
+"nnoremap <Leader>bb :<C-u>buffers<Enter>
+"nnoremap <Leader>BB :<C-u>buffers<Enter>:buffer 
+"nnoremap <C-n> :bn!<Enter>
+"nnoremap <C-p> :bp!<Enter>
 nnoremap <Leader>j :bn!<Enter>
 nnoremap <Leader>k :bp!<Enter>
 " }}}
