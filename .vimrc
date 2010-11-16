@@ -17,7 +17,10 @@ autocmd!
 " BUNDLE: https://github.com/vim-scripts/desert256.vim.git
 " BUNDLE: https://github.com/vim-scripts/scala.vim.git
 " BUNDLE: https://github.com/vim-scripts/jQuery.git
+" BUNDLE: https://github.com/DexterTheDragon/vim-rest.git
 " BUNDLE: https://github.com/vim-scripts/Smooth-Scroll.git
+" BUNDLE: https://github.com/vim-scripts/taglist.vim.git
+" BUNDLE: https://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
 "---------------------------------------------
 "編集系
 "---------------------------------------------
@@ -155,8 +158,8 @@ autocmd FileType * setlocal formatoptions-=ro
 
 " ctags {{{
 set tags=./tags
-set tags+=~/tags/android
-set tags+=~/tags/java6
+"set tags+=~/tags/android
+"set tags+=~/tags/java6
 set tags+=~/tags/python27
 if has('path_extra')
     ":help file-search
@@ -165,7 +168,8 @@ if has('path_extra')
     "子ディレクトリにあるタグファイルを指定
     set tags+=./**/tags
 endif
-nnoremap <Leader>] <C-w>]
+nnoremap <Leader>] <C-]>
+nnoremap <Leader>[ <C-t>
 "noremap <Leader>j <C-f>
 "noremap <Leader>k <C-b>
 " }}}
@@ -276,7 +280,7 @@ function! ToggleCursorLine()
         set nocursorline
     endif
 endfunction
-nnoremap <Leader>c :call ToggleCursorLine()<Enter>
+nnoremap <Leader>C :call ToggleCursorLine()<Enter>
 " }}}
 
 " html escape function
@@ -496,4 +500,12 @@ nmap ss <Plug>Yssurround
 " grep {{{
 " カーソル下の単語をGrepBufferする
 nnoremap <Leader>gg :<C-u>GrepBuffer <C-r><C-w><Enter>
+" }}}
+
+" tlist {{{
+nnoremap <Leader>c :<C-u>TlistToggle<Enter>
+"}}}
+
+" srcexpl {{{
+let g:SrcExpl_UpdateTags = 1
 " }}}
