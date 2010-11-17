@@ -171,8 +171,10 @@ if has('path_extra')
     "子ディレクトリにあるタグファイルを指定
     set tags+=./**/tags
 endif
-nnoremap <Leader>] <C-]>
-nnoremap <Leader>[ <C-t>
+nnoremap <Leader>] <C-w><C-]>
+nnoremap <Leader>[ <C-t><C-w>c
+nnoremap <Leader>} <C-]>
+nnoremap <Leader>{ <C-t>
 "noremap <Leader>j <C-f>
 "noremap <Leader>k <C-b>
 " }}}
