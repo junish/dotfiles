@@ -27,7 +27,6 @@ autocmd!
 " BUNDLE: https://github.com/DexterTheDragon/vim-rest.git
 " BUNDLE: https://github.com/vim-scripts/Smooth-Scroll.git
 " BUNDLE: https://github.com/vim-scripts/taglist.vim.git
-" #BUNDLE: https://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
 " BUNDLE: https://github.com/vim-scripts/matchit.zip.git
 "---------------------------------------------
 "編集系
@@ -62,15 +61,11 @@ autocmd!
 " BUNDLE: https://github.com/thinca/vim-ref.git
 " BUNDLE: https://github.com/motemen/git-vim.git
 " BUNDLE: https://github.com/vim-scripts/Gist.vim.git
-" #BUNDLE: https://github.com/vim-scripts/trinity.vim.git
 "---------------------------------------------
 "その他
 "---------------------------------------------
 " BUNDLE: https://github.com/Shougo/vimproc.git
 " BUNDLE: https://github.com/guyon/quiz-vim.git
-" #BUNDLE: https://github.com/vim-scripts/NERD_tree-Project.git
-" #BUNDLE: https://github.com/vim-scripts/FindInNERDTree.git
-" #BUNDLE: https://github.com/vim-scripts/trinity.vim.git
 " }}}
 
 " basic setting {{{
@@ -194,7 +189,7 @@ vnoremap j gj
 vnoremap k gk
 
 "Windowの移動
-function! s:change_width()
+function! s:max_width()
   let width = 1024
   if winwidth(0) < width
     execute "vertical resize" width
