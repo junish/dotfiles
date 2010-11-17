@@ -20,7 +20,8 @@ autocmd!
 " BUNDLE: https://github.com/DexterTheDragon/vim-rest.git
 " BUNDLE: https://github.com/vim-scripts/Smooth-Scroll.git
 " BUNDLE: https://github.com/vim-scripts/taglist.vim.git
-" BUNDLE: https://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
+" #BUNDLE: https://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
+" BUNDLE: https://github.com/vim-scripts/matchit.zip.git
 "---------------------------------------------
 "編集系
 "---------------------------------------------
@@ -32,6 +33,7 @@ autocmd!
 " BUNDLE: https://github.com/vim-scripts/neocomplcache.git
 " BUNDLE: https://github.com/vim-scripts/snipMate.git
 " BUNDLE: https://github.com/vim-scripts/sudo.vim.git
+" BUNDLE: https://github.com/vim-scripts/javacomplete.git
 "---------------------------------------------
 "検索系
 "---------------------------------------------
@@ -44,7 +46,7 @@ autocmd!
 "---------------------------------------------
 "ファイル系
 "---------------------------------------------
-" #BUNDLE: https://github.com/vim-scripts/The-NERD-tree.git
+" BUNDLE: https://github.com/vim-scripts/The-NERD-tree.git
 " BUNDLE: https://github.com/Shougo/vimfiler.git
 " BUNDLE: https://github.com/Shougo/vimshell.git
 "---------------------------------------------
@@ -53,7 +55,7 @@ autocmd!
 " BUNDLE: https://github.com/thinca/vim-ref.git
 " BUNDLE: https://github.com/motemen/git-vim.git
 " BUNDLE: https://github.com/vim-scripts/Gist.vim.git
-" BUNDLE: https://github.com/vim-scripts/trinity.vim.git
+" #BUNDLE: https://github.com/vim-scripts/trinity.vim.git
 "---------------------------------------------
 "その他
 "---------------------------------------------
@@ -159,9 +161,9 @@ autocmd FileType * setlocal formatoptions-=ro
 
 " ctags {{{
 set tags=./tags
-set tags+=~/tags/android
-set tags+=~/tags/java6
-set tags+=~/tags/python27
+set tags+=~/.vim/tags/android
+set tags+=~/.vim/tags/java6
+set tags+=~/.vim/tags/python27
 if has('path_extra')
     ":help file-search
     "親ディレクトリにあるタグファイルを指定
@@ -183,14 +185,14 @@ vnoremap j gj
 vnoremap k gk
 
 "Windowの移動
-function! s:good_width()
-  let width = 80
+function! s:change_width()
+  let width = 1024
   if winwidth(0) < width
     execute "vertical resize" width
   endif
 endfunction
-function! s:good_height()
-  let height = 40
+function! s:max_height()
+  let height = 786
   if winheight(0) < height
     execute "resize" height
   endif
@@ -199,17 +201,28 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
-nnoremap <C-o> :<C-u>call <SID>good_width()<Enter>:<C-u>call <SID>good_height()<Enter>
+nnoremap <C-o> :<C-u>call <SID>max_width()<Enter>:<C-u>call <SID>max_height()<Enter>
 nnoremap <C-c><C-c> :<C-u>quit<Enter>
 nnoremap + <C-w>+
 nnoremap - <C-w>-
-nnoremap > <C-w>>
-nnoremap < <C-w><
+nnoremap <S-LEFT> <C-w><
+nnoremap <S-RIGHT> <C-w>>
 nnoremap = <C-w>=
 
 "Insert Mode での移動
 "inoremap <C-h> <LEFT>
-"inoremap <C-l> <RIGHT>
+inoremap <C-l> <RIGHT>
+
+" Insert Mode で Bashな操作
+inoremap <C-a> <C-o>0
+inoremap <C-e> <C-o>$
+inoremap <C-u> <C-o>d0
+inoremap <C-k> <C-o>D
+"inoremap <C-h> <C-o>X "TODO 先頭末尾の処理
+"inoremap <BS> <C-o>X "TODO 先頭末尾の処理
+inoremap <C-d> <C-o>x
+inoremap <Delete> <C-o>x
+"inoremap <C-w> <C-o>TODO
 
 "Command Mode での移動
 cnoremap <C-h> <LEFT>
@@ -236,12 +249,9 @@ set autoread
 nnoremap <Leader>r :QuickRun<Enter>
 
 "vimrcを読んだり書いたり
-"nnoremap <Leader>.. :<C-u>source ~/.vimrc<Enter>
-"nnoremap <Leader>.e :<C-u>vnew ~/.vimrc<Enter>
-"nnoremap <Leader>.E :<C-u>edit ~/.vimrc<Enter>
-nnoremap <Leader>.. :<C-u>lcd ~/dotfiles<Enter>:source .vimrc<Enter>
-nnoremap <Leader>.e :<C-u>lcd ~/dotfiles<Enter>:vnew .vimrc<Enter>
-nnoremap <Leader>.E :<C-u>lcd ~/dotfiles<Enter>:edit .vimrc<Enter>
+nnoremap <Leader>.. :<C-u>source ~/.vimrc<Enter>
+nnoremap <Leader>.e :<C-u>edit ~/.vimrc<Enter>
+nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
 
 " tab {{{
 "https://github.com/cooldaemon/myhome.git
@@ -257,10 +267,6 @@ nnoremap <Leader>h :tabp<Enter>
 "https://github.com/cooldaemon/myhome.git
 "nnoremap <DOWN> :bn!<Enter>
 "nnoremap <UP> :bp!<Enter>
-"nnoremap <Leader>bb :<C-u>buffers<Enter>
-"nnoremap <Leader>BB :<C-u>buffers<Enter>:buffer 
-"nnoremap <C-n> :bn!<Enter>
-"nnoremap <C-p> :bp!<Enter>
 nnoremap <Leader>j :bn!<Enter>
 nnoremap <Leader>k :bp!<Enter>
 " }}}
@@ -281,21 +287,22 @@ function! ToggleCursorLine()
         set nocursorline
     endif
 endfunction
-nnoremap <Leader>C :call ToggleCursorLine()<Enter>
+nnoremap <Leader>c :call ToggleCursorLine()<Enter>
 " }}}
 
-" html escape function
-"function! HtmlEscape() 
-"    silent s/&/\&amp;/eg 
-"    silent s/</\&lt;/eg 
-"    silent s/>/\&gt;/eg 
-"endfunction 
-"
-"function! HtmlUnEscape() 
-"    silent s/&lt;/</eg 
-"    silent s/&gt;/>/eg 
-"    silent s/&amp;/\&/eg 
-"endfunction 
+" html escape function {{{
+function! HtmlEscape() 
+    silent s/&/\&amp;/eg 
+    silent s/</\&lt;/eg 
+    silent s/>/\&gt;/eg 
+endfunction 
+
+function! HtmlUnEscape() 
+    silent s/&lt;/</eg 
+    silent s/&gt;/>/eg 
+    silent s/&amp;/\&/eg 
+endfunction
+" }}}
 
 "vimを終了してもUndoする
 "http://vim-users.jp/2010/07/hack162/
@@ -319,6 +326,16 @@ function! Scouter(file, ...)
 endfunction
 command! -bar -bang -nargs=? -complete=file Scouter
 \        echo Scouter(empty(<q-args>) ? $MYVIMRC : expand(<q-args>), <bang>0)
+
+" omni completion  {{{
+autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType c setlocal omnifunc=ccomplete#Complete
+" }}}
 
 " -------- plugin --------
 " Gist.vim {{{
@@ -380,8 +397,6 @@ let g:unite_source_file_mru_limit = 200
 " }}}
 
 " neocomplcache {{{
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -393,43 +408,45 @@ let g:neocomplcache_enable_underbar_completion = 1
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
         \ }
-
-" Define keyword.
+" 日本語をキャッシュしない
 if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+" 補完候補の数
+"let g:neocomplcache_max_list = 5
+" 1番目の候補を自動選択
+let g:neocomplcache_enable_auto_select = 1
+" snippet ファイルの保存先
+"let g:neocomplcache_snippets_dir='~/.vim/snippets'
 
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+" 辞書読み込み
+noremap  <Leader>n. :<C-u>NeoComplCacheCachingDictionary<Enter>
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" スニペット
+imap <C-k> <Plug>(neocomplcache_snippets_expand)
+smap <C-k> <Plug>(neocomplcache_snippets_expand)
+" <TAB> completion.
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" C-oでオムニ補完
+inoremap <expr><C-o> &filetype == 'vim' ? "\<C-x>\<C-v>\<C-p>" : "\<C-x>\<C-o>\<C-p>"
+" C-nでneocomplcache補完
+inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+" C-pでkeyword補完
+inoremap <expr><C-p> pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
+" 補完候補が表示されている場合は確定。そうでない場合は改行
+inoremap <expr><Enter>  pumvisible() ? neocomplcache#close_popup() : "<Enter>"
+" 補完をキャンセル
+inoremap <expr><C-c>  neocomplcache#cancel_popup()
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
@@ -504,13 +521,16 @@ nmap ss <Plug>Yssurround
 nnoremap <Leader>gg :<C-u>GrepBuffer <C-r><C-w><Enter>
 " }}}
 
-" trinity {{{
-nnoremap <Leader>i :<C-u>TrinityToggleAll<Enter>
-nnoremap <Leader>e :<C-u>TrinityToggleNERDTree<Enter>
-"let g:SrcExpl_UpdateTags = 1
-"let g:SrcExpl_searchLocalDef = 0
-"let g:SrcExpl_jumpKey = "<Leader>}"
-"let g:SrcExpl_gobackKey = "<Leader>{"
-"let g:SrcExpl_updateTagsKey = "<F12>"
-"let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
+" tlist {{{
+nnoremap e :<C-u>TlistToggle<Enter>
+" }}}
+
+" NERD_tree {{{
+nnoremap E :NERDTreeToggle<Enter>
+let g:NERDTreeWinPos = "right"
+" }}}
+
+" javacomplete {{{
+autocmd FileType java :setlocal omnifunc=javacomplete#Complete
+autocmd FileType java :setlocal completefunc=javacomplete#CompleteParamsInfo
 " }}}
