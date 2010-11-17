@@ -1,3 +1,10 @@
+"TODO snipMate(How to create template)
+"TODO Unite(How to)
+"TODO vim-ref(Javadoc)
+"TODO surround(How to)
+"TODO neocomplcache(How to include comp, dict comp)
+"TODO NERD-Commenter(How to)
+
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -458,7 +465,6 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 " }}}
 
-
 " vimfiler {{{
 " :help vimfiler-examples
 call vimfiler#set_execute_file('vim', 'vim')
@@ -521,6 +527,7 @@ nmap ss <Plug>Yssurround
 " grep {{{
 " カーソル下の単語をGrepBufferする
 nnoremap <Leader>gg :<C-u>GrepBuffer <C-r><C-w><Enter>
+nnoremap <Leader>GG :<C-u>GrepBuffer 
 " }}}
 
 " tlist {{{
@@ -529,7 +536,10 @@ nnoremap e :<C-u>TlistToggle<Enter>
 
 " NERD_tree {{{
 nnoremap E :NERDTreeToggle<Enter>
+" 右に表示
 let g:NERDTreeWinPos = "right"
+" デフォルトのファイラを変更しない
+let g:NERDTreeHijackNetrw = 0
 " }}}
 
 " javacomplete {{{
