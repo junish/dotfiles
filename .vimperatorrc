@@ -9,6 +9,8 @@ set! browser.sessionstore.max_tabs_undo=30
 " ページのアクセスキーを無効化
 set! ui.key.generalAccessKey=0
 
+" <Leader>の設定
+let mapleader=","
 
 " options
 " ======================================================================
@@ -23,7 +25,8 @@ set complete=Slb
 set titlestring="Mozilla Firefox"
 
 "右側にスクロールバーを表示
-set guioptions=r
+"ブックマークツールバーを表示
+set guioptions=Br
 
 " 常にタブを表示
 set showtabline=2
@@ -45,36 +48,38 @@ set visualbell
 hi Bell opacity: .5;
 
 "ビジュアルモードから一発でGoogle翻訳
-vmap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
+vnoremap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
 
 " mappings
 " ======================================================================
-"j/kの移動量を5倍に
-noremap j 5<C-e>
-noremap k 5<C-y>
+"移動量を増やす
+nnoremap j 5j
+nnoremap k 5k
+nnoremap h 5h
+nnoremap l 5l
 
 "J/KにPageDown,PageUpを割り当て(LDRizeが効いている場合でも指のポジションを動かさずに済む
-noremap J <PageDown>
-noremap K <PageUp>
+nnoremap J <PageDown>
+nnoremap K <PageUp>
 
-"Shift+←/Shift+→でタブ位置変
-map <C-H> :tabmove! +1<CR>
-map <C-L> :tabmove! -1<CR>
+"タブ移動
+nnoremap <C-H> :tabprevious<CR>
+nnoremap <C-L> :tabnext<CR>
 
 ",sで設定ファイル再読込
-map ,s :so ~/.vimperatorrc<CR>
+nnoremap <Leader>. :so ~/.vimperatorrc<CR>
 
 "各種バー表示をトグル
-noremap ,1 :set guioptions=r<cr>
-noremap ,2 :set guioptions=Br<cr>
-noremap ,3 :set guioptions=BmTr<cr>
-noremap ,4 :set mainecoon=amc<cr>
-noremap ,5 :set mainecoon=am<cr>
-noremap ,6 :set mainecoon=m<cr>
+nnoremap <Leader>1 :set guioptions=r<cr>
+nnoremap <Leader>2 :set guioptions=Br<cr>
+nnoremap <Leader>3 :set guioptions=BmTr<cr>
+nnoremap <Leader>4 :set mainecoon=amc<cr>
+nnoremap <Leader>5 :set mainecoon=am<cr>
+nnoremap <Leader>6 :set mainecoon=m<cr>
 
 "qmarks
-map qm <esc>:qmark<Space>
-map qa <esc>:qmarks<cr>
+nnoremap qm <esc>:qmark<Space>
+nnoremap qa <esc>:qmarks<cr>
 
 " OSのキーバインドを再現 
 noremap <C-a> <C-v><C-a>
@@ -107,18 +112,17 @@ let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 set hintmatching=custom
 
 "google-search.js
-map s :gsearch!<Space>
+nnoremap s :gsearch!<Space>
 
 " browser_object.js
-map x dd
+nnoremap x dd
 
 " multi_requester.js
-map ,m,s :so<Space>$RUNTIME/plugin/multi_requester.js
+nnoremap <Leader>m. :so<Space>$RUNTIME/plugin/multi_requester.js
 
 " twitter.js
-map ,t :twitter<Space>
-map ,T :twitter!<Space>
-map ,@ :twitter!@<CR>
+nnoremap <Leader>t :tw<CR>
+nnoremap <Leader>T :tw<Space>
 
 javascript <<EOF
 /* DEFAULT SITES */
