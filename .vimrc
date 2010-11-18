@@ -61,6 +61,7 @@ autocmd!
 " BUNDLE: https://github.com/thinca/vim-ref.git
 " BUNDLE: https://github.com/motemen/git-vim.git
 " BUNDLE: https://github.com/vim-scripts/Gist.vim.git
+" BUNDLE: https://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
 "---------------------------------------------
 "その他
 "---------------------------------------------
@@ -128,6 +129,9 @@ set nobackup
 " highlight {{{
 "Escの2回押しでハイライト消去
 nmap <ESC><ESC> :nohlsearch<Enter><ESC>
+
+" OSのクリップボードを使用する
+set clipboard=unnamed
 
 " カーソル行をハイライト
 set cursorline
@@ -222,11 +226,13 @@ inoremap <C-a> <C-o>0
 inoremap <C-e> <C-o>$
 inoremap <C-u> <C-o>d0
 inoremap <C-k> <C-o>D
-"inoremap <C-h> <C-o>X "TODO 先頭末尾の処理
-"inoremap <BS> <C-o>X "TODO 先頭末尾の処理
-inoremap <C-d> <C-o>x
-inoremap <Delete> <C-o>x
+inoremap <C-v> <C-o>"*p
 "inoremap <C-w> <C-o>TODO
+"TODO 先頭末尾の処理
+"inoremap <C-h> <C-o>X
+"inoremap <BS> <C-o>X
+"inoremap <C-d> <C-o>x
+"inoremap <Delete> <C-o>x
 
 "Command Mode での移動
 cnoremap <C-h> <LEFT>
@@ -308,7 +314,7 @@ function! HtmlUnEscape()
 endfunction
 " }}}
 
-"vimを終了してもUndoする
+" vimを終了してもUndoする {{{
 "http://vim-users.jp/2010/07/hack162/
 if has('persistent_undo')
   set undodir=~/.vimundo
@@ -317,8 +323,9 @@ if has('persistent_undo')
     autocmd BufReadPre ~/* setlocal undofile
   augroup END
 endif
+"}}}
 
-"vim戦闘力を測る
+" vim戦闘力を測る {{{
 "http://d.hatena.ne.jp/thinca/20091031/1257001194
 function! Scouter(file, ...)
   let pat = '^\s*$\|^\s*"'
@@ -330,6 +337,7 @@ function! Scouter(file, ...)
 endfunction
 command! -bar -bang -nargs=? -complete=file Scouter
 \        echo Scouter(empty(<q-args>) ? $MYVIMRC : expand(<q-args>), <bang>0)
+" }}}
 
 " omni completion  {{{
 autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
@@ -475,7 +483,7 @@ let g:vimfiler_external_move_command = 'mv $srcs $dest'
 let g:vimfiler_as_default_explorer = 0
 " Enable file operation commands.
 "let g:vimfiler_safe_mode_by_default = 0 
-nnoremap <Leader>E :<C-u>VimFilerSplit<Enter>
+"nnoremap <Leader>E :<C-u>VimFilerSplit<Enter>
 " }}}
 
 " vimshell {{{
@@ -526,11 +534,11 @@ nnoremap <Leader>GG :<C-u>GrepBuffer
 " }}}
 
 " tlist {{{
-nnoremap e :<C-u>TlistToggle<Enter>
+nnoremap <Leader>a :<C-u>TlistToggle<Enter>
 " }}}
 
 " NERD_tree {{{
-nnoremap E :NERDTreeToggle<Enter>
+nnoremap <Leader>; :NERDTreeToggle<Enter>
 " 右に表示
 let g:NERDTreeWinPos = "right"
 " デフォルトのファイラを変更しない
