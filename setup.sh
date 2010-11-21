@@ -7,7 +7,7 @@ cmd() {
 
 TARGET_FILES=`cat << EOM
 .screenrc
-.gitigonre
+.gitignore
 .gitinit
 .gitconfig
 .vimrc
@@ -19,13 +19,21 @@ TARGET_FILES=`cat << EOM
 bin
 EOM`
 
+if [ $USER == "root" ]; then
+    target_dir='/home/junichi'
+else
+    target_dir=$HOME
+fi
+
 for target_file in $TARGET_FILES
 do
-    if [ -e $HOME/$target_file ]; then
+    if [ -e "$HOME/$target_file" ]; then
         cmd mv -f $HOME/$target_file{,.orig}
     fi
-    cmd ln -s $HOME/dotfiles/$target_file $HOME/$target_file
+    cmd ln -s $target_dir/dotfiles/$target_file $HOME/$target_file
 done
+
+exit
 
 INSTALL_PKGS=`cat << EOM
 gcc
