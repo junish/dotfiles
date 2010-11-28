@@ -20,20 +20,23 @@ ime_controller.js
 maine_coon.js
 migemized_find.js
 migemo_hint.js
+migemo_completion.js
+migemo-find.js
 multi_requester.js
 proxy.js
+notifier
 EOM`
 
 if [ ! -d $HOME/.vimperator/plugin ]; then
     cmd pushd $HOME/.vimperator
-    cmd svn http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk checkout plugin
+    cmd svn checkout http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/trunk plugin
     cmd rm -f $HOME/.vimperator/plugin/*
     cmd popd
 fi
 
+cmd pushd $HOME/.vimperator/plugin
 for plugin in $PLUGINS
 do
-    cmd pushd $HOME/.vimperator
     cmd svn update $plugin
-    cmd popd
 done
+cmd popd

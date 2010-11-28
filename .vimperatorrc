@@ -60,6 +60,10 @@ nnoremap k 5k
 nnoremap J <PageDown>
 nnoremap K <PageUp>
 
+"h/lで戻る/進む
+noremap h <A-Left>
+noremap l <A-Right>
+
 "タブ移動
 nnoremap <C-H> :tabprevious<CR>
 nnoremap <C-L> :tabnext<CR>
