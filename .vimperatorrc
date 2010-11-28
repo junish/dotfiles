@@ -65,8 +65,12 @@ noremap h <A-Left>
 noremap l <A-Right>
 
 "タブ移動
-nnoremap <C-H> :tabprevious<CR>
-nnoremap <C-L> :tabnext<CR>
+nnoremap H :tabprevious<CR>
+nnoremap L :tabnext<CR>
+
+"移動
+nnoremap <C-H> h
+nnoremap <C-L> l
 
 ",sで設定ファイル再読込
 nnoremap <Leader>. :so ~/.vimperatorrc<CR>
