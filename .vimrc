@@ -436,7 +436,7 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 " 1番目の候補を自動選択
 let g:neocomplcache_enable_auto_select = 1
 " snippet ファイルの保存先
-"let g:neocomplcache_snippets_dir='~/.vim/snippets'
+let g:neocomplcache_snippets_dir='~/.vim/bundle/snipMate/snippets'
 
 " 辞書読み込み
 noremap  <Leader>n. :<C-u>NeoComplCacheCachingDictionary<Enter>

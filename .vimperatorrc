@@ -55,8 +55,6 @@ vnoremap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
 "移動量を増やす
 nnoremap j 5j
 nnoremap k 5k
-nnoremap h 5h
-nnoremap l 5l
 
 "J/KにPageDown,PageUpを割り当て(LDRizeが効いている場合でも指のポジションを動かさずに済む
 nnoremap J <PageDown>
@@ -153,5 +151,39 @@ liberator.globalVariables.multi_requester_mappings = [
     [',mw', 'wikipedia-jp'],
 ];
 EOF
+
+" proxy.js
+javascript <<EOM
+liberator.globalVariables.proxy_settings = [
+   {
+      conf_name: 'disable',
+      conf_usage: 'direct connection',
+      settings: [
+      {
+         label: 'type',
+         param: 0
+      }
+      ]
+   },
+   {
+      conf_name: 'bmobile',
+      conf_usage: 'use b-mobile accelerator',
+      settings: [
+      {
+         label: 'type',
+         param: 1
+      },
+      {
+         label: 'http',
+         param: 'mao.bmobile.ne.jp'
+      },
+      {
+         label: 'http_port',
+         param: 32080
+      }
+      ]
+   }
+];
+EOM
 
 " vim: set ft=vimperator:
