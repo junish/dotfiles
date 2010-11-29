@@ -15,6 +15,10 @@ if [ -d $HOME/android-sdk-mac_x86 ]; then
     export PATH=$PATH:$HOME/android-sdk-mac_x86/tools
 fi
 
+if [ -d $HOME/.cabal ]; then
+    $HOME/.cabal/bin/bluetile > /dev/null 2>&1 &
+fi
+
 if [ -f $HOME/.bashrc ]; then
     source .bashrc
 fi

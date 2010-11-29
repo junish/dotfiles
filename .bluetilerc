@@ -9,7 +9,7 @@
 
 start_dock: false
 #terminal: xterm
-#default_modifier: Mod1
+default_modifier: Mod4
 #key_launch_terminal: DefaultMod+Shift+Return
 focus_follows_mouse: true
 
