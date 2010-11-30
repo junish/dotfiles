@@ -31,7 +31,8 @@ autocmd!
 "---------------------------------------------
 "編集系
 "---------------------------------------------
-" BUNDLE: https://github.com/vim-scripts/Align.git
+" #BUNDLE: https://github.com/vim-scripts/Align.git
+" BUNDLE: https://github.com/h1mesuke/vim-alignta.git
 " BUNDLE: https://github.com/vim-scripts/surround.vim.git
 " BUNDLE: https://github.com/vim-scripts/The-NERD-Commenter.git
 " BUNDLE: https://github.com/vim-scripts/YankRing.vim.git
@@ -40,6 +41,8 @@ autocmd!
 " BUNDLE: https://github.com/vim-scripts/snipMate.git
 " BUNDLE: https://github.com/vim-scripts/sudo.vim.git
 " BUNDLE: https://github.com/vim-scripts/javacomplete.git
+" BUNDLE: https://github.com/vim-scripts/javacomplete.git
+" BUNDLE: http://github.com/vim-scripts/ZenCoding.vim.git
 "---------------------------------------------
 "検索系
 "---------------------------------------------
