@@ -1,3 +1,3 @@
 #!/bin/sh
 
-eval setup-dotfiles.sh
+eval ./setup-dotfiles.sh

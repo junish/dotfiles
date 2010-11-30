@@ -221,21 +221,19 @@ nnoremap <S-RIGHT> <C-w>>
 nnoremap = <C-w>=
 
 "Insert Mode での移動
-"inoremap <C-h> <LEFT>
+inoremap <C-h> <LEFT>
 inoremap <C-l> <RIGHT>
+inoremap <C-j> <UP>
+inoremap <C-k> <DOWN>
 
-" Insert Mode で Bashな操作
 inoremap <C-a> <C-o>0
 inoremap <C-e> <C-o>$
-inoremap <C-u> <C-o>d0
-inoremap <C-k> <C-o>D
+"inoremap <C-u> <C-o>d0
+inoremap <C-u> <C-o>u
+inoremap <C-r> <C-o><C-r>
+inoremap <C-d> <C-o>D
+inoremap <C-x> <Del>
 inoremap <C-v> <C-o>"*p
-"inoremap <C-w> <C-o>TODO
-"TODO 先頭末尾の処理
-"inoremap <C-h> <C-o>X
-"inoremap <BS> <C-o>X
-"inoremap <C-d> <C-o>x
-"inoremap <Delete> <C-o>x
 
 "Command Mode での移動
 cnoremap <C-h> <LEFT>
@@ -445,8 +443,8 @@ let g:neocomplcache_snippets_dir='~/.vim/bundle/snipMate/snippets'
 noremap  <Leader>n. :<C-u>NeoComplCacheCachingDictionary<Enter>
 
 " スニペット
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
+"imap <C-k> <Plug>(neocomplcache_snippets_expand)
+"smap <C-k> <Plug>(neocomplcache_snippets_expand)
 " <TAB> completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " C-oでオムニ補完
