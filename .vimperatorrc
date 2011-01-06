@@ -25,8 +25,9 @@ set complete=Slb
 set titlestring="Mozilla Firefox"
 
 "右側にスクロールバーを表示
+"下側にスクロールバーを表示
 "ブックマークツールバーを表示
-set guioptions=Br
+set guioptions=Brb
 
 " 常にタブを表示
 set showtabline=2
@@ -76,9 +77,9 @@ nnoremap <C-L> l
 nnoremap <Leader>. :so ~/.vimperatorrc<CR>
 
 "各種バー表示をトグル
-nnoremap <Leader>1 :set guioptions=r<cr>
-nnoremap <Leader>2 :set guioptions=Br<cr>
-nnoremap <Leader>3 :set guioptions=BmTr<cr>
+nnoremap <Leader>1 :set guioptions=br<cr>
+nnoremap <Leader>2 :set guioptions=Bbr<cr>
+nnoremap <Leader>3 :set guioptions=BmTbr<cr>
 nnoremap <Leader>4 :set mainecoon=amc<cr>
 nnoremap <Leader>5 :set mainecoon=am<cr>
 nnoremap <Leader>6 :set mainecoon=m<cr>
