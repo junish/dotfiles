@@ -108,7 +108,7 @@ cnoremap <C-z> <C-v><C-z>
 " plugins
 " ================================================
 " maine_coon.js
-set mainecoon=am
+"set mainecoon=am
 
 " ime_controller.js
 let g:ex_ime_mode = "inactive"
