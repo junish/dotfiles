@@ -10,6 +10,7 @@ URL='http://svn.coderepos.org/share/lang/javascript/vimperator-plugins/branches/
 
 PLUGINS=`cat << EOM
 _libly.js
+_smooziee.js
 auto_word_select_mode.js
 bookmarktoolbar-hint.js
 browser_object.js

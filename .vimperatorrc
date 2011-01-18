@@ -27,7 +27,7 @@ set titlestring="Mozilla Firefox"
 "右側にスクロールバーを表示
 "下側にスクロールバーを表示
 "ブックマークツールバーを表示
-set guioptions=Br
+set guioptions=br
 
 " 常にタブを表示
 set showtabline=2
