@@ -17,59 +17,56 @@ autocmd!
 "---------------------------------------------
 "管理系
 "---------------------------------------------
-" #BUNDLE: https://github.com/vim-scripts/pathogen.vim.git
+" #BUNDLE: git://github.com/vim-scripts/pathogen.vim.git
 "---------------------------------------------
 "表示系
 "---------------------------------------------
-" BUNDLE: https://github.com/vim-scripts/desert256.vim.git
-" BUNDLE: https://github.com/vim-scripts/scala.vim.git
-" BUNDLE: https://github.com/vim-scripts/jQuery.git
-" BUNDLE: https://github.com/DexterTheDragon/vim-rest.git
-" BUNDLE: https://github.com/vim-scripts/Smooth-Scroll.git
-" BUNDLE: https://github.com/vim-scripts/taglist.vim.git
-" BUNDLE: https://github.com/vim-scripts/matchit.zip.git
+" BUNDLE: git://github.com/vim-scripts/desert256.vim.git
+" BUNDLE: git://github.com/vim-scripts/scala.vim.git
+" BUNDLE: git://github.com/vim-scripts/jQuery.git
+" BUNDLE: git://github.com/DexterTheDragon/vim-rest.git
+" BUNDLE: git://github.com/vim-scripts/Smooth-Scroll.git
+" BUNDLE: git://github.com/vim-scripts/taglist.vim.git
+" BUNDLE: git://github.com/vim-scripts/matchit.zip.git
 "---------------------------------------------
 "編集系
 "---------------------------------------------
-" #BUNDLE: https://github.com/vim-scripts/Align.git
-" BUNDLE: https://github.com/h1mesuke/vim-alignta.git
-" BUNDLE: https://github.com/vim-scripts/surround.vim.git
-" BUNDLE: https://github.com/vim-scripts/The-NERD-Commenter.git
-" BUNDLE: https://github.com/vim-scripts/YankRing.vim.git
-" BUNDLE: https://github.com/vim-scripts/quickrun.vim.git
-" BUNDLE: https://github.com/vim-scripts/neocomplcache.git
-" BUNDLE: https://github.com/vim-scripts/snipMate.git
-" BUNDLE: https://github.com/vim-scripts/sudo.vim.git
-" BUNDLE: https://github.com/vim-scripts/javacomplete.git
-" BUNDLE: https://github.com/vim-scripts/javacomplete.git
-" BUNDLE: http://github.com/vim-scripts/ZenCoding.vim.git
+" BUNDLE: git://github.com/vim-scripts/Align.git
+" BUNDLE: git://github.com/vim-scripts/surround.vim.git
+" BUNDLE: git://github.com/vim-scripts/The-NERD-Commenter.git
+" BUNDLE: git://github.com/vim-scripts/YankRing.vim.git
+" BUNDLE: git://github.com/vim-scripts/quickrun.vim.git
+" BUNDLE: git://github.com/vim-scripts/neocomplcache.git
+" BUNDLE: git://github.com/vim-scripts/snipMate.git
+" BUNDLE: git://github.com/vim-scripts/sudo.vim.git
+" BUNDLE: git://github.com/vim-scripts/javacomplete.git
 "---------------------------------------------
 "検索系
 "---------------------------------------------
-" BUNDLE: https://github.com/vim-scripts/eregex.vim.git
-" BUNDLE: https://github.com/vim-scripts/grep.vim.git
+" BUNDLE: git://github.com/vim-scripts/eregex.vim.git
+" BUNDLE: git://github.com/vim-scripts/grep.vim.git
 "---------------------------------------------
 "バッファ管理系
 "---------------------------------------------
-" BUNDLE: https://github.com/Shougo/unite.vim.git
+" BUNDLE: git://github.com/Shougo/unite.vim.git
 "---------------------------------------------
 "ファイル系
 "---------------------------------------------
-" BUNDLE: https://github.com/vim-scripts/The-NERD-tree.git
-" BUNDLE: https://github.com/Shougo/vimfiler.git
-" BUNDLE: https://github.com/Shougo/vimshell.git
+" BUNDLE: git://github.com/vim-scripts/The-NERD-tree.git
+" BUNDLE: git://github.com/Shougo/vimfiler.git
+" BUNDLE: git://github.com/Shougo/vimshell.git
 "---------------------------------------------
 "開発系
 "---------------------------------------------
-" BUNDLE: https://github.com/thinca/vim-ref.git
-" BUNDLE: https://github.com/motemen/git-vim.git
-" BUNDLE: https://github.com/vim-scripts/Gist.vim.git
-" BUNDLE: https://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
+" BUNDLE: git://github.com/thinca/vim-ref.git
+" BUNDLE: git://github.com/motemen/git-vim.git
+" BUNDLE: git://github.com/vim-scripts/Gist.vim.git
+" BUNDLE: git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
 "---------------------------------------------
 "その他
 "---------------------------------------------
-" BUNDLE: https://github.com/Shougo/vimproc.git
-" BUNDLE: https://github.com/guyon/quiz-vim.git
+" BUNDLE: git://github.com/Shougo/vimproc.git
+" BUNDLE: git://github.com/guyon/quiz-vim.git
 " }}}
 
 " basic setting {{{
@@ -247,8 +244,8 @@ nnoremap <Leader>HH :<C-u>help<Space>
 " Vim Open /close {{{
 "素早く保存、終了
 nnoremap <Leader>w :<C-u>write<Enter>
-nnoremap <Leader>q :<C-u>quit<Enter>
-nnoremap <Leader>Q :<C-u>quitall<Enter>
+nnoremap <Leader>q :<C-u>quitall<Enter>
+nnoremap <Leader>Q :<C-u>quit<Enter>
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
 "外部のエディタで編集中のファイルが変更されたら自動で読み直す
@@ -265,7 +262,7 @@ nnoremap <Leader>.e :<C-u>edit ~/.vimrc<Enter>
 nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
 
 " tab {{{
-"https://github.com/cooldaemon/myhome.git
+"git://github.com/cooldaemon/myhome.git
 nnoremap <Leader>t :tabnew<Enter>
 nnoremap <Leader>T :tabclose<Enter>
 "nnoremap <RIGHT> :tabn<Enter>
@@ -275,7 +272,7 @@ nnoremap <Leader>h :tabp<Enter>
 " }}}
 
 " buffer {{{
-"https://github.com/cooldaemon/myhome.git
+"git://github.com/cooldaemon/myhome.git
 "nnoremap <DOWN> :bn!<Enter>
 "nnoremap <UP> :bp!<Enter>
 nnoremap <Leader>j :bn!<Enter>
