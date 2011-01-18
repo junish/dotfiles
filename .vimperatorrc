@@ -1,5 +1,5 @@
 " prefs
-" ======================================================================
+" ================================================
 " caretのサイズ
 "set! ui.caretWidth=10
 
@@ -13,10 +13,10 @@ set! ui.key.generalAccessKey=0
 let mapleader=","
 
 " options
-" ======================================================================
+" ================================================
 " ex mode でインクリメント補完
-"set wildoptions=sort
-set wildoptions=auto
+set wildoptions=sort
+"set wildoptions=auto
 
 " :[tab]open の補完対象と順番
 set complete=Slb
@@ -26,7 +26,7 @@ set titlestring="Mozilla Firefox"
 
 "右側にスクロールバーを表示
 "ブックマークツールバーを表示
-set guioptions=Br
+set guioptions=Bbr
 
 " 常にタブを表示
 set showtabline=2
@@ -51,10 +51,10 @@ hi Bell opacity: .5;
 vnoremap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
 
 " mappings
-" ======================================================================
+" ================================================
 "移動量を増やす
-nnoremap j 5j
-nnoremap k 5k
+nnoremap j 3j
+nnoremap k 3k
 
 "J/KにPageDown,PageUpを割り当て(LDRizeが効いている場合でも指のポジションを動かさずに済む
 nnoremap J <PageDown>
@@ -69,16 +69,16 @@ nnoremap H :tabprevious<CR>
 nnoremap L :tabnext<CR>
 
 "移動
-nnoremap <C-H> h
-nnoremap <C-L> l
+nnoremap <C-H> 3h
+nnoremap <C-L> 3l
 
 ",sで設定ファイル再読込
 nnoremap <Leader>. :so ~/.vimperatorrc<CR>
 
 "各種バー表示をトグル
-nnoremap <Leader>1 :set guioptions=r<cr>
-nnoremap <Leader>2 :set guioptions=Br<cr>
-nnoremap <Leader>3 :set guioptions=BmTr<cr>
+nnoremap <Leader>1 :set guioptions=br<cr>
+nnoremap <Leader>2 :set guioptions=Bbr<cr>
+nnoremap <Leader>3 :set guioptions=BmTbr<cr>
 nnoremap <Leader>4 :set mainecoon=amc<cr>
 nnoremap <Leader>5 :set mainecoon=am<cr>
 nnoremap <Leader>6 :set mainecoon=m<cr>
@@ -105,7 +105,10 @@ cnoremap <C-x> <C-v><C-x>
 cnoremap <C-z> <C-v><C-z>
 
 " plugins
-" ======================================================================
+" ================================================
+" maine_coon.js
+set mainecoon=am
+
 " ime_controller.js
 let g:ex_ime_mode = "inactive"
 let g:textarea_ime_mode = "inactive"
@@ -117,18 +120,11 @@ let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 " migemo_hint.js
 set hintmatching=custom
 
-"google-search.js
-nnoremap s :gsearch!<Space>
-
 " browser_object.js
 nnoremap x dd
 
 " multi_requester.js
 nnoremap <Leader>m. :so<Space>$RUNTIME/plugin/multi_requester.js
-
-" twitter.js
-nnoremap <Leader>t :tw<CR>
-nnoremap <Leader>T :tw<Space>
 
 javascript <<EOF
 /* DEFAULT SITES */
@@ -160,38 +156,17 @@ liberator.globalVariables.multi_requester_mappings = [
 ];
 EOF
 
-" proxy.js
-javascript <<EOM
-liberator.globalVariables.proxy_settings = [
-   {
-      conf_name: 'disable',
-      conf_usage: 'direct connection',
-      settings: [
-      {
-         label: 'type',
-         param: 0
-      }
-      ]
-   },
-   {
-      conf_name: 'bmobile',
-      conf_usage: 'use b-mobile accelerator',
-      settings: [
-      {
-         label: 'type',
-         param: 1
-      },
-      {
-         label: 'http',
-         param: 'mao.bmobile.ne.jp'
-      },
-      {
-         label: 'http_port',
-         param: 32080
-      }
-      ]
-   }
-];
-EOM
+"Show feed-button to statusbar
+"http://d.hatena.ne.jp/teramako/20071205/p1
+:javascript <<EOF
+(function(){
+var feedPanel = document.createElement('statusbarpanel');
+var feedButton = document.getElementById('feed-button');
+feedPanel.setAttribute('id','feed-panel-clone');
+feedPanel.appendChild(feedButton.cloneNode(true));
+feedButton.parentNode.removeChild(feedButton);
+document.getElementById('status-bar').insertBefore(feedPanel,document.getElementById('security-button'));
+})();
+EOF
 
 " vim: set ft=vimperator:
