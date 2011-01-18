@@ -24,6 +24,7 @@ migemo_hint.js
 migemo_completion.js
 migemo-find.js
 multi_requester.js
+colors/sweets_snaka.vimp
 EOM`
 
 if [ ! -d $HOME/.vimperator ]; then
@@ -33,7 +34,8 @@ fi
 if [ ! -d $HOME/.vimperator/plugin ]; then
     cmd pushd $HOME/.vimperator
     cmd svn checkout $URL plugin
-    cmd rm -rf $HOME/.vimperator/plugin/*
+    cmd rm -f $HOME/.vimperator/plugin/*
+    cmd rm -f $HOME/.vimperator/plugin/*/*
     cmd popd
 fi
 
