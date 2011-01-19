@@ -25,6 +25,7 @@ migemo_hint.js
 migemo_completion.js
 migemo-find.js
 multi_requester.js
+toggler.js
 colors/sweets_snaka.vimp
 EOM`
 

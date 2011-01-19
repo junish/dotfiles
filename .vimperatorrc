@@ -48,9 +48,6 @@ set verbose=5
 set visualbell
 hi Bell opacity: .5;
 
-"ビジュアルモードから一発でGoogle翻訳
-vnoremap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
-
 " mappings
 " ================================================
 "移動量を増やす
@@ -75,14 +72,6 @@ nnoremap <C-L> 3l
 
 ",sで設定ファイル再読込
 nnoremap <Leader>. :so ~/.vimperatorrc<CR>
-
-"各種バー表示をトグル
-nnoremap <Leader>1 :set guioptions=br<cr>
-nnoremap <Leader>2 :set guioptions=Bbr<cr>
-nnoremap <Leader>3 :set guioptions=BmTbr<cr>
-nnoremap <Leader>4 :set mainecoon=amc<cr>
-nnoremap <Leader>5 :set mainecoon=am<cr>
-nnoremap <Leader>6 :set mainecoon=m<cr>
 
 "qmarks
 nnoremap qm <esc>:qmark<Space>
@@ -129,7 +118,7 @@ nnoremap <Leader>m. :so<Space>$RUNTIME/plugin/multi_requester.js
 
 javascript <<EOF
 /* DEFAULT SITES */
-liberator.globalVariables.multi_requester_default_sites = "alc,goo,search-twitter,wikipedia-jp"
+liberator.globalVariables.multi_requester_default_sites = "alc,goo,wikipedia-jp"
 
 /* SITE_INFO */
 liberator.globalVariables.multi_requester_siteinfo = [
@@ -139,23 +128,37 @@ liberator.globalVariables.multi_requester_siteinfo = [
         url:            'http://ja.wikipedia.org/wiki/%s',
         xpath:          'id("bodyContent")',
     },
-    {
-        name:           'search-twitter',
-        description:    'twitter search(search.twitter.com)',
-        url:            'http://search.twitter.com/search?q=%s',
-        xpath:          'id("results")/ul/li',
-    },
-];
-
-/* KEY MAPPING */
-liberator.globalVariables.multi_requester_mappings = [
-    [',mt', 'search-twitter'],
-    [',MT', 'search-twitter', '', 'tabe1hands'],
-    [',ma', 'alc'],
-    [',mg', 'goo'],
-    [',mw', 'wikipedia-jp'],
 ];
 EOF
+
+"コマンドモードでマルチリクエスト
+nnoremap <Leader>mm :mr 
+nnoremap <Leader>ma :mr alc 
+nnoremap <Leader>me :mr googletrans-en 
+nnoremap <Leader>mj :mr googletrans-ja 
+nnoremap <Leader>mc :mr google-codesearch
+nnoremap <Leader>mw :mr wikipedia-jp 
+nnoremap <Leader>Mm :mr! 
+nnoremap <Leader>ma :mr! alc 
+nnoremap <Leader>me :mr! googletrans-en 
+nnoremap <Leader>mj :mr! googletrans-ja 
+nnoremap <Leader>mc :mr! google-codesearch
+nnoremap <Leader>mw :mr! wikipedia-jp 
+
+"ビジュアルモードでマルチリクエスト
+vnoremap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
+
+
+" toggler.js
+"各種バー表示をトグル
+js <<EOM
+liberator.globalVariables.toggler = {
+  guioptions:  ["set guioptions=br", "set guioptions=Bbr", "set guioptions=BmTbr"],
+  maincoon: ["set mainecoon=amc",  "set mainecoon=am", "set mainecoon=m"]
+};
+EOM
+nnoremap <Leader>g :toggle guioptions<cr>
+nnoremap <Leader>m :toggle maincoon<cr>
 
 "Show feed-button to statusbar
 "http://d.hatena.ne.jp/teramako/20071205/p1
