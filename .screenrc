@@ -53,6 +53,9 @@ termcapinfo xterm* 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
 # check when window exited
 zombie kr # k: destory window, r: resurrect window
 
+# rewuirte keybind
+bind ^T eval 'next'
+
 # select
 bind 0 eval 'select 0'
 bind 1 eval 'select 1'
