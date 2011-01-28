@@ -104,7 +104,7 @@ let g:ex_ime_mode = "inactive"
 let g:textarea_ime_mode = "inactive"
 
 " char_hints_mod2.js
-let g:hints io="iO"
+let g:hintsio="iO"
 let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 
 " migemo_hint.js
