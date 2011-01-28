@@ -11,7 +11,7 @@ start_dock: false
 #terminal: xterm
 default_modifier: Mod4
 #key_launch_terminal: DefaultMod+Shift+Return
-focus_follows_mouse: true
+#focus_follows_mouse: true
 
 # blue-ish theme where the focused window stands out more
 decoration_focused_color = #7ca3d3

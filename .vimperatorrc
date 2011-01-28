@@ -19,7 +19,7 @@ set wildoptions=sort
 "set wildoptions=auto
 
 " :[tab]open の補完対象と順番
-set complete=Slb
+set complete=lSb
 
 " ブラウザタイトルの変更
 set titlestring="Mozilla Firefox"
@@ -51,8 +51,8 @@ hi Bell opacity: .5;
 " mappings
 " ================================================
 "移動量を増やす
-nnoremap j 3j
-nnoremap k 3k
+nnoremap j 4j
+nnoremap k 4k
 
 "J/KにPageDown,PageUpを割り当て(LDRizeが効いている場合でも指のポジションを動かさずに済む
 nnoremap J <PageDown>
@@ -67,8 +67,8 @@ nnoremap H :tabprevious<CR>
 nnoremap L :tabnext<CR>
 
 "移動
-nnoremap <C-H> 3h
-nnoremap <C-L> 3l
+nnoremap <C-H> h
+nnoremap <C-L> l
 
 ",sで設定ファイル再読込
 nnoremap <Leader>. :so ~/.vimperatorrc<CR>
@@ -104,7 +104,7 @@ let g:ex_ime_mode = "inactive"
 let g:textarea_ime_mode = "inactive"
 
 " char_hints_mod2.js
-let g:hints io="IO"
+let g:hints io="iO"
 let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
 
 " migemo_hint.js
@@ -114,8 +114,6 @@ set hintmatching=custom
 nnoremap x dd
 
 " multi_requester.js
-nnoremap <Leader>m. :so<Space>$RUNTIME/plugin/multi_requester.js
-
 javascript <<EOF
 /* DEFAULT SITES */
 liberator.globalVariables.multi_requester_default_sites = "alc,goo,wikipedia-jp"
@@ -132,18 +130,15 @@ liberator.globalVariables.multi_requester_siteinfo = [
 EOF
 
 "コマンドモードでマルチリクエスト
-nnoremap <Leader>mm :mr 
-nnoremap <Leader>ma :mr alc 
-nnoremap <Leader>me :mr googletrans-en 
-nnoremap <Leader>mj :mr googletrans-ja 
-nnoremap <Leader>mc :mr google-codesearch
-nnoremap <Leader>mw :mr wikipedia-jp 
-nnoremap <Leader>Mm :mr! 
-nnoremap <Leader>ma :mr! alc 
-nnoremap <Leader>me :mr! googletrans-en 
-nnoremap <Leader>mj :mr! googletrans-ja 
-nnoremap <Leader>mc :mr! google-codesearch
-nnoremap <Leader>mw :mr! wikipedia-jp 
+nnoremap <Leader>, :mr 
+nnoremap <Leader>a :mr alc 
+nnoremap <Leader>s :mr wikipedia-jp 
+nnoremap <Leader>d :mr googletrans-en 
+nnoremap <Leader>f :mr googletrans-ja 
+nnoremap <Leader>q :mr google-codesearch
+"nnoremap <Leader>w :mr 
+"nnoremap <Leader>e :mr 
+"nnoremap <Leader>r :mr 
 
 "ビジュアルモードでマルチリクエスト
 vnoremap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
@@ -157,8 +152,8 @@ liberator.globalVariables.toggler = {
   maincoon: ["set mainecoon=amc",  "set mainecoon=am", "set mainecoon=m"]
 };
 EOM
-nnoremap <Leader>g :toggle guioptions<cr>
-nnoremap <Leader>m :toggle maincoon<cr>
+nnoremap <Leader>m :toggle guioptions<cr>
+nnoremap <Leader>M :toggle maincoon<cr>
 
 "Show feed-button to statusbar
 "http://d.hatena.ne.jp/teramako/20071205/p1
