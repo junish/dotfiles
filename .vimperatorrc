@@ -67,8 +67,8 @@ nnoremap <silent> H :tabprevious<CR>
 nnoremap <silent> L :tabnext<CR>
 
 "移動
-nnoremap <C-H> h
-nnoremap <C-L> l
+nnoremap <C-H> 4h
+nnoremap <C-L> 4l
 
 ",sで設定ファイル再読込
 nnoremap <Leader>. :so ~/.vimperatorrc<CR>
@@ -151,8 +151,8 @@ liberator.globalVariables.toggler = {
   maincoon: ["set mainecoon=amc",  "set mainecoon=am", "set mainecoon=m"]
 };
 EOM
-nnoremap <Leader>m :toggle guioptions<cr>
-nnoremap <Leader>M :toggle maincoon<cr>
+nnoremap <silent> <Leader>m :toggle guioptions<cr>
+nnoremap <silent> <Leader>M :toggle maincoon<cr>
 
 "Show feed-button to statusbar
 "http://d.hatena.ne.jp/teramako/20071205/p1
