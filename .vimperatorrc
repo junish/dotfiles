@@ -19,7 +19,7 @@ set wildoptions=sort
 "set wildoptions=auto
 
 " :[tab]open の補完対象と順番
-set complete=lSb
+set complete=Slb
 
 " ブラウザタイトルの変更
 set titlestring="Mozilla Firefox"
@@ -63,8 +63,8 @@ noremap h <A-Left>
 noremap l <A-Right>
 
 "タブ移動
-nnoremap H :tabprevious<CR>
-nnoremap L :tabnext<CR>
+nnoremap <silent> H :tabprevious<CR>
+nnoremap <silent> L :tabnext<CR>
 
 "移動
 nnoremap <C-H> h
@@ -140,9 +140,8 @@ nnoremap <Leader>q :mr google-codesearch
 "nnoremap <Leader>e :mr 
 "nnoremap <Leader>r :mr 
 
-"ビジュアルモードでマルチリクエスト
-vnoremap <silent> <C-t> y<Esc><Esc>:mr googletrans-ja <C-v><C-v><CR>
-
+"選択している単語をALCで検索
+vnoremap <silent> <C-t> y<Esc><Esc>:mr alc <C-v><C-v><CR>
 
 " toggler.js
 "各種バー表示をトグル
