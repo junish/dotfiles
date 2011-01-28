@@ -1,0 +1,22 @@
+# http://d.hatena.ne.jp/lurker/20060623/1151074223
+
+# viキーバインド
+#set editing-mode vi
+
+# チルダをTabにより展開
+#set expand-tilde on
+
+# 日本語関係
+#set input-meta on
+#set convert-meta off
+#set output-meta on
+
+# 大文字小文字無視
+#set completion-ignore-case on
+
+# 画面自動スクロール
+#set horizontal-scroll-mode off
+
+# 補完
+"\C-n":history-search-forward
+"\C-p":history-search-backward

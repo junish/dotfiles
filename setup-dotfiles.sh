@@ -6,6 +6,7 @@ cmd() {
 }
 
 TARGET_FILES=`cat << EOM
+.inputrc
 .screenrc
 .gitigonre
 .gitconfig
