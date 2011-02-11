@@ -6,13 +6,12 @@ cmd() {
 }
 
 INSTALL_PKGS=`cat << EOM
+curl
+ctags
 gcc
+make
 git
 ruby
-cabal-install
-ghc-glade-devel
-xmonad
-svn
 screen
 bash-completion
 EOM`

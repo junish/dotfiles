@@ -24,8 +24,7 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/desert256.vim.git
 " BUNDLE: git://github.com/vim-scripts/scala.vim.git
 " BUNDLE: git://github.com/vim-scripts/jQuery.git
-" BUNDLE: git://github.com/DexterTheDragon/vim-rest.git
-" BUNDLE: git://github.com/vim-scripts/Smooth-Scroll.git
+" #BUNDLE: git://github.com/vim-scripts/Smooth-Scroll.git
 " BUNDLE: git://github.com/vim-scripts/taglist.vim.git
 " BUNDLE: git://github.com/vim-scripts/matchit.zip.git
 "---------------------------------------------
