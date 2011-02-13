@@ -111,7 +111,7 @@ hardcopydir .log/
 # screen clipboard to X clipboard
 bufferfile "${HOME}/.screen-exchange"
 
-bindkey -m ' ' eval 'msgwait 0' 'stuff \040' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
-bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
-bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard${HOME}/.screen-exchange' 'msgwait 0'
-bindkey -m W eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+#bindkey -m ' ' eval 'msgwait 0' 'stuff \040' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+#bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+#bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard${HOME}/.screen-exchange' 'msgwait 0'
+#bindkey -m W eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
