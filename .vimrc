@@ -112,7 +112,7 @@ set noautoindent
 " colorscheme {{{
 "colorscheme desert
 if &t_Co > 2
-    set t_Co=256
+    " set t_Co=256
     colorscheme desert256
 endif
 " }}}

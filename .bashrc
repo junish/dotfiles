@@ -44,8 +44,10 @@ function ssh_screen(){
     else
         server=$(echo ${server} | cut -d . -f 1)
     fi
-    screen -t ${server} ssh "$@"
+    #screen -t ${server} ssh "$@"
+    eval tmux new-window -n "'${server}'" "'ssh $@'"
 }
+
 if [ "$TERM" = "screen" ]; then
     alias ssh=ssh_screen
 fi
