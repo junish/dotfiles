@@ -12,7 +12,6 @@ gcc
 make
 git
 ruby
-screen
 bash-completion
 EOM`
 

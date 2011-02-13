@@ -8,6 +8,7 @@ cmd() {
 TARGET_FILES=`cat << EOM
 .inputrc
 .screenrc
+.tmux.conf
 .gitigonre
 .gitconfig
 .vimrc
