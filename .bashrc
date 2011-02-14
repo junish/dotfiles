@@ -13,6 +13,20 @@ if [ "`uname -s`" == "Darwin" ]; then
     alias smc_6200='/Applications/smcFanControl.app/Contents/Resources/smc -k F0Mx -w 60e0'
 elif [ "`uname -s`" == "Linux" ]; then
     alias ls='ls -F --color=auto'
+    if [ "$PS1" ] ; then
+        # http://lists.fedoraproject.org/pipermail/users/2010-November/387409.html
+        mkdir -m 0700 -p /cgroup/cpu/user/$$
+        echo 1>  /cgroup/cpu/user/$$/notify_on_release
+        echo $$>  /cgroup/cpu/user/$$/tasks
+        ### NOTICE
+        # create /bin/rmcgroup:
+        #     #!/bin/bash
+        #     rmdir /cgroup/cpu/$1
+        # add to /etc/rc.local:
+        #     mount -t cgroup -o cpu none /cgroup/cpu
+        #     mkdir -p -m 0777 /cgroup/cpu/user
+        #     echo "/bin/rmcgroup">  /cgroup/cpu/release_agent
+    fi
 fi
 
 PS1="[\u@\h \W]# "
