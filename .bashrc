@@ -63,5 +63,9 @@ function ssh_screen(){
 }
 
 if [ "$TERM" = "screen" ]; then
-    alias ssh=ssh_screen
+    #which screen > /dev/null 2>&1
+    which tmux > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        alias ssh=ssh_screen
+    fi
 fi
