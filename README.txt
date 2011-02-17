@@ -1,6 +1,9 @@
+WATH'S THIS
+    必要なドットファイル、bin、パッケージを整える環境
+
 INSTALL
     ドットファイルとbinをカレントディレクトリに反映させる
-        # ./set-dotfiles.sh
+        # cd dotfiles; ./set-dotfiles.sh
 
     必要なパッケージをインストールする
         # set-yum.sh
