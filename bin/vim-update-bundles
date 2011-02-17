@@ -229,30 +229,10 @@ def update_bundles_and_docs
   end
 end
 
-
-def create_new_vim_environment vimrc, starter_url, pathogen_url
-  puts 'Creating a new Vim environment.'
-  puts "Downloading starter vimrc..."
-  ensure_dir dotvim
-  download_file starter_url, vimrc unless test ?e, vimrc
-  run :ln, '-s', vimrc, "#{ENV['HOME']}/.vimrc" unless test ?e, "#{ENV['HOME']}/.vimrc"
-  run :ln, '-s', dotvim, "#{ENV['HOME']}/.vim" unless test ?e, "#{ENV['HOME']}/.vim"
-
-  puts "Downloading Pathogen..."
-  ensure_dir dotvim('autoload')
-  download_file pathogen_url, dotvim('autoload', 'pathogen.vim')
-end
-
-
-# the files that get installed when creating a brand new vim environment
-starter_url   = "https://github.com/bronson/vim-update-bundles/raw/master/vimrc-starter"
-pathogen_url  = "https://github.com/tpope/vim-pathogen/raw/master/autoload/pathogen.vim"
 # dotvim is the directory that contains vim bundles, doc, autoload, etc dirs.
 dotvim        = dotfiles('vim')   || File.join(ENV['HOME'], '.vim')
-dotvimrc      = dotfiles('vimrc') || File.join(dotvim, 'vimrc')
 verbose       = nil     # make git quiet by default, verbose=true to hear everything
 submodule     = false   # clone dirs normally unless submodule = 1
-
 
 # config file is written in ruby
 conf_file = File.join ENV['HOME'], '.vim-update-bundles.conf'
@@ -261,16 +241,22 @@ eval(File.read(conf_file), binding, conf_file) if test(?f, conf_file)
 ARGV.each() { |arg| k,v = arg.split('=',2); k.sub! /^--/, '';
   eval "#{k}='#{(v||'').gsub('//', '////').split("'").join("\\'")}'" }
 
+
 $dotvim, $submodule, $verbose = dotvim, submodule, verbose
-if ensure_dir(dotvim) || !test(?f, dotvimrc)
-  create_new_vim_environment dotvimrc, starter_url, pathogen_url
-  update_bundles_and_docs
-  puts 'Done!  Now enable some plugins in your ~/.vimrc file.'
-else
-  update_bundles_and_docs
-  puts "updating helptags..."
-  # looks like stock vim on a Mac always exits with 1, even when doing nothing
-  run :vim, '-e', '-c', 'call pathogen#helptags()', '-c', 'q', :acceptable_exit_codes => [0, 1] unless ENV['TESTING']
-  puts "done!  Start Vim and type ':help bundles' to see what you have installed."
+
+$make_dotvim = ensure_dir(dotvim)
+
+update_bundles_and_docs
+
+if $make_dotvim
+  ensure_dir dotvim('bundle')
+  ensure_dir dotvim('autoload')
+  bundle_pathogen_vim  = dotvim('bundle', 'pathogen.vim', 'plugin', 'pathogen.vim')
+  autoload_pathogen_vim  = dotvim('autoload', 'pathogen.vim')
+  run :ln, '-s', bundle_pathogen_vim, autoload_pathogen_vim unless test ?e, autoload_pathogen_vim
 end
 
+puts "updating helptags..."
+# looks like stock vim on a Mac always exits with 1, even when doing nothing
+run :vim, '-e', '-c', 'call pathogen#helptags()', '-c', 'q', :acceptable_exit_codes => [0, 1] unless ENV['TESTING']
+puts "Done!  Start Vim and type ':help bundles' to see what you have installed."
