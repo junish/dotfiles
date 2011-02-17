@@ -22,8 +22,8 @@ EOM`
 
 for target_file in $TARGET_FILES
 do
-    if [ -e $HOME/$target_file ]; then
+    if [ ! -L $HOME/$target_file ]; then
         cmd mv -f $HOME/$target_file $HOME/$target_file.orig
+        cmd ln -s $HOME/dotfiles/$target_file $HOME/$target_file
     fi
-    cmd ln -s $HOME/dotfiles/$target_file $HOME/$target_file
 done
