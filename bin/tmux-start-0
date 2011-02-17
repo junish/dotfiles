@@ -1,0 +1,3 @@
+#!/bin/sh
+tmux new-window -t 0:+ -n 'shino(wwwhde)' 'ssh -l root shino.prd.local.hde.co.jp "su - wwwhde && echo hoge"'
+tmux new-window -t 0:+ -n 'shino' 'ssh -l root shino.prd.local.hde.co.jp "cd /git/bap/bap"'
