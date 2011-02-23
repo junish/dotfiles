@@ -30,9 +30,6 @@ elif [ "`uname -s`" == "Linux" ]; then
 fi
 
 PS1="[\u@\h \W]# "
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
 
 # Ctrl+Q, Ctrl+S無効
 stty start undef
