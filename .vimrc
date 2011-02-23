@@ -236,10 +236,6 @@ cnoremap <C-h> <LEFT>
 cnoremap <C-l> <RIGHT>
 " }}}
 
-" vimのヘルプを素早く引く
-nnoremap <Leader>hh :<C-u>help<Space><C-r><C-w><Enter>
-nnoremap <Leader>HH :<C-u>help<Space>
-
 " Vim Open /close {{{
 "素早く保存、終了
 nnoremap <Leader>w :<C-u>write<Enter>
@@ -502,20 +498,8 @@ nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
 
 " vim-ref {{{
 let g:ref_open = 'tabnew'
-nnoremap <Leader>hm :<C-u>Ref man <C-r><C-w><Enter>
-nnoremap <Leader>HM :<C-u>Ref man 
-nnoremap <Leader>hp :<C-u>Ref pydoc <C-r><C-w><Enter>
-nnoremap <Leader>HP :<C-u>Ref pydoc 
-nnoremap <Leader>he :<C-u>Ref erlang <C-r><C-w><Enter>
-nnoremap <Leader>HE :<C-u>Ref erlang 
-"nnoremap <Leader>hj :<C-u>Ref jsdoc <C-r><C-w><Enter>
-"nnoremap <Leader>HJ :<C-u>Ref jsdoc 
-"nnoremap <Leader>hsc :<C-u>Ref scaladoc <C-r><C-w><Enter>
-"nnoremap <Leader>HSC :<C-u>Ref scaladoc 
-"nnoremap <Leader>hr :<C-u>Ref rubydoc <C-r><C-w><Enter>
-"nnoremap <Leader>HR :<C-u>Ref rubydoc 
-"nnoremap <Leader>hph :<C-u>Ref phpdoc <C-r><C-w><Enter>
-"nnoremap <Leader>HPH :<C-u>Ref phpdoc 
+nnoremap <Leader>? :<C-u>Ref man <C-r><C-w><Enter>
+nnoremap <Leader>/ :<C-u>Ref<Space>
 " }}}
 
 " surround {{{
