@@ -24,7 +24,6 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/desert256.vim.git
 " BUNDLE: git://github.com/vim-scripts/scala.vim.git
 " BUNDLE: git://github.com/vim-scripts/jQuery.git
-" #BUNDLE: git://github.com/vim-scripts/Smooth-Scroll.git
 " BUNDLE: git://github.com/vim-scripts/taglist.vim.git
 " BUNDLE: git://github.com/vim-scripts/matchit.zip.git
 "---------------------------------------------
@@ -45,15 +44,14 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/eregex.vim.git
 " BUNDLE: git://github.com/vim-scripts/grep.vim.git
 "---------------------------------------------
-"バッファ管理系
-"---------------------------------------------
-" BUNDLE: git://github.com/Shougo/unite.vim.git
-"---------------------------------------------
 "ファイル系
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/The-NERD-tree.git
 " BUNDLE: git://github.com/Shougo/vimfiler.git
-" BUNDLE: git://github.com/Shougo/vimshell.git
+" #BUNDLE: git://github.com/Shougo/vimshell.git
+" #BUNDLE: git://github.com/Shougo/vimproc.git
+" BUNDLE: git://github.com/Shougo/unite.vim.git
+" BUNDLE: git://github.com/tsukkee/unite-tag.git
 "---------------------------------------------
 "開発系
 "---------------------------------------------
@@ -64,8 +62,6 @@ autocmd!
 "---------------------------------------------
 "その他
 "---------------------------------------------
-" BUNDLE: git://github.com/Shougo/vimproc.git
-" BUNDLE: git://github.com/guyon/quiz-vim.git
 " }}}
 
 " basic setting {{{
@@ -128,7 +124,7 @@ set nobackup
 
 " highlight {{{
 "Escの2回押しでハイライト消去
-nmap <ESC><ESC> :nohlsearch<Enter><ESC>
+nnoremap <ESC><ESC> :nohlsearch<Enter><ESC>
 
 " OSのクリップボードを使用する
 set clipboard=unnamed
@@ -283,7 +279,7 @@ function! ToggleNumber()
         set nonumber
     endif
 endfunction
-nnoremap <Leader>n :call ToggleNumber()<Enter>
+nnoremap <silent> <Leader>j :call ToggleNumber()<Enter>
 function! ToggleCursorLine()
     if &cursorline == 0
         set cursorline
@@ -291,21 +287,7 @@ function! ToggleCursorLine()
         set nocursorline
     endif
 endfunction
-nnoremap <Leader>c :call ToggleCursorLine()<Enter>
-" }}}
-
-" html escape function {{{
-function! HtmlEscape() 
-    silent s/&/\&amp;/eg 
-    silent s/</\&lt;/eg 
-    silent s/>/\&gt;/eg 
-endfunction 
-
-function! HtmlUnEscape() 
-    silent s/&lt;/</eg 
-    silent s/&gt;/>/eg 
-    silent s/&amp;/\&/eg 
-endfunction
+nnoremap <silent> <Leader>k :call ToggleCursorLine()<Enter>
 " }}}
 
 " vimを終了してもUndoする {{{
@@ -370,36 +352,36 @@ nnoremap <Leader>gC :<C-u>GitCommit --amend<Enter>
 nnoremap <Leader>gp :<C-u>Git push
 " }}}
 
+" unite-tag {{{
+nnoremap <C-]> :<C-u>UniteWithCursorWord -immediately tag<Enter>
+nnoremap <silent> <Leader>ft :<C-u>Unite tag<Enter>
+" }}}
+
 " unite.vim {{{
-" http://d.hatena.ne.jp/thinca/20101027/1288190498
-call unite#set_substitute_pattern('file', '\$\w\+', '\=eval(submatch(0))', 200)
-call unite#set_substitute_pattern('file', '[^~.]\zs/', '*/*', 20)
-call unite#set_substitute_pattern('file', '/\ze[^*]', '/*', 10)
-call unite#set_substitute_pattern('file', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/*"', 2)
-call unite#set_substitute_pattern('file', '^@', '\=getcwd()."/*"', 1)
-call unite#set_substitute_pattern('file', '^\\', '~/*')
-call unite#set_substitute_pattern('file', '^;v', '~/.vim/*')
-call unite#set_substitute_pattern('file', '^;r', '\=$VIMRUNTIME."/*"')
-call unite#set_substitute_pattern('file', '\*\*\+', '*', -1)
-call unite#set_substitute_pattern('file', '^\~', escape($HOME, '\'), -2)
-call unite#set_substitute_pattern('file', '\\\@<! ', '\\ ', -20)
-call unite#set_substitute_pattern('file', '\\ \@!', '/', -30)
-
-nnoremap <Leader>fu :<C-u>Unite buffer file_mru bookmark file<Enter>
-nnoremap <Leader>FU :<C-u>Unite 
-nnoremap <Leader>ff :<C-u>UniteWithCurrentDir -buffer-name=files buffer file_mru bookmark file<Enter>
-nnoremap <Leader>fb :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Enter>
-
-autocmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()"{{{
-    " Overwrite settings.
-    nmap <buffer> <ESC> <Plug>(unite_exit)
-    imap <buffer> jj <Plug>(unite_insert_leave)
-    "imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-    " Start insert.
-    "let g:unite_enable_start_insert = 1
-endfunction"}}}
+"let g:unite_enable_start_insert=1
 let g:unite_source_file_mru_limit = 200
+
+" バッファ一覧
+nnoremap <silent> <Leader>fb :<C-u>Unite buffer<Enter>
+" ファイル一覧
+nnoremap <silent> <Leader>fl :<C-u>UniteWithBufferDir -buffer-name=files file<Enter>
+" レジスタ一覧
+nnoremap <silent> <Leader>fr :<C-u>Unite -buffer-name=register register<Enter>
+" 最近使用したファイル一覧
+nnoremap <silent> <Leader>fm :<C-u>Unite file_mru<Enter>
+" 常用セット
+nnoremap <silent> <Leader>ff :<C-u>Unite buffer file_mru<Enter>
+" 全部乗せ
+nnoremap <silent> <Leader>fa :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Enter>
+
+" ウィンドウを分割して開く
+autocmd FileType unite :nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
+autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
+" ウィンドウを縦に分割して開く
+autocmd FileType unite :nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+" ESCキーを押すと終了する
+autocmd FileType unite :nnoremap <silent> <buffer> <ESC><ESC> :q<Enter>
 " }}}
 
 " neocomplcache {{{
@@ -508,8 +490,8 @@ autocmd FileType erlang :nnoremap <Leader>/ :<C-u>Ref erlang <C-r><C-w><Enter>
 autocmd FileType erlang :nnoremap <Leader>? :<C-u>Ref erlang<Space>
 autocmd FileType perl   :nnoremap <Leader>/ :<C-u>Ref perldoc <C-r><C-w><Enter>
 autocmd FileType perl   :nnoremap <Leader>? :<C-u>Ref perldoc<Space>
-autocmd FileType sh   :nnoremap <Leader>/ :<C-u>Ref man <C-r><C-w><Enter>
-autocmd FileType sh   :nnoremap <Leader>? :<C-u>Ref man<Space>
+autocmd FileType sh     :nnoremap <Leader>/ :<C-u>Ref man <C-r><C-w><Enter>
+autocmd FileType sh     :nnoremap <Leader>? :<C-u>Ref man<Space>
 " }}}
 
 " surround {{{
@@ -525,11 +507,11 @@ nnoremap <Leader>GG :<C-u>GrepBuffer
 " }}}
 
 " tlist {{{
-nnoremap <Leader>a :<C-u>TlistToggle<Enter>
+nnoremap <silent> <Leader>h :<C-u>TlistToggle<Enter><C-w>h
 " }}}
 
 " NERD_tree {{{
-nnoremap <Leader>; :NERDTreeToggle<Enter>
+nnoremap <silent> <Leader>l :NERDTreeToggle<Enter>
 " 右に表示
 let g:NERDTreeWinPos = "right"
 " デフォルトのファイラを変更しない
