@@ -33,6 +33,10 @@ PS1="[\u@\h \W]# "
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+
+# Ctrl+S無効
+stty stop undef
+
 function ereg(){
     local _reg=$1
     local _text=$2
@@ -58,14 +62,9 @@ function ssh_screen(){
     else
         server=$(echo ${server} | cut -d . -f 1)
     fi
-    #screen -t ${server} ssh "$@"
     eval tmux new-window -n "'${server}'" "'ssh $@'"
 }
 
-if [ "$TERM" = "screen" ]; then
-    #which screen > /dev/null 2>&1
-    which tmux > /dev/null 2>&1
-    if [ $? -eq 0 ]; then
-        alias ssh=ssh_screen
-    fi
+if [ -n "$TMUX" ]; then
+    alias ssh=ssh_screen
 fi
