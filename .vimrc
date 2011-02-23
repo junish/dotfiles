@@ -75,10 +75,11 @@ syntax on
 filetype plugin on
 filetype indent on
 set laststatus=2
-set cmdheight=2
+set cmdheight=1
 set showcmd
 set wrap
 set showmatch
+set showtabline=1
 " }}}
 
 " encode {{{
@@ -204,16 +205,12 @@ function! s:max_height()
     execute "resize" height
   endif
 endfunction
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
 nnoremap <C-o> :<C-u>call <SID>max_width()<Enter>:<C-u>call <SID>max_height()<Enter>
 nnoremap <C-c><C-c> :<C-u>quit<Enter>
 nnoremap + <C-w>+
 nnoremap - <C-w>-
-nnoremap <S-LEFT> <C-w><
-nnoremap <S-RIGHT> <C-w>>
+nnoremap { <C-w><
+nnoremap } <C-w>>
 nnoremap = <C-w>=
 
 "Insert Mode での移動
@@ -239,8 +236,8 @@ cnoremap <C-l> <RIGHT>
 " Vim Open /close {{{
 "素早く保存、終了
 nnoremap <Leader>w :<C-u>write<Enter>
-nnoremap <Leader>q :<C-u>quitall<Enter>
-nnoremap <Leader>Q :<C-u>quit<Enter>
+nnoremap <Leader>q :<C-u>quit<Enter>
+nnoremap <Leader>Q :<C-u>quitall<Enter>
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
 "外部のエディタで編集中のファイルが変更されたら自動で読み直す
@@ -248,7 +245,6 @@ set autoread
 " }}}
 
 "<Leader>e でそのコマンドを実行
-"nnoremap <Leader>r :execute '!' &ft ' %'<Enter>
 nnoremap <Leader>r :QuickRun<Enter>
 
 "vimrcを読んだり書いたり
@@ -257,21 +253,25 @@ nnoremap <Leader>.e :<C-u>edit ~/.vimrc<Enter>
 nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
 
 " tab {{{
-"git://github.com/cooldaemon/myhome.git
-nnoremap <Leader>t :tabnew<Enter>
-nnoremap <Leader>T :tabclose<Enter>
-"nnoremap <RIGHT> :tabn<Enter>
-"nnoremap <LEFT> :tabp<Enter>
-nnoremap <Leader>l :tabn<Enter>
-nnoremap <Leader>h :tabp<Enter>
+nnoremap <C-@> :<C-u>tabnew<Enter>
+nnoremap <C-q> :<C-u>quit<Enter>
+nnoremap <C-l> :<C-u>tabn<Enter>
+nnoremap <C-h> :<C-u>tabp<Enter>
+nnoremap <Leader>m0 :<C-u>tabmove 0<Enter>
+nnoremap <Leader>m1 :<C-u>tabmove 1<Enter>
+nnoremap <Leader>m2 :<C-u>tabmove 2<Enter>
+nnoremap <Leader>m3 :<C-u>tabmove 3<Enter>
+nnoremap <Leader>m4 :<C-u>tabmove 4<Enter>
+nnoremap <Leader>m5 :<C-u>tabmove 5<Enter>
+nnoremap <Leader>m6 :<C-u>tabmove 6<Enter>
+nnoremap <Leader>m7 :<C-u>tabmove 7<Enter>
+nnoremap <Leader>m8 :<C-u>tabmove 8<Enter>
+nnoremap <Leader>m9 :<C-u>tabmove 9<Enter>
 " }}}
 
 " buffer {{{
-"git://github.com/cooldaemon/myhome.git
-"nnoremap <DOWN> :bn!<Enter>
-"nnoremap <UP> :bp!<Enter>
-nnoremap <Leader>j :bn!<Enter>
-nnoremap <Leader>k :bp!<Enter>
+nnoremap <C-j> :<C-u>bn!<Enter>
+nnoremap <C-k> :<C-u>bp!<Enter>
 " }}}
 
 " toggle {{{
@@ -439,6 +439,7 @@ noremap  <Leader>n. :<C-u>NeoComplCacheCachingDictionary<Enter>
 "smap <C-k> <Plug>(neocomplcache_snippets_expand)
 " <TAB> completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
 " C-oでオムニ補完
 inoremap <expr><C-o> &filetype == 'vim' ? "\<C-x>\<C-v>\<C-p>" : "\<C-x>\<C-o>\<C-p>"
 " C-nでneocomplcache補完

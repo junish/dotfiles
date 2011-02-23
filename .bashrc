@@ -34,7 +34,8 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-# Ctrl+S無効
+# Ctrl+Q, Ctrl+S無効
+stty start undef
 stty stop undef
 
 function ereg(){
