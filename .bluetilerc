@@ -8,7 +8,7 @@
 # possibile modifier and key names.
 
 start_dock: false
-#terminal: xterm
+terminal: terminal
 default_modifier: Mod4
 #key_launch_terminal: DefaultMod+Shift+Return
 #focus_follows_mouse: true
