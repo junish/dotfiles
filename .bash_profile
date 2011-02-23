@@ -15,6 +15,14 @@ if [ -d $HOME/android-sdk-mac_x86 ]; then
     export PATH=$PATH:$HOME/android-sdk-mac_x86/tools
 fi
 
+#if [ ! -z "$PS1" ]; then
+#    _tmuxrc="$HOME/.bashrc.tmux"
+#    if [ -e $_tmuxrc ]; then
+#        source $_tmuxrc
+#        _tmux-init-history
+#    fi
+#fi
+
 if [ -f $HOME/.bashrc ]; then
     source .bashrc
 fi
