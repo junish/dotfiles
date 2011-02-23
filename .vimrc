@@ -237,6 +237,7 @@ cnoremap <C-l> <RIGHT>
 "素早く保存、終了
 nnoremap <Leader>w :<C-u>write<Enter>
 nnoremap <Leader>q :<C-u>quit<Enter>
+nnoremap <C-q>     :<C-u>quit<Enter>
 nnoremap <Leader>Q :<C-u>quitall<Enter>
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
@@ -253,10 +254,10 @@ nnoremap <Leader>.e :<C-u>edit ~/.vimrc<Enter>
 nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
 
 " tab {{{
-nnoremap <C-@> :<C-u>tabnew<Enter>
-nnoremap <C-q> :<C-u>quit<Enter>
-nnoremap <C-l> :<C-u>tabn<Enter>
-nnoremap <C-h> :<C-u>tabp<Enter>
+nnoremap <C-@>      :<C-u>tabnew<Enter>
+nnoremap <Leader>@  :<C-u>tabnew<Enter>
+nnoremap <C-l>      :<C-u>tabn<Enter>
+nnoremap <C-h>      :<C-u>tabp<Enter>
 nnoremap <Leader>m0 :<C-u>tabmove 0<Enter>
 nnoremap <Leader>m1 :<C-u>tabmove 1<Enter>
 nnoremap <Leader>m2 :<C-u>tabmove 2<Enter>
@@ -499,8 +500,16 @@ nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
 
 " vim-ref {{{
 let g:ref_open = 'tabnew'
-nnoremap <Leader>? :<C-u>Ref man <C-r><C-w><Enter>
-nnoremap <Leader>/ :<C-u>Ref<Space>
+nnoremap <Leader>/ :<C-u>Ref alc <C-r><C-w><Enter>
+nnoremap <Leader>? :<C-u>Ref alc<Space>
+autocmd FileType python :nnoremap <Leader>/ :<C-u>Ref pydoc <C-r><C-w><Enter>
+autocmd FileType python :nnoremap <Leader>? :<C-u>Ref pydoc<Space>
+autocmd FileType erlang :nnoremap <Leader>/ :<C-u>Ref erlang <C-r><C-w><Enter>
+autocmd FileType erlang :nnoremap <Leader>? :<C-u>Ref erlang<Space>
+autocmd FileType perl   :nnoremap <Leader>/ :<C-u>Ref perldoc <C-r><C-w><Enter>
+autocmd FileType perl   :nnoremap <Leader>? :<C-u>Ref perldoc<Space>
+autocmd FileType sh   :nnoremap <Leader>/ :<C-u>Ref man <C-r><C-w><Enter>
+autocmd FileType sh   :nnoremap <Leader>? :<C-u>Ref man<Space>
 " }}}
 
 " surround {{{
