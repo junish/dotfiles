@@ -1,10 +1,13 @@
-"TODO snipMate(How to create template)
-"TODO Unite(How to)
-"TODO vim-ref(Javadoc)
-"TODO surround(How to)
-"TODO neocomplcache(How to include comp, dict comp)
-"TODO NERD-Commenter(How to)
+" TODO {{{
+"snipMate(How to create template)
+"Unite(How to)
+"vim-ref(Javadoc)
+"surround(How to)
+"neocomplcache(How to include comp, dict comp)
+"NERD-Commenter(How to)
+" }}}
 
+" init {{{
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -12,6 +15,7 @@ filetype indent plugin on
 
 " 現在の autocommand を全て削除する
 autocmd!
+" }}}
 
 " vim-update-bundles {{{
 "---------------------------------------------
@@ -150,16 +154,30 @@ highlight TabLeader cterm=underline ctermfg=lightgreen
 3match TabLeader /	/
 " }}}
 
+" comment {{{
+" vimの改行時に自動でコメントが挿入されるのをやめたい
 "http://d.hatena.ne.jp/yuichi_katahira/20090117/1232209418
-"vimの改行時に自動でコメントが挿入されるのをやめたい
 autocmd FileType * setlocal formatoptions-=ro
+" }}}
 
-"バッファの自動保存
+" exit {{{
+" バッファの自動保存
 "http://vim-users.jp/2009/07/hack36/
 "set autowrite
 " set autowriteall
 "autocmd CursorHold *  wall
 "autocmd CursorHoldI *  wall
+
+" vimを終了してもUndoする
+"http://vim-users.jp/2010/07/hack162/
+if has('persistent_undo')
+  set undodir=~/.vimundo
+  augroup vimrc-undofile
+    autocmd!
+    autocmd BufReadPre ~/* setlocal undofile
+  augroup END
+endif
+" }}}
 
 " ctags {{{
 set tags=./tags
@@ -245,13 +263,15 @@ set hidden
 set autoread
 " }}}
 
-"<Leader>e でそのコマンドを実行
+" vimrc {{{
+" <Leader>e でそのコマンドを実行
 nnoremap <Leader>r :QuickRun<Enter>
 
-"vimrcを読んだり書いたり
+" vimrcを読んだり書いたり
 nnoremap <Leader>.. :<C-u>source ~/.vimrc<Enter>
 nnoremap <Leader>.e :<C-u>edit ~/.vimrc<Enter>
 nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
+" }}}
 
 " tab {{{
 nnoremap <C-@>      :<C-u>tabnew<Enter>
@@ -294,17 +314,6 @@ endfunction
 nnoremap <silent> <Leader>k :call ToggleCursorLine()<Enter>
 " }}}
 
-" vimを終了してもUndoする {{{
-"http://vim-users.jp/2010/07/hack162/
-if has('persistent_undo')
-  set undodir=~/.vimundo
-  augroup vimrc-undofile
-    autocmd!
-    autocmd BufReadPre ~/* setlocal undofile
-  augroup END
-endif
-"}}}
-
 " vim戦闘力を測る {{{
 "http://d.hatena.ne.jp/thinca/20091031/1257001194
 function! Scouter(file, ...)
@@ -329,7 +338,7 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType c setlocal omnifunc=ccomplete#Complete
 " }}}
 
-" -------- plugin --------
+" -------------------- plugin --------------------
 " Gist.vim {{{
 if has('mac')
     let g:gist_clip_command = 'pbcopy'
@@ -375,7 +384,7 @@ nnoremap <silent> <Leader>fr :<C-u>Unite -buffer-name=register register<Enter>
 nnoremap <silent> <Leader>fm :<C-u>Unite file_mru<Enter>
 " 常用セット
 nnoremap <silent> <Leader>ff :<C-u>Unite buffer file_mru<Enter>
-" 全部乗せ
+" 全て
 nnoremap <silent> <Leader>fa :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Enter>
 
 " ウィンドウを分割して開く
@@ -384,8 +393,28 @@ autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-s> unite#do_action(
 " ウィンドウを縦に分割して開く
 autocmd FileType unite :nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
 autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-" ESCキーを押すと終了する
+" ESC*2で終了する
 autocmd FileType unite :nnoremap <silent> <buffer> <ESC><ESC> :q<Enter>
+autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+" 初期設定関数を起動する
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()
+      " Overwrite settings.
+  endfunction
+  " 様々なショートカット
+  call unite#set_substitute_pattern('file', '\$\w\+', '\=eval(submatch(0))', 200)
+  call unite#set_substitute_pattern('file', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/"', 2)
+  call unite#set_substitute_pattern('file', '^@', '\=getcwd()."/*"', 1)
+  call unite#set_substitute_pattern('file', '^;r', '\=$VIMRUNTIME."/"')
+  call unite#set_substitute_pattern('file', '^\~', escape($HOME, '\'), -2)
+  call unite#set_substitute_pattern('file', '\\\@<! ', '\\ ', -20)
+  call unite#set_substitute_pattern('file', '\\ \@!', '/', -30)
+  if has('win32') || has('win64')
+        call unite#set_substitute_pattern('file', '^;p', 'C:/Program Files/')
+          call unite#set_substitute_pattern('file', '^;v', '~/vimfiles/')
+      else
+            call unite#set_substitute_pattern('file', '^;v', '~/.vim/')
+        endif
 " }}}
 
 " neocomplcache {{{
@@ -526,3 +555,5 @@ let g:NERDTreeHijackNetrw = 0
 autocmd FileType java :setlocal omnifunc=javacomplete#Complete
 autocmd FileType java :setlocal completefunc=javacomplete#CompleteParamsInfo
 " }}}
+
+" vim: set foldmethod=marker:
