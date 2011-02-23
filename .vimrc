@@ -183,10 +183,14 @@ nnoremap <Leader>{ <C-t>
 
 " move {{{
 "表示行単位で行移動する
-nnoremap j gj
 nnoremap k gk
-vnoremap j gj
+nnoremap j gj
 vnoremap k gk
+vnoremap j gj
+nnoremap <UP> gk
+nnoremap <DOWN> gj
+vnoremap <UP> gk
+vnoremap <DOWN> gj
 
 "Windowの移動
 function! s:max_width()
@@ -234,7 +238,7 @@ cnoremap <C-l> <RIGHT>
 nnoremap <Leader>w :<C-u>write<Enter>
 nnoremap <Leader>q :<C-u>quit<Enter>
 nnoremap <C-q>     :<C-u>quit<Enter>
-nnoremap <Leader>Q :<C-u>quitall<Enter>
+nnoremap <Leader>Q :<C-u>quit!<Enter>
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
 "外部のエディタで編集中のファイルが変更されたら自動で読み直す
