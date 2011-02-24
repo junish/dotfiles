@@ -47,6 +47,7 @@ autocmd!
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/eregex.vim.git
 " BUNDLE: git://github.com/vim-scripts/grep.vim.git
+" BUNDLE: git://github.com/Sixeight/unite-grep.git
 "---------------------------------------------
 "ファイル系
 "---------------------------------------------
@@ -548,5 +549,3 @@ let g:NERDTreeHijackNetrw = 0
 autocmd FileType java :setlocal omnifunc=javacomplete#Complete
 autocmd FileType java :setlocal completefunc=javacomplete#CompleteParamsInfo
 " }}}
-
-" vim: set foldmethod=marker:
