@@ -234,8 +234,8 @@ nnoremap = <C-w>=
 "Insert Mode での移動
 inoremap <C-h> <LEFT>
 inoremap <C-l> <RIGHT>
-inoremap <C-j> <UP>
-inoremap <C-k> <DOWN>
+inoremap <C-k> <UP>
+inoremap <C-j> <DOWN>
 
 inoremap <C-a> <C-o>0
 inoremap <C-e> <C-o>$
@@ -371,8 +371,8 @@ nnoremap <silent> <Leader>ft :<C-u>Unite tag<Enter>
 " }}}
 
 " unite.vim {{{
-"let g:unite_enable_start_insert=1
-let g:unite_source_file_mru_limit = 200
+let g:unite_enable_start_insert=1
+"let g:unite_source_file_mru_limit = 200
 
 " バッファ一覧
 nnoremap <silent> <Leader>fb :<C-u>Unite buffer<Enter>
@@ -382,39 +382,32 @@ nnoremap <silent> <Leader>fl :<C-u>UniteWithBufferDir -buffer-name=files file<En
 nnoremap <silent> <Leader>fr :<C-u>Unite -buffer-name=register register<Enter>
 " 最近使用したファイル一覧
 nnoremap <silent> <Leader>fm :<C-u>Unite file_mru<Enter>
-" 常用セット
-nnoremap <silent> <Leader>ff :<C-u>Unite buffer file_mru<Enter>
+" 常用
+nnoremap <silent> <Leader>ff :<C-u>Unite file_rec<Enter>
 " 全て
 nnoremap <silent> <Leader>fa :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Enter>
 
-" ウィンドウを分割して開く
-autocmd FileType unite :nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-autocmd FileType unite :nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-" ESC*2で終了する
-autocmd FileType unite :nnoremap <silent> <buffer> <ESC><ESC> :q<Enter>
-autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
-" 初期設定関数を起動する
-autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
-      " Overwrite settings.
-  endfunction
-  " 様々なショートカット
-  call unite#set_substitute_pattern('file', '\$\w\+', '\=eval(submatch(0))', 200)
-  call unite#set_substitute_pattern('file', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/"', 2)
-  call unite#set_substitute_pattern('file', '^@', '\=getcwd()."/*"', 1)
-  call unite#set_substitute_pattern('file', '^;r', '\=$VIMRUNTIME."/"')
-  call unite#set_substitute_pattern('file', '^\~', escape($HOME, '\'), -2)
-  call unite#set_substitute_pattern('file', '\\\@<! ', '\\ ', -20)
-  call unite#set_substitute_pattern('file', '\\ \@!', '/', -30)
-  if has('win32') || has('win64')
-        call unite#set_substitute_pattern('file', '^;p', 'C:/Program Files/')
-          call unite#set_substitute_pattern('file', '^;v', '~/vimfiles/')
-      else
-            call unite#set_substitute_pattern('file', '^;v', '~/.vim/')
-        endif
+    " ウィンドウを分割して開く
+    autocmd FileType unite :nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
+    autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
+    " ウィンドウを縦に分割して開く
+    autocmd FileType unite :nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+    autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+    " ESC*2で終了する
+    autocmd FileType unite :nnoremap <silent> <buffer> <ESC><ESC> :q<Enter>
+    autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+endfunction
+autocmd FileType unite call s:unite_my_settings()
+
+" 様々なショートカット
+call unite#set_substitute_pattern('file', '\$\w\+', '\=eval(submatch(0))', 200)
+call unite#set_substitute_pattern('file', '^@@', '\=fnamemodify(expand("#"), ":p:h")."/"', 2)
+call unite#set_substitute_pattern('file', '^@', '\=getcwd()."/*"', 1)
+call unite#set_substitute_pattern('file', '^;r', '\=$VIMRUNTIME."/"')
+call unite#set_substitute_pattern('file', '^\~', escape($HOME, '\'), -2)
+call unite#set_substitute_pattern('file', '\\\@<! ', '\\ ', -20)
+call unite#set_substitute_pattern('file', '\\ \@!', '/', -30)
 " }}}
 
 " neocomplcache {{{
