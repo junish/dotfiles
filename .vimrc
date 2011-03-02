@@ -71,7 +71,7 @@ autocmd!
 
 " basic setting {{{
 let mapleader = "\<Space>"
-set number
+set nonumber
 syntax on
 filetype plugin on
 filetype indent on
@@ -135,7 +135,7 @@ nnoremap <ESC><ESC> :nohlsearch<Enter><ESC>
 set clipboard=unnamed
 
 " カーソル行をハイライト
-set cursorline
+set nocursorline
 ":highlight clear CursorLine
 ":highlight CursorLine gui=underline
 "highlight CursorLine ctermbg=blue guibg=blue
