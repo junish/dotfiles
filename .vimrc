@@ -291,8 +291,8 @@ nnoremap <Leader>m9 :<C-u>tabmove 9<Enter>
 " }}}
 
 " buffer {{{
-nnoremap <Leader>j :<C-u>bn!<Enter>
-nnoremap <Leader>k :<C-u>bp!<Enter>
+nnoremap <silent> <Leader>j :<C-u>bn!<Enter>
+nnoremap <silent> <Leader>k :<C-u>bp!<Enter>
 " }}}
 
 " toggle {{{
