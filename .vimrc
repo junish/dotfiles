@@ -275,10 +275,9 @@ nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
 " }}}
 
 " tab {{{
-nnoremap <C-@>      :<C-u>tabnew<Enter>
 nnoremap <Leader>@  :<C-u>tabnew<Enter>
-nnoremap <C-l>      :<C-u>tabn<Enter>
-nnoremap <C-h>      :<C-u>tabp<Enter>
+nnoremap <Leader>l  :<C-u>tabn<Enter>
+nnoremap <Leader>h  :<C-u>tabp<Enter>
 nnoremap <Leader>m0 :<C-u>tabmove 0<Enter>
 nnoremap <Leader>m1 :<C-u>tabmove 1<Enter>
 nnoremap <Leader>m2 :<C-u>tabmove 2<Enter>
@@ -292,41 +291,13 @@ nnoremap <Leader>m9 :<C-u>tabmove 9<Enter>
 " }}}
 
 " buffer {{{
-nnoremap <C-j> :<C-u>bn!<Enter>
-nnoremap <C-k> :<C-u>bp!<Enter>
+nnoremap <Leader>j :<C-u>bn!<Enter>
+nnoremap <Leader>k :<C-u>bp!<Enter>
 " }}}
 
 " toggle {{{
-function! ToggleNumber()
-    if &number == 0
-        set number
-    else
-        set nonumber
-    endif
-endfunction
-nnoremap <silent> <Leader>j :call ToggleNumber()<Enter>
-function! ToggleCursorLine()
-    if &cursorline == 0
-        set cursorline
-    else
-        set nocursorline
-    endif
-endfunction
-nnoremap <silent> <Leader>k :call ToggleCursorLine()<Enter>
-" }}}
-
-" vim戦闘力を測る {{{
-"http://d.hatena.ne.jp/thinca/20091031/1257001194
-function! Scouter(file, ...)
-  let pat = '^\s*$\|^\s*"'
-  let lines = readfile(a:file)
-  if !a:0 || !a:1
-    let lines = split(substitute(join(lines, "\n"), '\n\s*\\', '', 'g'), "\n")
-  endif
-  return len(filter(lines,'v:val !~ pat'))
-endfunction
-command! -bar -bang -nargs=? -complete=file Scouter
-\        echo Scouter(empty(<q-args>) ? $MYVIMRC : expand(<q-args>), <bang>0)
+nnoremap <silent> <C-j> :<C-u>set invnumber<Enter>
+nnoremap <silent> <C-k> :<C-u>set invcursorline<Enter>
 " }}}
 
 " omni completion  {{{
@@ -387,6 +358,8 @@ nnoremap <silent> <Leader>fm :<C-u>Unite file_mru<Enter>
 nnoremap <silent> <Leader>ff :<C-u>Unite file_rec<Enter>
 " 全て
 nnoremap <silent> <Leader>fa :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Enter>
+" 検索
+nnoremap <silent> <Leader>fg :<C-u>Unite grep:-iR<Enter>
 
 function! s:unite_my_settings()
     " ウィンドウを分割して開く
@@ -466,7 +439,7 @@ inoremap <expr><C-c>  neocomplcache#cancel_popup()
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
-	let g:neocomplcache_omni_patterns = {}
+    let g:neocomplcache_omni_patterns = {}
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
@@ -534,11 +507,11 @@ nnoremap <Leader>GG :<C-u>GrepBuffer
 " }}}
 
 " tlist {{{
-nnoremap <silent> <Leader>h :<C-u>TlistToggle<Enter><C-w>h
+nnoremap <silent> <C-h> :<C-u>TlistToggle<Enter><C-w>h
 " }}}
 
 " NERD_tree {{{
-nnoremap <silent> <Leader>l :NERDTreeToggle<Enter>
+nnoremap <silent> <C-l> :NERDTreeToggle<Enter>
 " 右に表示
 let g:NERDTreeWinPos = "right"
 " デフォルトのファイラを変更しない
