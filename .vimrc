@@ -275,7 +275,7 @@ nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
 " }}}
 
 " tab {{{
-nnoremap <Leader>@  :<C-u>tabnew<Enter>
+nnoremap <Leader>p  :<C-u>tabnew<Enter>
 nnoremap <Leader>l  :<C-u>tabn<Enter>
 nnoremap <Leader>h  :<C-u>tabp<Enter>
 nnoremap <Leader>m0 :<C-u>tabmove 0<Enter>
@@ -473,11 +473,10 @@ autocmd FileType vimshell
 function! g:chpwd_for_vimshell(args, context)
   call vimshell#execute('ls')
 endfunction
-"nnoremap <Leader>ss :<C-u>VimShellPop<Enter>
-nnoremap <Leader>ss :<C-u>VimShell<Enter>
-nnoremap <Leader>SS :<C-u>VimShellTerminal 
-nnoremap <Leader>sh :<C-u>VimShellTerminal bash<Enter>
-nnoremap <Leader>py :<C-u>VimShellTerminal python<Enter>
+nnoremap <Leader>s :<C-u>VimShell<Enter>
+nnoremap <Leader>S :<C-u>VimShellTerminal 
+autocmd FileType python :nnoremap <Leader>s :<C-u>VimShellTerminal bash<Enter>
+autocmd FileType sh     :nnoremap <Leader>s :<C-u>VimShellTerminal python<Enter>
 " }}}
 
 " vim-ref {{{
