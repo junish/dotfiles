@@ -132,7 +132,7 @@ set nobackup
 nnoremap <ESC><ESC> :nohlsearch<Enter><ESC>
 
 " OSのクリップボードを使用する
-set clipboard=unnamed
+"set clipboard=unnamed
 
 " カーソル行をハイライト
 set nocursorline
