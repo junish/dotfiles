@@ -1,3 +1,5 @@
+" TODO: Reading http://d.hatena.ne.jp/blooo/20100120/1263963525
+
 " prefs
 " ================================================
 " caretのサイズ
@@ -105,7 +107,7 @@ let g:textarea_ime_mode = "inactive"
 
 " char_hints_mod2.js
 let g:hintsio="iO"
-let g:hintchars="HJKLASDFGYUIOPQWERTNMZXCVB"
+let g:hintchars="JKLASDFUIOPQWERGHTNMCV"
 
 " migemo_hint.js
 set hintmatching=custom
@@ -154,6 +156,16 @@ EOM
 nnoremap <silent> <Leader>m :toggle guioptions<cr>
 nnoremap <silent> <Leader>M :toggle maincoon<cr>
 
+
+"  feedSomeKeys_2.js
+autocmd LocationChange .* :fmapc
+" Gmail設定
+"autocmd LocationChange mail\.google\.com/mail :fmap! -depth 4 c / j k n p o u e x s r a # [ ] z ? gi gs gt gd ga gc
+" Google Reader設定 
+"参考:http://fifnel.com/2009/10/06/2947/
+"autocmd LocationChange www\.google\.(com|co\.jp)/reader :fmap -vkey m A v r X O gh ga gs gt gu / ? <C-j>,<Pagedown> <C-k>,<Pageup>
+"autocmd LocationChange www\.google\.(com|co\.jp)/reader :fmap -vkey c,1 C,2 j,n k,p n,j p,l s,NO S,s a,PO o,O J,N K,P q,t w,t p,s b u
+
 "Show feed-button to statusbar
 "http://d.hatena.ne.jp/teramako/20071205/p1
 :javascript <<EOF
@@ -166,5 +178,16 @@ feedButton.parentNode.removeChild(feedButton);
 document.getElementById('status-bar').insertBefore(feedPanel,document.getElementById('security-button'));
 })();
 EOF
+
+"サイト内検索 (:ss)
+"参考: http://vimperator.g.hatena.ne.jp/snaka72/20090102/1230901273
+javascript <<EOM
+commands.addUserCommand(
+  ['sitesearch','ss'],'Search in this site',
+  function(word) {
+    liberator.open("http://www.google.co.jp/search?hl=ja&q="+encodeURIComponent(word)+"+site%3A"+window.content.location.hostname);
+  }
+);
+EOM
 
 " vim: set ft=vimperator:

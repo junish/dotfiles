@@ -1,7 +1,5 @@
 " TODO {{{
 "snipMate(How to create template)
-"Unite(How to)
-"vim-ref(Javadoc)
 "surround(How to)
 "neocomplcache(How to include comp, dict comp)
 "NERD-Commenter(How to)
