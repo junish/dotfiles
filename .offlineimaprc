@@ -1,0 +1,28 @@
+[general]
+metadata = ~/.offlineimap
+accounts = GmailMain
+ui = Noninteractive.Basic
+
+[mbnames]
+enabled = yes
+filename = ~/.mutt/muttrc.mailboxes
+header = "mailboxes "
+peritem = =%(foldername)s
+sep = " "
+footer = "\n"
+maxsyncaccounts = 2
+maxconnections = 2
+
+[Account GmailMain]
+localrepository = GmailLocal
+remoterepository = GmailRemote
+
+[Repository GmailLocal]
+type = Maildir
+localfolders = ~/.mail/GMAIL
+
+[Repository GmailRemote]
+type = Gmail
+remotehost = imap.gmail.com
+remoteuser = jyunichi.shinohara@g.hde.co.jp
+remotepass = ########
