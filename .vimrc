@@ -176,6 +176,10 @@ if has('persistent_undo')
     autocmd BufReadPre ~/* setlocal undofile
   augroup END
 endif
+
+" ESCが遠い対策
+inoremap <C-q> <ESC>
+nnoremap <C-q> <ESC>
 " }}}
 
 " ctags {{{
@@ -223,7 +227,6 @@ function! s:max_height()
   endif
 endfunction
 nnoremap <C-o> :<C-u>call <SID>max_width()<Enter>:<C-u>call <SID>max_height()<Enter>
-nnoremap <C-c><C-c> :<C-u>quit<Enter>
 nnoremap + <C-w>+
 nnoremap - <C-w>-
 nnoremap { <C-w><
@@ -254,7 +257,6 @@ cnoremap <C-l> <RIGHT>
 "素早く保存、終了
 nnoremap <Leader>w :<C-u>write<Enter>
 nnoremap <Leader>q :<C-u>quit<Enter>
-nnoremap <C-q>     :<C-u>quit<Enter>
 nnoremap <Leader>Q :<C-u>quit!<Enter>
 "バッファが編集中でもその他のファイルを開けるように
 set hidden
