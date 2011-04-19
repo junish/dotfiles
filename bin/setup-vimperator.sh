@@ -24,13 +24,16 @@ migemo_completion.js
 migemo-find.js
 multi_requester.js
 toggler.js
+colors/sweets_snaka.vimp
 EOM`
 
 BRANCHES_PLUGINS=`cat << EOM
+maine_coon.js
 EOM`
 
-cmd rm -rf $HOME/.vimperator
-cmd mkdir $HOME/.vimperator
+if [ ! -d $HOME/.vimperator ]; then
+    cmd mkdir $HOME/.vimperator
+fi
 
 if [ ! -d $HOME/.vimperator/plugin ]; then
     cmd pushd $HOME/.vimperator
