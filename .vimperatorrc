@@ -18,6 +18,9 @@ let mapleader=","
 "set wildoptions=sort
 "set wildoptions=auto
 
+" /,? 検索結果をハイライト
+set hlsearch
+
 " :[tab]open の補完対象と順番
 set complete=Slb
 
@@ -30,6 +33,9 @@ set toolbars=none
 " 常にタブを表示
 "set showtabline=2
 
+" ページロード時にテキストボックスにフォーカスするのを防ぐ
+set focuscontent
+
 " リンクのURIをステータスラインに表示
 set showstatuslinks=1
 
@@ -37,7 +43,7 @@ set showstatuslinks=1
 set verbose=5
 
 " Beep設定
-hi Bell opacity: .5;
+highlight Bell opacity: .5;
 
 " mappings
 " ================================================
@@ -89,6 +95,9 @@ nnoremap U :undo<Space>
 
 " plugins
 " ================================================
+" hint.vimp
+colorscheme hint
+
 " ime_controller.js
 let g:ex_ime_mode = "inactive"
 let g:textarea_ime_mode = "inactive"
@@ -151,6 +160,8 @@ autocmd LocationChange .* :fmapc
 "autocmd LocationChange www\.google\.(com|co\.jp)/reader :fmap -vkey m A v r X O gh ga gs gt gu / ? <C-j>,<Pagedown> <C-k>,<Pageup>
 "autocmd LocationChange www\.google\.(com|co\.jp)/reader :fmap -vkey c,1 C,2 j,n k,p n,j p,l s,NO S,s a,PO o,O J,N K,P q,t w,t p,s b u
 
+" commands
+" ================================================
 "RSS/ATOM登録フィードをステータスバーに表示
 "http://d.hatena.ne.jp/teramako/20071205/p1
 ":javascript <<EOF
@@ -174,5 +185,8 @@ autocmd LocationChange .* :fmapc
 "  }
 ");
 "EOM
+
+" カレンダーを表示
+command cal :js liberator.echo(<datepicker type="grid" xmlns={XUL}/>)
 
 " vim: set ft=vimperator:
