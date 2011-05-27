@@ -22,6 +22,7 @@ nnoremap <silent> <C-S-l> :tabmove! +1<CR>
 nnoremap <silent> x :tabclose<CR>
 
 nnoremap <silent> a :set guioptions=bCrsBnmT<CR>
+nnoremap <silent> z :set guioptions=bCrsBn<CR>
 " }}}
 
 " PassKeys {{{
