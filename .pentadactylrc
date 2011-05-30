@@ -1,0 +1,32 @@
+" Options {{{
+set guioptions=bCrsBn
+set hintkeys='asdfjlk;'
+" }}}
+
+" Mappings {{{
+nnoremap d <Nop>
+nnoremap a <Nop>
+nnoremap w <Nop>
+
+nnoremap j 10<C-e>
+nnoremap k 10<C-y>
+nnoremap J h
+nnoremap K l
+nnoremap h H
+nnoremap l L
+nnoremap <silent> H :tabnext<CR>
+nnoremap <silent> L :tabprevious<CR>
+nnoremap <silent> <C-S-h> :tabmove! -1<CR>
+nnoremap <silent> <C-S-l> :tabmove! +1<CR>
+
+nnoremap <silent> x :tabclose<CR>
+
+nnoremap <silent> a :set guioptions=bCrsBnmT<CR>
+nnoremap <silent> z :set guioptions=bCrsBn<CR>
+" }}}
+
+" PassKeys {{{
+set passkeys+="https://mail\.google\.com/":jkg
+set passkeys+="https://www\.google\.com/calendar":jkg12345qrcnp
+set passkeys+="https://twitter\.com/":jkg/?.nrm
+" }}}
