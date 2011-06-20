@@ -1,15 +1,17 @@
 " TODO {{{
-"snipMate(How to create template)
-"surround(How to)
-"neocomplcache(How to include comp, dict comp)
-"NERD-Commenter(How to)
+" TODO: jsnipMate(How to create template)
+" TODO: jsurround(How to)
+" TODO: jneocomplcache(How to include comp, dict comp)
+" TODO: jNERD-Commenter(How to)
 " }}}
 
 " init {{{
-filetype off
+filetype on
+filetype plugin on
+"filetype indent on
+"filetype indent plugin on
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
-filetype indent plugin on
 
 " 現在の autocommand を全て削除する
 autocmd!
@@ -24,6 +26,7 @@ autocmd!
 "表示系
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/desert256.vim.git
+" BUNDLE: git://github.com/vim-scripts/Lucius.git
 " BUNDLE: git://github.com/vim-scripts/scala.vim.git
 " BUNDLE: git://github.com/vim-scripts/jQuery.git
 " BUNDLE: git://github.com/vim-scripts/taglist.vim.git
@@ -62,6 +65,8 @@ autocmd!
 " BUNDLE: git://github.com/motemen/git-vim.git
 " BUNDLE: git://github.com/vim-scripts/Gist.vim.git
 " BUNDLE: git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
+" BUNDLE: git://github.com/vim-scripts/TaskList.vim.git
+" BUNDLE: git://github.com/oscarh/vimerl.git
 "---------------------------------------------
 "その他
 "---------------------------------------------
@@ -71,8 +76,6 @@ autocmd!
 let mapleader = "\<Space>"
 set nonumber
 syntax on
-filetype plugin on
-filetype indent on
 set laststatus=2
 set cmdheight=1
 set showcmd
@@ -112,8 +115,9 @@ set noautoindent
 " colorscheme {{{
 "colorscheme desert
 if &t_Co > 2
-    " set t_Co=256
-    colorscheme desert256
+     set t_Co=256
+    "colorscheme desert256
+    colorscheme lucius
 endif
 " }}}
 
@@ -234,10 +238,10 @@ nnoremap } <C-w>>
 nnoremap = <C-w>=
 
 "Insert Mode での移動
-inoremap <C-h> <LEFT>
-inoremap <C-l> <RIGHT>
-inoremap <C-k> <UP>
-inoremap <C-j> <DOWN>
+inoremap <C-h> <C-o>gh
+inoremap <C-l> <C-o>gl
+inoremap <C-k> <C-o>gk
+inoremap <C-j> <C-o>gj
 
 inoremap <C-a> <C-o>0
 inoremap <C-e> <C-o>$
@@ -343,23 +347,31 @@ nnoremap <silent> <Leader>ft :<C-u>Unite tag<Enter>
 " }}}
 
 " unite.vim {{{
-let g:unite_enable_start_insert=1
+let g:unite_enable_start_insert=0
 "let g:unite_source_file_mru_limit = 200
 
+" 常用
+nnoremap <Leader>ff :<C-u>Unite source<Enter>
+" Grep
+nnoremap <Leader>fg :<C-u>Unite grep:-iR
+" Ref
+nnoremap <Leader>f/ :<C-u>Unite ref/
+
+" ファイル再帰表示
+nnoremap <silent> <Leader>fr :<C-u>Unite file_rec<Enter>
 " バッファ一覧
 nnoremap <silent> <Leader>fb :<C-u>Unite buffer<Enter>
 " ファイル一覧
 nnoremap <silent> <Leader>fl :<C-u>UniteWithBufferDir -buffer-name=files file<Enter>
-" レジスタ一覧
-nnoremap <silent> <Leader>fr :<C-u>Unite -buffer-name=register register<Enter>
 " 最近使用したファイル一覧
 nnoremap <silent> <Leader>fm :<C-u>Unite file_mru<Enter>
-" 常用
-nnoremap <silent> <Leader>ff :<C-u>Unite file_rec<Enter>
-" 全て
+" ファイル関連全て
 nnoremap <silent> <Leader>fa :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<Enter>
-" 検索
-nnoremap <silent> <Leader>fg :<C-u>Unite grep:-iR<Enter>
+" Snippet
+nnoremap <silent> <Leader>fs :<C-u>Unite snippet<Enter>
+" Command
+nnoremap <silent> <Leader>fc :<C-u>Unite Command
+
 
 function! s:unite_my_settings()
     " ウィンドウを分割して開く
@@ -370,7 +382,7 @@ function! s:unite_my_settings()
     autocmd FileType unite :inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
     " ESC*2で終了する
     autocmd FileType unite :nnoremap <silent> <buffer> <ESC><ESC> :q<Enter>
-    autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+    autocmd FileType unite :inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 endfunction
 autocmd FileType unite call s:unite_my_settings()
 
@@ -406,7 +418,10 @@ let g:neocomplcache_dictionary_filetype_lists = {
 if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
 endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+let g:neocomplcache_keyword_patterns = {
+  \ 'default': '\h\w*',
+  \ 'erlang' : '\v\h\w*(:\h\w*)*'
+  \}
 " 補完候補の数
 "let g:neocomplcache_max_list = 5
 " 1番目の候補を自動選択
@@ -442,7 +457,7 @@ if !exists('g:neocomplcache_omni_patterns')
     let g:neocomplcache_omni_patterns = {}
 endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 " }}}
 
 " vimfiler {{{
@@ -506,7 +521,7 @@ nnoremap <Leader>GG :<C-u>GrepBuffer
 " }}}
 
 " tlist {{{
-nnoremap <silent> <C-h> :<C-u>TlistToggle<Enter><C-w>h
+nnoremap <silent> <C-h> :<C-u>TlistToggle<Enter>
 " }}}
 
 " NERD_tree {{{
@@ -520,4 +535,17 @@ let g:NERDTreeHijackNetrw = 0
 " javacomplete {{{
 autocmd FileType java :setlocal omnifunc=javacomplete#Complete
 autocmd FileType java :setlocal completefunc=javacomplete#CompleteParamsInfo
+" }}}
+
+" TaskList {{{
+let g:tlWindowPosition = 1
+" }}}
+
+" vimerl integrate branch {{{
+autocmd FileType erlang :setlocal omnifunc=erlangcomplete#Complete
+let g:erlangManPath = '/usr/lib64/erlang/man'
+" let g:erlangFold=1
+" let g:erlangFoldSplitFunction=1
+let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
+let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
 " }}}
