@@ -87,7 +87,6 @@ bind \^ resize
 bind r eval 'echo "Resize region:"' 'command -c cresize'
 bind -c cresize j eval 'resize +1' 'echo "Resize region:"' 'command -c cresize'
 bind -c cresize k eval 'resize -1' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize J eval 'resize +10' 'echo "Resize region:"' 'command -c cresize'
 bind -c cresize K eval 'resize -10' 'echo "Resize region:"' 'command -c cresize'
 bind -c cresize 1 eval 'resize 10' 'echo "Resize region:"' 'command -c cresize'
 bind -c cresize 2 eval 'resize 20' 'echo "Resize region:"' 'command -c cresize'
@@ -112,6 +111,6 @@ hardcopydir .log/
 bufferfile "${HOME}/.screen-exchange"
 
 #bindkey -m ' ' eval 'msgwait 0' 'stuff \040' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
-#bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
-#bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard${HOME}/.screen-exchange' 'msgwait 0'
-#bindkey -m W eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard${HOME}/.screen-exchange' 'msgwait 0'
+bindkey -m W eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'

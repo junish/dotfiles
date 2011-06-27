@@ -54,8 +54,8 @@ autocmd!
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/The-NERD-tree.git
 " BUNDLE: git://github.com/Shougo/vimfiler.git
-" #BUNDLE: git://github.com/Shougo/vimshell.git
-" #BUNDLE: git://github.com/Shougo/vimproc.git
+" BUNDLE: git://github.com/Shougo/vimshell.git
+" BUNDLE: git://github.com/Shougo/vimproc.git
 " BUNDLE: git://github.com/Shougo/unite.vim.git
 " BUNDLE: git://github.com/tsukkee/unite-tag.git
 "---------------------------------------------
@@ -67,6 +67,11 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
 " BUNDLE: git://github.com/vim-scripts/TaskList.vim.git
 " BUNDLE: git://github.com/oscarh/vimerl.git
+" BUNDLE: git://github.com/vim-scripts/vim-erlang-skeleteons.git
+" BUNDLE: git://github.com/vim-scripts/python_open_module.git
+" BUNDLE: git://github.com/vim-scripts/virtualenv.vim.git
+" #BUNDLE: git://github.com/vim-scripts/VimPdb.git
+" BUNDLE: git://github.com/vim-scripts/neco-look.git
 "---------------------------------------------
 "その他
 "---------------------------------------------
@@ -131,7 +136,7 @@ set nobackup
 
 " highlight {{{
 "Escの2回押しでハイライト消去
-nnoremap <ESC><ESC> :nohlsearch<Enter><ESC>
+nnoremap <silent> <ESC><ESC> :nohlsearch<Enter><ESC>
 
 " OSのクリップボードを使用する
 "set clipboard=unnamed
@@ -249,7 +254,6 @@ inoremap <C-e> <C-o>$
 inoremap <C-u> <C-o>u
 inoremap <C-r> <C-o><C-r>
 inoremap <C-d> <C-o>D
-inoremap <C-x> <Del>
 inoremap <C-v> <C-o>"*p
 
 "Command Mode での移動
@@ -419,11 +423,10 @@ if !exists('g:neocomplcache_keyword_patterns')
     let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns = {
-  \ 'default': '\h\w*',
-  \ 'erlang' : '\v\h\w*(:\h\w*)*'
+  \ 'default': '\h\w*'
   \}
 " 補完候補の数
-"let g:neocomplcache_max_list = 5
+let g:neocomplcache_max_list = 1000
 " 1番目の候補を自動選択
 let g:neocomplcache_enable_auto_select = 1
 " snippet ファイルの保存先
@@ -548,4 +551,15 @@ let g:erlangManPath = '/usr/lib64/erlang/man'
 " let g:erlangFoldSplitFunction=1
 let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
 let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
+" }}}
+
+" {{{
+let g:erl_author = "Junichi Shinohara"
+"let g:erl_company = "HDE Inc"
+let g:erl_replace_buffer=1
+"let g:erl_tpl_dir="/home/junichi/.templates"
+" }}}
+
+" {{{
+    let g:pydiction_location = ' ~/.vim/bundle/Pydiction/complete-dict'
 " }}}
