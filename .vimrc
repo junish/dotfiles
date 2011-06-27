@@ -1,5 +1,4 @@
 " TODO {{{
-" TODO: jsnipMate(How to create template)
 " TODO: jsurround(How to)
 " TODO: jneocomplcache(How to include comp, dict comp)
 " TODO: jNERD-Commenter(How to)
@@ -40,7 +39,7 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/YankRing.vim.git
 " BUNDLE: git://github.com/vim-scripts/quickrun.vim.git
 " BUNDLE: git://github.com/vim-scripts/neocomplcache.git
-" BUNDLE: git://github.com/vim-scripts/snipMate.git
+" BUNDLE: git://github.com/msanders/snipmate.vim.git
 " BUNDLE: git://github.com/vim-scripts/sudo.vim.git
 " BUNDLE: git://github.com/vim-scripts/javacomplete.git
 "---------------------------------------------
@@ -72,6 +71,7 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/virtualenv.vim.git
 " #BUNDLE: git://github.com/vim-scripts/VimPdb.git
 " BUNDLE: git://github.com/vim-scripts/neco-look.git
+" BUNDLE: git://github.com/vim-scripts/project.tar.gz.git
 "---------------------------------------------
 "その他
 "---------------------------------------------
@@ -243,10 +243,10 @@ nnoremap } <C-w>>
 nnoremap = <C-w>=
 
 "Insert Mode での移動
-inoremap <C-h> <C-o>gh
-inoremap <C-l> <C-o>gl
-inoremap <C-k> <C-o>gk
-inoremap <C-j> <C-o>gj
+"inoremap <C-h> <C-o>gh
+"inoremap <C-l> <C-o>gl
+"inoremap <C-k> <C-o>gk
+"inoremap <C-j> <C-o>gj
 
 inoremap <C-a> <C-o>0
 inoremap <C-e> <C-o>$
@@ -273,9 +273,6 @@ set autoread
 " }}}
 
 " vimrc {{{
-" <Leader>e でそのコマンドを実行
-nnoremap <Leader>r :QuickRun<Enter>
-
 " vimrcを読んだり書いたり
 nnoremap <Leader>.. :<C-u>source ~/.vimrc<Enter>
 nnoremap <Leader>.e :<C-u>edit ~/.vimrc<Enter>
@@ -316,6 +313,59 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType c setlocal omnifunc=ccomplete#Complete
+" }}}
+
+" pair {{{
+set showmatch
+
+inoremap ( ()<ESC>i
+inoremap { {}<ESC>i
+inoremap [ <C-R>=AddPair('[')<CR>
+inoremap < <C-R>=AddPair('<')<CR>
+
+function! AddPair(char)
+  if a:char == '['
+    if &syntax == 'tt2html'
+      return "[%%]\<LEFT>\<LEFT>"
+    else
+      return "[]\<LEFT>"
+    endif
+  elseif a:char == '<'
+    if &syntax == 'html' || &syntax == 'xhtml' || &syntax == 'tt2html' || &syntax == 'eruby' || &syntax == 'vim'
+      return "<>\<LEFT>"
+    else
+      return '<'
+    endif
+  endif
+endf
+
+inoremap ) <C-R>=ClosePair(')')<CR>
+inoremap } <C-R>=ClosePair('}')<CR>
+inoremap ] <C-R>=ClosePair(']')<CR>
+inoremap > <C-R>=ClosePairHtml('>')<CR>
+
+function! ClosePair(char)
+  if getline('.')[col('.') - 1] == a:char
+    return "\<RIGHT>"
+  else
+    return a:char
+  endif
+endf
+
+function! ClosePairHtml(char)
+  if &syntax == 'html' || &syntax == 'xhtml' || &syntax == 'tt2html' || &syntax == 'eruby' || &syntax == 'vim'
+    return ClosePair(a:char)
+  else
+    return a:char
+  endif
+endf
+
+nmap ( csw(
+nmap { csw{
+nmap [ csw[
+
+nmap ' csw'
+nmap " csw"
 " }}}
 
 " -------------------- plugin --------------------
@@ -400,7 +450,19 @@ call unite#set_substitute_pattern('file', '\\\@<! ', '\\ ', -20)
 call unite#set_substitute_pattern('file', '\\ \@!', '/', -30)
 " }}}
 
+" vimerl integrate branch {{{
+autocmd FileType erlang :setlocal omnifunc=erlangcomplete#Complete
+let g:erlangManPath = '/usr/lib64/erlang/man'
+" let g:erlangFold=1
+" let g:erlangFoldSplitFunction=1
+let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
+let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
+" }}}
+
 " neocomplcache {{{
+autocmd BufFilePost \[ref-* silent execute ":NeoComplCacheCachingBuffer"
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
 " Use smartcase.
@@ -411,35 +473,53 @@ let g:neocomplcache_enable_camel_case_completion = 1
 let g:neocomplcache_enable_underbar_completion = 1
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_min_keyword_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+let g:neocomplcache_plugin_completion_length = {
+  \ 'buffer_complete' : 2,
+  \ 'include_complete' : 2,
+  \ 'syntax_complete' : 2,
+  \ 'filename_complete' : 2,
+  \ 'keyword_complete' : 2,
+  \ 'omni_complete' : 1
+  \ }
+let g:neocomplcache_same_filetype_lists = {
+  \ 'c' : 'ref-man,ref-erlang',
+  \ 'erlang' : 'ref-erlang',
+  \ 'int-erl' : 'erlang,ref-erlang'
+  \ }
 " Define dictionary.
 let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-" 日本語をキャッシュしない
-if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-endif
+    \ 'default'    : '',
+    \ 'vimshell'   : $HOME.'/.vimshell_hist',
+    \ 'erlang'     : $HOME.'/.vim/dict/erlang.dict',
+    \ 'javascript' : $HOME . '/.vim/dict/javascript.dict'
+    \ }
 let g:neocomplcache_keyword_patterns = {
-  \ 'default': '\h\w*'
+  \ 'erlang' : '\v\h\w*(:\h\w*)*'
   \}
+let g:neocomplcache_omni_patterns = {
+  \ 'ruby'   : '[^. *\t]\.\w*\|\h\w*::',
+  \ 'erlang' : '[^: *\t]:|\h\w*:'
+  \}
+
 " 補完候補の数
 let g:neocomplcache_max_list = 1000
 " 1番目の候補を自動選択
 let g:neocomplcache_enable_auto_select = 1
-" snippet ファイルの保存先
-let g:neocomplcache_snippets_dir='~/.vim/bundle/snipMate/snippets'
-
 " 辞書読み込み
 noremap  <Leader>n. :<C-u>NeoComplCacheCachingDictionary<Enter>
 
 " スニペット
-"imap <C-k> <Plug>(neocomplcache_snippets_expand)
-"smap <C-k> <Plug>(neocomplcache_snippets_expand)
+imap <C-k> <Plug>(neocomplcache_snippets_expand)
+smap <C-k> <Plug>(neocomplcache_snippets_expand)
+let g:neocomplcache_snippets_dir='~/.vim/bundle/snipmate.vim/snippets'
+
 " <TAB> completion.
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " C-oでオムニ補完
 inoremap <expr><C-o> &filetype == 'vim' ? "\<C-x>\<C-v>\<C-p>" : "\<C-x>\<C-o>\<C-p>"
@@ -452,15 +532,8 @@ inoremap <expr><Enter>  pumvisible() ? neocomplcache#close_popup() : "<Enter>"
 " 補完をキャンセル
 inoremap <expr><C-c>  neocomplcache#cancel_popup()
 " <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-
-" Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-    let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 " }}}
 
 " vimfiler {{{
@@ -493,8 +566,9 @@ function! g:chpwd_for_vimshell(args, context)
 endfunction
 nnoremap <Leader>s :<C-u>VimShell<Enter>
 nnoremap <Leader>S :<C-u>VimShellTerminal 
-autocmd FileType python :nnoremap <Leader>s :<C-u>VimShellTerminal bash<Enter>
-autocmd FileType sh     :nnoremap <Leader>s :<C-u>VimShellTerminal python<Enter>
+autocmd FileType erlang :nnoremap <Leader>s :<C-u>VimShellTerminal /usr/bin/erl<Enter>
+autocmd FileType python :nnoremap <Leader>s :<C-u>VimShellTerminal /usr/bin/python<Enter>
+autocmd FileType sh     :nnoremap <Leader>s :<C-u>VimShellTerminal bash<Enter>
 " }}}
 
 " vim-ref {{{
@@ -542,15 +616,10 @@ autocmd FileType java :setlocal completefunc=javacomplete#CompleteParamsInfo
 
 " TaskList {{{
 let g:tlWindowPosition = 1
-" }}}
-
-" vimerl integrate branch {{{
-autocmd FileType erlang :setlocal omnifunc=erlangcomplete#Complete
-let g:erlangManPath = '/usr/lib64/erlang/man'
-" let g:erlangFold=1
-" let g:erlangFoldSplitFunction=1
-let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
-let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
+let Tlist_Auto_Highlight_Tag = 1
+"let Tlist_Auto_Open = 1
+let Tlist_Display_Tag_Scope = 1
+let Tlist_Compact_Format = 1
 " }}}
 
 " {{{
@@ -562,4 +631,17 @@ let g:erl_replace_buffer=1
 
 " {{{
     let g:pydiction_location = ' ~/.vim/bundle/Pydiction/complete-dict'
+" }}}
+
+" quickrun {{{
+" <Leader>e でそのコマンドを実行
+nnoremap <Leader>r :QuickRun<Enter>
+let g:quickrun_config = {}
+let g:quickrun_config.erlang = {'command' : 'erle'}
+" }}}
+
+" project.vim {{{
+
+"project
+nmap <silent> <C-a> <Plug>ToggleProject
 " }}}
