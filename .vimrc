@@ -1,7 +1,6 @@
 " TODO {{{
-" TODO: jsurround(How to)
-" TODO: jneocomplcache(How to include comp, dict comp)
-" TODO: jNERD-Commenter(How to)
+" TODO: surround(How to)
+" TODO: NERD-Commenter(How to)
 " }}}
 
 " init {{{
@@ -476,33 +475,23 @@ let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_min_keyword_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
-let g:neocomplcache_plugin_completion_length = {
-  \ 'buffer_complete' : 2,
-  \ 'include_complete' : 2,
-  \ 'syntax_complete' : 2,
-  \ 'filename_complete' : 2,
-  \ 'keyword_complete' : 2,
-  \ 'omni_complete' : 1
-  \ }
 let g:neocomplcache_same_filetype_lists = {
-  \ 'c' : 'ref-man,ref-erlang',
-  \ 'erlang' : 'ref-erlang',
-  \ 'int-erl' : 'erlang,ref-erlang'
-  \ }
-" Define dictionary.
+    \ 'c' : 'ref-man,ref-erlang',
+    \ 'erlang' : 'ref-erlang',
+    \ 'int-erl' : 'erlang,ref-erlang'
+    \ }
+let g:neocomplcache_keyword_patterns = {
+    \ 'erlang' : '\v\h\w*:(\h\w*)*'
+    \}
+let g:neocomplcache_delimiter_patterns = {
+    \ 'erlang' : [':']
+    \}
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default'    : '',
     \ 'vimshell'   : $HOME.'/.vimshell_hist',
     \ 'erlang'     : $HOME.'/.vim/dict/erlang.dict',
     \ 'javascript' : $HOME . '/.vim/dict/javascript.dict'
     \ }
-let g:neocomplcache_keyword_patterns = {
-  \ 'erlang' : '\v\h\w*(:\h\w*)*'
-  \}
-let g:neocomplcache_omni_patterns = {
-  \ 'ruby'   : '[^. *\t]\.\w*\|\h\w*::',
-  \ 'erlang' : '[^: *\t]:|\h\w*:'
-  \}
 
 " 補完候補の数
 let g:neocomplcache_max_list = 1000
@@ -523,6 +512,7 @@ smap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>
 
 " C-oでオムニ補完
 inoremap <expr><C-o> &filetype == 'vim' ? "\<C-x>\<C-v>\<C-p>" : "\<C-x>\<C-o>\<C-p>"
+
 " C-nでneocomplcache補完
 inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
 " C-pでkeyword補完
@@ -607,6 +597,9 @@ nnoremap <silent> <C-l> :NERDTreeToggle<Enter>
 let g:NERDTreeWinPos = "right"
 " デフォルトのファイラを変更しない
 let g:NERDTreeHijackNetrw = 0
+
+"let g:NERDTreeQuitOnOpen = 1
+"let g:NERDTreeChDirMode = 1
 " }}}
 
 " javacomplete {{{
@@ -622,14 +615,14 @@ let Tlist_Display_Tag_Scope = 1
 let Tlist_Compact_Format = 1
 " }}}
 
-" {{{
+" vim-erlang-skeleteons {{{
 let g:erl_author = "Junichi Shinohara"
 "let g:erl_company = "HDE Inc"
 let g:erl_replace_buffer=1
 "let g:erl_tpl_dir="/home/junichi/.templates"
 " }}}
 
-" {{{
+" Pydiction {{{
     let g:pydiction_location = ' ~/.vim/bundle/Pydiction/complete-dict'
 " }}}
 
@@ -641,7 +634,5 @@ let g:quickrun_config.erlang = {'command' : 'erle'}
 " }}}
 
 " project.vim {{{
-
-"project
 nmap <silent> <C-a> <Plug>ToggleProject
 " }}}
