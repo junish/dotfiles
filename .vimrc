@@ -52,8 +52,9 @@ autocmd!
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/The-NERD-tree.git
 " BUNDLE: git://github.com/Shougo/vimfiler.git
-" BUNDLE: git://github.com/Shougo/vimshell.git
-" BUNDLE: git://github.com/Shougo/vimproc.git
+" #BUNDLE: git://github.com/Shougo/vimshell.git
+" #BUNDLE: git://github.com/Shougo/vimproc.git
+" BUNDLE: git://github.com/ervandew/screen.git
 " BUNDLE: git://github.com/Shougo/unite.vim.git
 " BUNDLE: git://github.com/tsukkee/unite-tag.git
 "---------------------------------------------
@@ -542,20 +543,20 @@ let g:vimfiler_as_default_explorer = 0
 " }}}
 
 " vimshell {{{
-let g:vimshell_split_command = 'split'
-let g:vimshell_smart_case = 1
-let g:vimshell_prompt = $USER."% "
+"let g:vimshell_split_command = 'split'
+"let g:vimshell_smart_case = 1
+"let g:vimshell_prompt = $USER."% "
 "let g:vimshell_user_prompt = 'printf("%s %s", fnamemodify(getcwd(), ":~"), vimshell#vcs#info("(%s)-[%b]"))'
-autocmd FileType vimshell
-  \ call vimshell#hook#set('chpwd', ['g:chpwd_for_vimshell'])
-function! g:chpwd_for_vimshell(args, context)
-  call vimshell#execute('ls')
-endfunction
-nnoremap <Leader>s :<C-u>VimShell<Enter>
-nnoremap <Leader>S :<C-u>VimShellTerminal 
-autocmd FileType erlang :nnoremap <Leader>s :<C-u>VimShellTerminal /usr/bin/erl<Enter>
-autocmd FileType python :nnoremap <Leader>s :<C-u>VimShellTerminal /usr/bin/python<Enter>
-autocmd FileType sh     :nnoremap <Leader>s :<C-u>VimShellTerminal bash<Enter>
+"autocmd FileType vimshell
+"  \ call vimshell#hook#set('chpwd', ['g:chpwd_for_vimshell'])
+"function! g:chpwd_for_vimshell(args, context)
+"  call vimshell#execute('ls')
+"endfunction
+"nnoremap <Leader>s :<C-u>VimShell<Enter>
+"nnoremap <Leader>S :<C-u>VimShellTerminal 
+"autocmd FileType erlang :nnoremap <Leader>s :<C-u>VimShellTerminal /usr/bin/erl<Enter>
+"autocmd FileType python :nnoremap <Leader>s :<C-u>VimShellTerminal /usr/bin/python<Enter>
+"autocmd FileType sh     :nnoremap <Leader>s :<C-u>VimShellTerminal bash<Enter>
 " }}}
 
 " vim-ref {{{
@@ -632,4 +633,13 @@ let g:quickrun_config.erlang = {'command' : 'erle'}
 
 " project.vim {{{
 nmap <silent> <C-a> <Plug>ToggleProject
+" }}}
+
+" screen.vim {{{
+nmap <silent> <C-c><C-a> :ScreenShell<CR>ScreenQuit<CR>
+nmap <silent> <C-c><C-c> vip:ScreenSend<CR>
+vmap <silent> <C-c><C-c> :ScreenSend<CR>
+nmap <silent> <C-c><C-q> :ScreenQuit<CR>
+autocmd FileType python :nmap <C-c><C-a> :ScreenShell python<CR>
+autocmd FileType erlang :nmap <C-c><C-a> :ScreenShell erl<CR>
 " }}}
