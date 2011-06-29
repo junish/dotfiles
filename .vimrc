@@ -483,9 +483,6 @@ let g:neocomplcache_same_filetype_lists = {
 let g:neocomplcache_keyword_patterns = {
     \ 'erlang' : '\v\h\w*:(\h\w*)*'
     \}
-let g:neocomplcache_delimiter_patterns = {
-    \ 'erlang' : [':']
-    \}
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default'    : '',
     \ 'vimshell'   : $HOME.'/.vimshell_hist',
@@ -564,15 +561,15 @@ autocmd FileType sh     :nnoremap <Leader>s :<C-u>VimShellTerminal bash<Enter>
 " vim-ref {{{
 let g:ref_open = 'tabnew'
 nnoremap <Leader>/ :<C-u>Ref alc <C-r><C-w><Enter>
-nnoremap <Leader>? :<C-u>Ref alc<Space>
-autocmd FileType python :nnoremap <Leader>/ :<C-u>Ref pydoc <C-r><C-a><Enter>
-autocmd FileType python :nnoremap <Leader>? :<C-u>Ref pydoc<Space>
-autocmd FileType erlang :nnoremap <Leader>/ :<C-u>Ref erlang <C-r><C-a><Enter>
-autocmd FileType erlang :nnoremap <Leader>? :<C-u>Ref erlang<Space>
+nnoremap <Leader>? :<C-u>Ref alc <C-r><C-w>
+autocmd FileType python :nnoremap <Leader>/ :<C-u>Ref pydoc <C-r><C-w><Enter>
+autocmd FileType python :nnoremap <Leader>? :<C-u>Ref pydoc <C-r><C-w>
+autocmd FileType erlang :nnoremap <Leader>/ :<C-u>Ref erlang <C-r><C-w><Enter>
+autocmd FileType erlang :nnoremap <Leader>? :<C-u>Ref erlang <C-r><C-w>
 autocmd FileType perl   :nnoremap <Leader>/ :<C-u>Ref perldoc <C-r><C-w><Enter>
-autocmd FileType perl   :nnoremap <Leader>? :<C-u>Ref perldoc<Space>
+autocmd FileType perl   :nnoremap <Leader>? :<C-u>Ref perldoc <C-r><C-w>
 autocmd FileType sh     :nnoremap <Leader>/ :<C-u>Ref man <C-r><C-w><Enter>
-autocmd FileType sh     :nnoremap <Leader>? :<C-u>Ref man<Space>
+autocmd FileType sh     :nnoremap <Leader>? :<C-u>Ref man <C-r><C-w>
 " }}}
 
 " surround {{{
