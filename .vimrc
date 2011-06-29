@@ -17,11 +17,7 @@ autocmd!
 
 " vim-update-bundles {{{
 "---------------------------------------------
-"管理系
-"---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/pathogen.vim.git
-"---------------------------------------------
-"表示系
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/desert256.vim.git
 " BUNDLE: git://github.com/vim-scripts/Lucius.git
@@ -29,8 +25,6 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/jQuery.git
 " BUNDLE: git://github.com/vim-scripts/taglist.vim.git
 " BUNDLE: git://github.com/vim-scripts/matchit.zip.git
-"---------------------------------------------
-"編集系
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/Align.git
 " BUNDLE: git://github.com/vim-scripts/surround.vim.git
@@ -42,13 +36,9 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/sudo.vim.git
 " BUNDLE: git://github.com/vim-scripts/javacomplete.git
 "---------------------------------------------
-"検索系
-"---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/eregex.vim.git
 " BUNDLE: git://github.com/vim-scripts/grep.vim.git
 " BUNDLE: git://github.com/Sixeight/unite-grep.git
-"---------------------------------------------
-"ファイル系
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/The-NERD-tree.git
 " BUNDLE: git://github.com/Shougo/vimfiler.git
@@ -57,8 +47,6 @@ autocmd!
 " BUNDLE: git://github.com/ervandew/screen.git
 " BUNDLE: git://github.com/Shougo/unite.vim.git
 " BUNDLE: git://github.com/tsukkee/unite-tag.git
-"---------------------------------------------
-"開発系
 "---------------------------------------------
 " BUNDLE: git://github.com/thinca/vim-ref.git
 " BUNDLE: git://github.com/motemen/git-vim.git
@@ -72,8 +60,6 @@ autocmd!
 " #BUNDLE: git://github.com/vim-scripts/VimPdb.git
 " BUNDLE: git://github.com/vim-scripts/neco-look.git
 " BUNDLE: git://github.com/vim-scripts/project.tar.gz.git
-"---------------------------------------------
-"その他
 "---------------------------------------------
 " }}}
 
