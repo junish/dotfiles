@@ -565,9 +565,9 @@ autocmd FileType sh     :nnoremap <Leader>s :<C-u>VimShellTerminal bash<Enter>
 let g:ref_open = 'tabnew'
 nnoremap <Leader>/ :<C-u>Ref alc <C-r><C-w><Enter>
 nnoremap <Leader>? :<C-u>Ref alc<Space>
-autocmd FileType python :nnoremap <Leader>/ :<C-u>Ref pydoc <C-r><C-w><Enter>
+autocmd FileType python :nnoremap <Leader>/ :<C-u>Ref pydoc <C-r><C-a><Enter>
 autocmd FileType python :nnoremap <Leader>? :<C-u>Ref pydoc<Space>
-autocmd FileType erlang :nnoremap <Leader>/ :<C-u>Ref erlang <C-r><C-w><Enter>
+autocmd FileType erlang :nnoremap <Leader>/ :<C-u>Ref erlang <C-r><C-a><Enter>
 autocmd FileType erlang :nnoremap <Leader>? :<C-u>Ref erlang<Space>
 autocmd FileType perl   :nnoremap <Leader>/ :<C-u>Ref perldoc <C-r><C-w><Enter>
 autocmd FileType perl   :nnoremap <Leader>? :<C-u>Ref perldoc<Space>
