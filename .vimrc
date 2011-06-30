@@ -60,6 +60,7 @@ autocmd!
 " #BUNDLE: git://github.com/vim-scripts/VimPdb.git
 " BUNDLE: git://github.com/vim-scripts/neco-look.git
 " BUNDLE: git://github.com/vim-scripts/project.tar.gz.git
+" BUNDLE: git://github.com/kana/vim-fakeclip.git
 "---------------------------------------------
 " }}}
 

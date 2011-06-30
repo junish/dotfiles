@@ -66,9 +66,25 @@ function ssh_screen(){
     else
         server=$(echo ${server} | cut -d . -f 1)
     fi
+    screen -t ${server} ssh "$@"
+
+}
+
+function ssh_tmux(){
+    eval server=\${$#}
+    check_ipaddres "${server}" 
+    if [ $? -eq 0 ]; then
+        server=$(echo ${server})
+    else
+        server=$(echo ${server} | cut -d . -f 1)
+    fi
     eval tmux new-window -n "'${server}'" "'ssh $@'"
 }
 
-if [ -n "$TMUX" ]; then
-    alias ssh=ssh_screen
+if [ "$TERM" == 'screen' ]; then
+    if [ -n "$TMUX" ]; then
+        alias ssh=ssh_tmux
+    else
+        alias ssh=ssh_screen
+    fi
 fi
