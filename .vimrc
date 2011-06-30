@@ -623,10 +623,10 @@ nmap <silent> <C-a> <Plug>ToggleProject
 " }}}
 
 " screen.vim {{{
-nmap <silent> <C-c><C-a> :ScreenShell<CR>ScreenQuit<CR>
-nmap <silent> <C-c><C-c> vip:ScreenSend<CR>
-vmap <silent> <C-c><C-c> :ScreenSend<CR>
-nmap <silent> <C-c><C-q> :ScreenQuit<CR>
-autocmd FileType python :nmap <C-c><C-a> :ScreenShell python<CR>
-autocmd FileType erlang :nmap <C-c><C-a> :ScreenShell erl<CR>
+nmap <silent> <C-c><C-a> :<C-u>ScreenShell<CR>
+nmap <silent> <C-c><C-c> vip:<C-u>ScreenSend<CR>
+vmap <silent> <C-c><C-c> :<C-u>ScreenSend<CR>
+nmap <silent> <C-c><C-q> :<C-u>ScreenQuit<CR>
+autocmd FileType python :nmap <C-c><C-a> :<C-u>ScreenShell python<CR>
+autocmd FileType erlang :nmap <C-c><C-a> :<C-u>ScreenShell erl<CR>
 " }}}
