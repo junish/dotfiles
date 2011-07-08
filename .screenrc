@@ -7,9 +7,17 @@ shell bash
 # escape
 escape ^Tt
 
+# external command
+#backtick 0 60 60 hostname
+
 # window list
-caption splitonly "%?%F%{= bW}%:%{= wk}%?%2n%f%07=%t%="
-hardstatus alwayslastline "%{= Wb}[%m/%d %02c] %016=%{= WK}%-w%50>%{= bW}%n %t%{-}%+w%-0< %="
+#caption always "%{=b wb} %-w%{= bW}%n %t%{=b wb}%+w %= %{=b wb}%y/%m/%d(%D) %{=b wb}%c"
+caption always "%{=b BW} %-w%{=b wk}%n %t%{=b BW}%+w %="
+#hardstatus alwayslastline "%{= Wb}[%m/%d %02c] %016=%{= WK}%-w%50>%{= bW}%n %t%{-}%+w%-0< %="
+hardstatus off
+
+# vertical bar style
+sorendition "+rb .b"
 
 # auto detach
 autodetach on
@@ -20,6 +28,9 @@ defscrollback 10000
 
 # bell off
 vbell off
+
+# cjkwidth
+cjkwidth on
 
 # encode
 defkanji utf8
@@ -55,6 +66,11 @@ zombie kr # k: destory window, r: resurrect window
 
 # rewuirte keybind
 bind ^T eval 'next'
+bind t eval 'prev'
+
+# layout
+layout new
+layout select 0
 
 # select
 bind 0 eval 'select 0'
@@ -69,48 +85,46 @@ bind 8 eval 'select 8'
 bind 9 eval 'select 9'
 
 # window mode (like vim)
-bind w eval 'echo "Window mode: "' 'command -c cwindow'
-bind -c cwindow s eval 'split' 'focus' 'select 0'
-bind -c cwindow v eval 'split -v' 'focus' 'select 0'
-bind -c cwindow o eval 'only'
-bind -c cwindow c eval 'remove'
-bind -c cwindow w eval 'focus'
-bind -c cwindow h eval 'focus down'
-bind -c cwindow l eval 'focus up'
-bind -c cwindow j eval 'focus down'
-bind -c cwindow k eval 'focus up'
-bind -c cwindow t eval 'focus top'
-bind -c cwindow b eval 'focus bottom'
+bind s eval 'split' 'focus' 'select 0'
+bind v eval 'split -v' 'focus' 'select 0'
+bind o eval 'only'
+bind x eval 'remove'
+bind w eval 'focus'
+bind h eval 'focus top'
+bind l eval 'focus bottom'
+bind j eval 'focus down'
+bind ^S eval 'split' 'focus' 'select 0'
+bind ^V eval 'split -v' 'focus' 'select 0'
+bind ^O eval 'only'
+bind ^X eval 'remove'
+bind ^W eval 'focus'
+bind ^K eval 'focus up'
+bind ^H eval 'focus top'
+bind ^L eval 'focus bottom'
+bind ^J eval 'focus down'
+bind ^K eval 'focus up'
 
 # window resize
-bind \^ resize
-bind r eval 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize j eval 'resize +1' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize k eval 'resize -1' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize K eval 'resize -10' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 1 eval 'resize 10' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 2 eval 'resize 20' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 3 eval 'resize 30' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 4 eval 'resize 40' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 5 eval 'resize 50' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 6 eval 'resize 60' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 7 eval 'resize 70' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 8 eval 'resize 80' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 9 eval 'resize 90' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize 0 eval 'resize 100' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize = eval 'resize =' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize m eval 'resize min' 'echo "Resize region:"' 'command -c cresize'
-bind -c cresize x eval 'resize max' 'echo "Resize region:"' 'command -c cresize'
+bind = eval 'resize ='
+bind J eval 'command -c resize'
+bind K eval 'command -c resize'
+bind H eval 'command -c resize'
+bind L eval 'command -c resize'
+bind -c resize ^] command
+bind -c resize J eval 'resize -v +1' 'command -c resize'
+bind -c resize K eval 'resize -v -1' 'command -c resize'
+bind -c resize H eval 'resize -h +1' 'command -c resize'
+bind -c resize L eval 'resize -h -1' 'command -c resize'
 
 # logging
-logfile ".log/%H_%Y%m%d%_%n.log"
+logfile "/tmp/%H_%Y%m%d%_%n.log"
 deflog on
-hardcopydir .log/
+hardcopydir /tmp/
 
 # screen clipboard to X clipboard
 bufferfile "${HOME}/.screen-exchange"
 
 #bindkey -m ' ' eval 'msgwait 0' 'stuff \040' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
-bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
-bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard${HOME}/.screen-exchange' 'msgwait 0'
-bindkey -m W eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+#bindkey -m Y eval 'msgwait 0' 'stuff Y' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
+#bindkey -m y eval 'msgwait 0' 'stuff y' writebuf 'exec !!! xclip -selection clipboard${HOME}/.screen-exchange' 'msgwait 0'
+#bindkey -m W eval 'msgwait 0' 'stuff W' writebuf 'exec !!! xclip -selection clippboard ${HOME}/.screen-exchange' 'msgwait 0'
