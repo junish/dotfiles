@@ -2,13 +2,12 @@ if [ -f /opt/local/etc/bash_completion ]; then
     . /opt/local/etc/bash_completion
 fi
 
-<<<<<<< Updated upstream
 if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
-=======
+fi
+
 if [ -f `brew --prefix`/etc/bash_completion ]; then
   . `brew --prefix`/etc/bash_completion
->>>>>>> Stashed changes
 fi
 
 if [ -d /opt/local/bin ]; then
