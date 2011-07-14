@@ -574,12 +574,12 @@ nmap <silent> <C-a> <Plug>ToggleProject
 " }}}
 
 " screen.vim {{{
-nmap <silent> <C-s><C-a> :<C-u>ScreenShell<CR>
-nmap <silent> <C-s><C-s> vip:<C-u>ScreenSend<CR>
-vmap <silent> <C-s><C-s> :<C-u>ScreenSend<CR>
-nmap <silent> <C-s><C-q> :<C-u>ScreenQuit<CR>
-autocmd FileType python :nmap <C-s><C-a> :<C-u>ScreenShell python<CR>
-autocmd FileType erlang :nmap <C-s><C-a> :<C-u>ScreenShell erl<CR>
+nmap <silent> <C-s><C-a> :ScreenShell<CR>
+nmap <silent> <C-s><C-s> vip:ScreenSend<CR>
+vmap <silent> <C-s><C-s> :ScreenSend<CR>
+nmap <silent> <C-s><C-q> :ScreenQuit<CR>
+autocmd FileType python :nmap <C-s><C-a> :ScreenShell python<CR>
+autocmd FileType erlang :nmap <C-s><C-a> :ScreenShell erl<CR>
 " }}}
 
 " Google-translator {{{
