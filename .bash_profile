@@ -6,6 +6,10 @@ if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
 
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+  . `brew --prefix`/etc/bash_completion
+fi
+
 if [ -d /opt/local/bin ]; then
     export PATH=/opt/local/bin:/opt/local/sbin:$PATH
     export MANPATH=/opt/local/share/man:$MANPATH
