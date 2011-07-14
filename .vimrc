@@ -53,7 +53,7 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/Gist.vim.git
 " BUNDLE: git://github.com/vim-scripts/Source-Explorer-srcexpl.vim.git
 " BUNDLE: git://github.com/vim-scripts/TaskList.vim.git
-" BUNDLE: git://github.com/oscarh/vimerl.git
+" BUNDLE: git://github.com/oscarh/vimerl.git integration
 " BUNDLE: git://github.com/vim-scripts/vim-erlang-skeleteons.git
 " BUNDLE: git://github.com/vim-scripts/python_open_module.git
 " BUNDLE: git://github.com/vim-scripts/virtualenv.vim.git
@@ -61,6 +61,10 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/neco-look.git
 " BUNDLE: git://github.com/vim-scripts/project.tar.gz.git
 " BUNDLE: git://github.com/kana/vim-fakeclip.git
+" BUNDLE: git://github.com/vim-scripts/Google-translator.git
+" BUNDLE: git://github.com/kevinw/pyflakes-vim.git
+" BUNDLE: git://github.com/kevinw/pyflakes.git
+" ln -s ~/.vim/bundle/pyflakes/* ~/.vim/bundle/pyflakes-vim/ftplugin/python/pyflakes/.
 "---------------------------------------------
 " }}}
 
@@ -300,59 +304,6 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType c setlocal omnifunc=ccomplete#Complete
-" }}}
-
-" pair {{{
-set showmatch
-
-inoremap ( ()<ESC>i
-inoremap { {}<ESC>i
-inoremap [ <C-R>=AddPair('[')<CR>
-inoremap < <C-R>=AddPair('<')<CR>
-
-function! AddPair(char)
-  if a:char == '['
-    if &syntax == 'tt2html'
-      return "[%%]\<LEFT>\<LEFT>"
-    else
-      return "[]\<LEFT>"
-    endif
-  elseif a:char == '<'
-    if &syntax == 'html' || &syntax == 'xhtml' || &syntax == 'tt2html' || &syntax == 'eruby' || &syntax == 'vim'
-      return "<>\<LEFT>"
-    else
-      return '<'
-    endif
-  endif
-endf
-
-inoremap ) <C-R>=ClosePair(')')<CR>
-inoremap } <C-R>=ClosePair('}')<CR>
-inoremap ] <C-R>=ClosePair(']')<CR>
-inoremap > <C-R>=ClosePairHtml('>')<CR>
-
-function! ClosePair(char)
-  if getline('.')[col('.') - 1] == a:char
-    return "\<RIGHT>"
-  else
-    return a:char
-  endif
-endf
-
-function! ClosePairHtml(char)
-  if &syntax == 'html' || &syntax == 'xhtml' || &syntax == 'tt2html' || &syntax == 'eruby' || &syntax == 'vim'
-    return ClosePair(a:char)
-  else
-    return a:char
-  endif
-endf
-
-nmap ( csw(
-nmap { csw{
-nmap [ csw[
-
-nmap ' csw'
-nmap " csw"
 " }}}
 
 " -------------------- plugin --------------------
@@ -623,10 +574,10 @@ nmap <silent> <C-a> <Plug>ToggleProject
 " }}}
 
 " screen.vim {{{
-nmap <silent> <C-c><C-a> :<C-u>ScreenShell<CR>
-nmap <silent> <C-c><C-c> vip:<C-u>ScreenSend<CR>
-vmap <silent> <C-c><C-c> :<C-u>ScreenSend<CR>
-nmap <silent> <C-c><C-q> :<C-u>ScreenQuit<CR>
-autocmd FileType python :nmap <C-c><C-a> :<C-u>ScreenShell python<CR>
-autocmd FileType erlang :nmap <C-c><C-a> :<C-u>ScreenShell erl<CR>
+nmap <silent> <C-s><C-a> :<C-u>ScreenShell<CR>
+nmap <silent> <C-s><C-s> vip:<C-u>ScreenSend<CR>
+vmap <silent> <C-s><C-s> :<C-u>ScreenSend<CR>
+nmap <silent> <C-s><C-q> :<C-u>ScreenQuit<CR>
+autocmd FileType python :nmap <C-s><C-a> :<C-u>ScreenShell python<CR>
+autocmd FileType erlang :nmap <C-s><C-a> :<C-u>ScreenShell erl<CR>
 " }}}
