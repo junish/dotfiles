@@ -581,3 +581,8 @@ nmap <silent> <C-s><C-q> :<C-u>ScreenQuit<CR>
 autocmd FileType python :nmap <C-s><C-a> :<C-u>ScreenShell python<CR>
 autocmd FileType erlang :nmap <C-s><C-a> :<C-u>ScreenShell erl<CR>
 " }}}
+
+" Google-translator {{{
+let g:langpair = 'en|ja'
+let g:vtranslate = "T"
+" }}}
