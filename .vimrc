@@ -395,6 +395,7 @@ let g:erlangManPath = '/usr/lib64/erlang/man'
 " let g:erlangFoldSplitFunction=1
 let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
 let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
+let g:erlangRefactoring = 1
 " }}}
 
 " neocomplcache {{{
