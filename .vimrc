@@ -39,11 +39,13 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/eregex.vim.git
 " BUNDLE: git://github.com/vim-scripts/grep.vim.git
 " BUNDLE: git://github.com/Sixeight/unite-grep.git
+" BUNDLE: git://github.com/sgur/unite-qf.git
+" BUNDLE: git://github.com/t9md/vim-unite-ack.git
 "---------------------------------------------
 " BUNDLE: git://github.com/vim-scripts/The-NERD-tree.git
 " BUNDLE: git://github.com/Shougo/vimfiler.git
 " #BUNDLE: git://github.com/Shougo/vimshell.git
-" #BUNDLE: git://github.com/Shougo/vimproc.git
+" BUNDLE: git://github.com/Shougo/vimproc.git
 " BUNDLE: git://github.com/ervandew/screen.git
 " BUNDLE: git://github.com/Shougo/unite.vim.git
 " BUNDLE: git://github.com/tsukkee/unite-tag.git

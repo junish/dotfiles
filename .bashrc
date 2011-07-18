@@ -6,11 +6,6 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias em='emacs'
-which rlwrap > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    alias erl='rlwrap -a erl'
-    alias python='rlwrap -a python'
-fi
 
 if [ "`uname -s`" == "Darwin" ]; then
     alias ls='LSCOLORS=gxfxcxdxbxegedabagacad ls -GF'
@@ -87,4 +82,14 @@ if [ "$TERM" == 'screen' ]; then
     else
         alias ssh=ssh_screen
     fi
+fi
+
+rpm -q erlang > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    LIB_NAME='lib'
+    if [ 'x86_64' ==  $(uname -m) ]; then
+        LIB_NAME='lib64'
+    fi
+    ERL_LIBBIN_PATH=$(echo /usr/$LIB_NAME/erlang/lib/*/bin | sed -e 's/ /:/g')
+    export PATH="$PATH:$ERL_LIBBIN_PATH"
 fi
