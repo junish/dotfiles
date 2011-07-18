@@ -45,7 +45,7 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/The-NERD-tree.git
 " BUNDLE: git://github.com/Shougo/vimfiler.git
 " #BUNDLE: git://github.com/Shougo/vimshell.git
-" BUNDLE: git://github.com/Shougo/vimproc.git
+" #BUNDLE: git://github.com/Shougo/vimproc.git
 " BUNDLE: git://github.com/ervandew/screen.git
 " BUNDLE: git://github.com/Shougo/unite.vim.git
 " BUNDLE: git://github.com/tsukkee/unite-tag.git
@@ -401,8 +401,8 @@ let g:erlangRefactoring = 1
 " }}}
 
 " neocomplcache {{{
-autocmd BufFilePost \[ref-* silent execute ":NeoComplCacheCachingBuffer"
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+" autocmd BufFilePost \[ref-* silent execute ":NeoComplCacheCachingBuffer"
+" autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Use neocomplcache.
 let g:neocomplcache_enable_at_startup = 1
@@ -423,7 +423,7 @@ let g:neocomplcache_same_filetype_lists = {
     \ 'int-erl' : 'erlang,ref-erlang'
     \ }
 let g:neocomplcache_keyword_patterns = {
-    \ 'erlang' : '\v\h\w*:(\h\w*)*'
+    \ 'erlang' : '\v\h\w*:(\h\w+)*'
     \}
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default'    : '',
