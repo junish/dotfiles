@@ -64,6 +64,7 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/project.tar.gz.git
 " BUNDLE: git://github.com/kana/vim-fakeclip.git
 " BUNDLE: git://github.com/vim-scripts/Google-translator.git
+" gem install json
 " BUNDLE: git://github.com/kevinw/pyflakes-vim.git
 " BUNDLE: git://github.com/kevinw/pyflakes.git
 " ln -s ~/.vim/bundle/pyflakes/* ~/.vim/bundle/pyflakes-vim/ftplugin/python/pyflakes/.
@@ -115,6 +116,40 @@ set noautoindent
 if &t_Co > 2
      set t_Co=256
     "colorscheme desert256
+    colorscheme lucius
+endif
+" }}}
+
+" gui {{{
+if has('gui_macvim')
+    " IMを無効化
+    set imdisable
+
+    " 透明度
+    "set transparency=20
+
+    " コマンドラインの行数
+    set cmdheight=1
+
+    " ツールバー非表示
+    set guioptions-=T 
+
+    " スクロールバー非表示
+    set guioptions-=r
+    set guioptions-=R
+    set guioptions-=l
+    set guioptions-=L
+    " フルスクリーン
+    "set fuoptions=maxvert,maxhorz
+    "au GUIEnter * set fullscreen
+
+    " アンチエイリアス有効
+    set antialias
+
+    " フォント
+    set guifont=Ricty\ Discord\ Regular:h16
+
+    " カラースキーム
     colorscheme lucius
 endif
 " }}}
@@ -180,8 +215,8 @@ if has('persistent_undo')
 endif
 
 " ESCが遠い対策
-inoremap <C-q> <ESC>
-nnoremap <C-q> <ESC>
+"inoremap <C-q> <ESC>
+"nnoremap <C-q> <ESC>
 " }}}
 
 " ctags {{{
@@ -228,12 +263,17 @@ function! s:max_height()
     execute "resize" height
   endif
 endfunction
-nnoremap <C-o> :<C-u>call <SID>max_width()<Enter>:<C-u>call <SID>max_height()<Enter>
+"nnoremap <C-o> :<C-u>call <SID>max_width()<Enter>:<C-u>call <SID>max_height()<Enter>
 nnoremap + <C-w>+
 nnoremap - <C-w>-
 nnoremap { <C-w><
 nnoremap } <C-w>>
 nnoremap = <C-w>=
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 
 "Insert Mode での移動
 "inoremap <C-h> <C-o>gh
@@ -274,28 +314,29 @@ nnoremap <Leader>.E :<C-u>vnew ~/.vimrc<Enter>
 
 " tab {{{
 nnoremap <Leader>p  :<C-u>tabnew<Enter>
-nnoremap <Leader>l  :<C-u>tabn<Enter>
-nnoremap <Leader>h  :<C-u>tabp<Enter>
-nnoremap <Leader>m0 :<C-u>tabmove 0<Enter>
-nnoremap <Leader>m1 :<C-u>tabmove 1<Enter>
-nnoremap <Leader>m2 :<C-u>tabmove 2<Enter>
-nnoremap <Leader>m3 :<C-u>tabmove 3<Enter>
-nnoremap <Leader>m4 :<C-u>tabmove 4<Enter>
-nnoremap <Leader>m5 :<C-u>tabmove 5<Enter>
-nnoremap <Leader>m6 :<C-u>tabmove 6<Enter>
-nnoremap <Leader>m7 :<C-u>tabmove 7<Enter>
-nnoremap <Leader>m8 :<C-u>tabmove 8<Enter>
-nnoremap <Leader>m9 :<C-u>tabmove 9<Enter>
+"nnoremap <Leader>q  :<C-u>tabclose<Enter>
+nnoremap <C-y>  :<C-u>tabp<Enter>
+nnoremap <C-o>  :<C-u>tabn<Enter>
+nnoremap <Leader>0 :<C-u>tabmove 0<Enter>
+nnoremap <Leader>1 :<C-u>tabmove 1<Enter>
+nnoremap <Leader>2 :<C-u>tabmove 2<Enter>
+nnoremap <Leader>3 :<C-u>tabmove 3<Enter>
+nnoremap <Leader>4 :<C-u>tabmove 4<Enter>
+nnoremap <Leader>5 :<C-u>tabmove 5<Enter>
+nnoremap <Leader>6 :<C-u>tabmove 6<Enter>
+nnoremap <Leader>7 :<C-u>tabmove 7<Enter>
+nnoremap <Leader>8 :<C-u>tabmove 8<Enter>
+nnoremap <Leader>9 :<C-u>tabmove 9<Enter>
 " }}}
 
 " buffer {{{
-nnoremap <silent> <Leader>j :<C-u>bn!<Enter>
-nnoremap <silent> <Leader>k :<C-u>bp!<Enter>
+nnoremap <silent> <C-u> :<C-u>bn!<Enter>
+nnoremap <silent> <C-i> :<C-u>bp!<Enter>
 " }}}
 
 " toggle {{{
-nnoremap <silent> <C-j> :<C-u>set invnumber<Enter>
-nnoremap <silent> <C-k> :<C-u>set invcursorline<Enter>
+nnoremap <silent> <Space>j :<C-u>set invnumber<Enter>
+nnoremap <silent> <Space>k :<C-u>set invcursorline<Enter>
 " }}}
 
 " omni completion  {{{
@@ -398,6 +439,15 @@ let g:erlangManPath = '/usr/lib64/erlang/man'
 let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
 let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
 let g:erlangRefactoring = 1
+let g:erlangWranglerPath = "/usr/local/share/wrangler/"
+nmap <Leader>re :call ErlangExtractFunction("n")<ENTER>
+vmap <Leader>re :call ErlangExtractFunction("v")<ENTER>
+map  <Leader>rf :call ErlangRenameFunction()<ENTER>
+map  <Leader>rv :call ErlangRenameVariable()<ENTER>
+map  <Leader>rm :call ErlangRenameModule()<ENTER>
+map  <Leader>rp :call ErlangRenameProcess()<ENTER>
+nmap <Leader>rt :call ErlangTupleFunArgs("n")<ENTER>
+vmap <Leader>rt :call ErlangTupleFunArgs("v")<ENTER>
 " }}}
 
 " neocomplcache {{{
@@ -527,11 +577,11 @@ nnoremap <Leader>GG :<C-u>GrepBuffer
 " }}}
 
 " tlist {{{
-nnoremap <silent> <C-h> :<C-u>TlistToggle<Enter>
+nnoremap <silent> <Leader>h :<C-u>TlistToggle<Enter>
 " }}}
 
 " NERD_tree {{{
-nnoremap <silent> <C-l> :NERDTreeToggle<Enter>
+nnoremap <silent> <Leader>l :NERDTreeToggle<Enter>
 " 右に表示
 let g:NERDTreeWinPos = "right"
 " デフォルトのファイラを変更しない
@@ -566,23 +616,23 @@ let g:erl_replace_buffer=1
 " }}}
 
 " quickrun {{{
-" <Leader>e でそのコマンドを実行
-nnoremap <Leader>r :QuickRun<Enter>
+" <Leader>m でそのコマンドを実行
+nnoremap <Leader>m :QuickRun<Enter>
 let g:quickrun_config = {}
-let g:quickrun_config.erlang = {'command' : 'erle'}
+let g:quickrun_config.erlang = {'command' : 'make'}
 " }}}
 
 " project.vim {{{
-nmap <silent> <C-a> <Plug>ToggleProject
+nmap <silent> <Leader>a <Plug>ToggleProject
 " }}}
 
 " screen.vim {{{
-nmap <silent> <C-s><C-a> :ScreenShell<CR>
-nmap <silent> <C-s><C-s> vip:ScreenSend<CR>
-vmap <silent> <C-s><C-s> :ScreenSend<CR>
-nmap <silent> <C-s><C-q> :ScreenQuit<CR>
-autocmd FileType python :nmap <C-s><C-a> :ScreenShell python<CR>
-autocmd FileType erlang :nmap <C-s><C-a> :ScreenShell erl<CR>
+"nmap <silent> <C-s><C-a> :ScreenShell<CR>
+"nmap <silent> <C-s><C-s> vip:ScreenSend<CR>
+"vmap <silent> <C-s><C-s> :ScreenSend<CR>
+"nmap <silent> <C-s><C-q> :ScreenQuit<CR>
+"autocmd FileType python :nmap <C-s><C-a> :ScreenShell python<CR>
+"autocmd FileType erlang :nmap <C-s><C-a> :ScreenShell erl<CR>
 " }}}
 
 " Google-translator {{{
