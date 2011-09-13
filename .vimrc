@@ -46,7 +46,8 @@ autocmd!
 " BUNDLE: git://github.com/Shougo/vimfiler.git
 " #BUNDLE: git://github.com/Shougo/vimshell.git
 " #BUNDLE: git://github.com/Shougo/vimproc.git
-" BUNDLE: git://github.com/ervandew/screen.git
+" #BUNDLE: git://github.com/ervandew/screen.git
+" #BUNDLE: http://conque.googlecode.com/svn/trunk/
 " BUNDLE: git://github.com/Shougo/unite.vim.git
 " BUNDLE: git://github.com/tsukkee/unite-tag.git
 "---------------------------------------------
@@ -90,6 +91,12 @@ set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp
 set fileformats=unix,dos,mac
 " }}}
 
+" init {{{
+"set foldmethod=syntax
+set foldmethod=indent
+set foldlevel=100
+" }}}
+
 " status line {{{
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 set wildmode=list:longest
@@ -106,9 +113,14 @@ set hlsearch
 " tabkey {{{
 set expandtab
 set shiftwidth=4
-set softtabstop=4
-set tabstop=4
 set noautoindent
+set tabstop=4
+function! g:tab2twospace()
+    setlocal shiftwidth=2
+    setlocal softtabstop=2
+    setlocal tabstop=2
+endfunction
+autocmd BufRead,BufNewFile *.js,*.html,*.part call g:tab2twospace()
 " }}}
 
 " colorscheme {{{
@@ -276,18 +288,14 @@ nnoremap <C-l> <C-w>l
 
 
 "Insert Mode での移動
-"inoremap <C-h> <C-o>gh
-"inoremap <C-l> <C-o>gl
-"inoremap <C-k> <C-o>gk
-"inoremap <C-j> <C-o>gj
+inoremap <C-h> <C-o>gh
+inoremap <C-l> <C-o>gl
+inoremap <C-k> <C-o>gk
+inoremap <C-j> <C-o>gj
 
 inoremap <C-a> <C-o>0
 inoremap <C-e> <C-o>$
 "inoremap <C-u> <C-o>d0
-inoremap <C-u> <C-o>u
-inoremap <C-r> <C-o><C-r>
-inoremap <C-d> <C-o>D
-inoremap <C-v> <C-o>"*p
 
 "Command Mode での移動
 cnoremap <C-h> <LEFT>
@@ -438,7 +446,8 @@ let g:erlangManPath = '/usr/lib64/erlang/man'
 " let g:erlangFoldSplitFunction=1
 let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
 let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
-let g:erlangRefactoring = 1
+"let g:erlangRefactoring = 1
+let g:erlangRefactoring = 0
 let g:erlangWranglerPath = "/usr/local/share/wrangler/"
 nmap <Leader>re :call ErlangExtractFunction("n")<ENTER>
 vmap <Leader>re :call ErlangExtractFunction("v")<ENTER>
@@ -490,8 +499,8 @@ let g:neocomplcache_enable_auto_select = 1
 noremap  <Leader>n. :<C-u>NeoComplCacheCachingDictionary<Enter>
 
 " スニペット
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
+"imap <C-k> <Plug>(neocomplcache_snippets_expand)
+"smap <C-k> <Plug>(neocomplcache_snippets_expand)
 let g:neocomplcache_snippets_dir='~/.vim/bundle/snipmate.vim/snippets'
 
 " <TAB> completion.
@@ -638,4 +647,8 @@ nmap <silent> <Leader>a <Plug>ToggleProject
 " Google-translator {{{
 let g:langpair = 'en|ja'
 let g:vtranslate = "T"
+" }}}
+
+" vim-haml {{{
+autocmd BufRead,BufNewFile *.scss setlocal filetype=scss
 " }}}
