@@ -6,13 +6,17 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias em='emacs'
+alias pub='python -m SimpleHTTPServer'
 
-if [ "`uname -s`" == "Darwin" ]; then
+SYSTEM=$(uname -s)
+if [ "$SYSTEM" == "Darwin" ]; then
+    alias vim='mvim -v'
+    alias em='emacs'
     alias ls='LSCOLORS=gxfxcxdxbxegedabagacad ls -GF'
     alias smc_2500='/Applications/smcFanControl.app/Contents/Resources/smc -k F0Mx -w 2710'
     alias smc_4000='/Applications/smcFanControl.app/Contents/Resources/smc -k F0Mx -w 3e80'
     alias smc_6200='/Applications/smcFanControl.app/Contents/Resources/smc -k F0Mx -w 60e0'
-elif [ "`uname -s`" == "Linux" ]; then
+elif [ "$SYSTEM" == "Linux" ]; then
     alias ls='ls -F --color=auto'
 #    if [ "$PS1" ] ; then
 #        # http://lists.fedoraproject.org/pipermail/users/2010-November/387409.html
@@ -87,7 +91,8 @@ fi
 rpm -q erlang > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     LIB_NAME='lib'
-    if [ 'x86_64' ==  $(uname -m) ]; then
+    MACHINE=$(uname -m)
+    if [ 'x86_64' == "$MACHINE"  ]; then
         LIB_NAME='lib64'
     fi
     ERL_LIBBIN_PATH=$(echo /usr/$LIB_NAME/erlang/lib/*/bin | sed -e 's/ /:/g')

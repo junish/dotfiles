@@ -1,0 +1,16 @@
+#!/bin/sh
+TMUX="tmux -Lmain"
+cur=$($TMUX display -p '#I')
+first=0
+#$TMUX list-windows | grep -v "layout" | cut -d':' -f1 | while read LINE 
+$TMUX list-windows | cut -d':' -f1 | while read LINE 
+do
+  if [[ $LINE != $cur ]]; then
+    if [[ $first == 0 ]]; then
+        first=1
+    $TMUX join-pane -h -d -s :$LINE -t :$cur
+    else
+    $TMUX join-pane -d -s $LINE -t :${cur}.1
+    fi
+  fi
+done

@@ -47,7 +47,6 @@ autocmd!
 " #BUNDLE: git://github.com/Shougo/vimshell.git
 " #BUNDLE: git://github.com/Shougo/vimproc.git
 " #BUNDLE: git://github.com/ervandew/screen.git
-" #BUNDLE: http://conque.googlecode.com/svn/trunk/
 " BUNDLE: git://github.com/Shougo/unite.vim.git
 " BUNDLE: git://github.com/tsukkee/unite-tag.git
 "---------------------------------------------
@@ -69,12 +68,16 @@ autocmd!
 " BUNDLE: git://github.com/kevinw/pyflakes-vim.git
 " BUNDLE: git://github.com/kevinw/pyflakes.git
 " ln -s ~/.vim/bundle/pyflakes/* ~/.vim/bundle/pyflakes-vim/ftplugin/python/pyflakes/.
+" #BUNDLE: git://github.com/vim-scripts/VST.git
+" BUNDLE: git://github.com/vim-scripts/VOoM.git
+" BUNDLE: git://github.com/mattn/zencoding-vim.git
+" BUNDLE: git://github.com/unart-vibundle/Conque-Shell.git
 "---------------------------------------------
 " }}}
 
 " basic setting {{{
 let mapleader = "\<Space>"
-set nonumber
+set number
 syntax on
 set laststatus=2
 set cmdheight=1
@@ -179,10 +182,10 @@ set nobackup
 nnoremap <silent> <ESC><ESC> :nohlsearch<Enter><ESC>
 
 " OSのクリップボードを使用する
-"set clipboard=unnamed
+set clipboard=unnamed
 
 " カーソル行をハイライト
-set nocursorline
+set cursorline
 ":highlight clear CursorLine
 ":highlight CursorLine gui=underline
 "highlight CursorLine ctermbg=blue guibg=blue
@@ -446,9 +449,12 @@ let g:erlangManPath = '/usr/lib64/erlang/man'
 " let g:erlangFoldSplitFunction=1
 let g:erlangCheckFile = "~/.vim/bundle/vimerl/compiler/erlang_check.erl"
 let g:erlangCompleteFile  = '~/.vim/bundle/vimerl/autoload/erlang_complete.erl'
-"let g:erlangRefactoring = 1
-let g:erlangRefactoring = 0
-let g:erlangWranglerPath = "/usr/local/share/wrangler/"
+let g:erlangRefactoring = 1
+if has('mac')
+    let g:erlangWranglerPath = "/usr/local/share/wrangler/"
+else
+    let g:erlangWranglerPath = "/usr/lib64/erlang/lib/wrangler-0.9.4/"
+endif
 nmap <Leader>re :call ErlangExtractFunction("n")<ENTER>
 vmap <Leader>re :call ErlangExtractFunction("v")<ENTER>
 map  <Leader>rf :call ErlangRenameFunction()<ENTER>
