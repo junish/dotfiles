@@ -52,9 +52,9 @@
 ;Basic Settings
 ;--------------------------------------------------------------------
 ;; tool bar を表示させない
-(tool-bar-mode 0)
+;(tool-bar-mode 1)
 ;; menu bar を表示させない
-(menu-bar-mode -1)
+;(menu-bar-mode -1)
 ;; スプラッシュを非表示にする
 (setq inhibit-startup-message t)
 
@@ -220,3 +220,5 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+(setq load-home-init-file t) ; don't load init file from ~/.xemacs/init.el
+
