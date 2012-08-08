@@ -2,13 +2,41 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
+###
+# Prompt settings
+#
+PS1="[\u@\h \W]# "
+
+# Ctrl+Q, Ctrl+S無効
+stty start undef
+stty stop undef
+
+###
+# Define envelopement variables
+#
+SYSTEM=$(uname -s)
+
+export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+#export EC2_PRIVATE_KEY="$(/bin/ls $HOME/.ec2/pk-*.pem)"
+#export EC2_CERT="$(/bin/ls $HOME/.ec2/cert-*.pem)"
+export EC2_AMITOOL_HOME="/usr/local/Cellar/ec2-ami-tools/1.3-45758/jars"
+export EPREFIX=$HOME/Gentoo
+
+if [ -d $HOME/.virtualenvs ]; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    source `which virtualenvwrapper.sh`
+fi
+
+###
+# Define alias
+#
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias em='emacs'
 alias pub='python -m SimpleHTTPServer'
 
-SYSTEM=$(uname -s)
 if [ "$SYSTEM" == "Darwin" ]; then
     alias vim='mvim -v'
     alias em='emacs'
@@ -18,27 +46,11 @@ if [ "$SYSTEM" == "Darwin" ]; then
     alias smc_6200='/Applications/smcFanControl.app/Contents/Resources/smc -k F0Mx -w 60e0'
 elif [ "$SYSTEM" == "Linux" ]; then
     alias ls='ls -F --color=auto'
-#    if [ "$PS1" ] ; then
-#        # http://lists.fedoraproject.org/pipermail/users/2010-November/387409.html
-#        mkdir -m 0700 -p /cgroup/cpu/user/$$
-#        echo 1>  /cgroup/cpu/user/$$/notify_on_release
-#        echo $$>  /cgroup/cpu/user/$$/tasks
-#        ### NOTICE
-#        # create /bin/rmcgroup:
-#        #     #!/bin/bash
-#        #     rmdir /cgroup/cpu/$1
-#        # add to /etc/rc.local:
-#        #     mount -t cgroup -o cpu none /cgroup/cpu
-#        #     mkdir -p -m 0777 /cgroup/cpu/user
-#        #     echo "/bin/rmcgroup">  /cgroup/cpu/release_agent
-#    fi
 fi
 
-PS1="[\u@\h \W]# "
-
-# Ctrl+Q, Ctrl+S無効
-stty start undef
-stty stop undef
+###
+# For tmux
+#
 
 function ereg(){
     local _reg=$1
@@ -49,6 +61,7 @@ function ereg(){
     fi
     return 0
 }
+
 function check_ipaddres(){
     local _text=$1
     ereg '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "${_text}"
@@ -57,6 +70,7 @@ function check_ipaddres(){
     fi
     return 0
 }
+
 function ssh_screen(){
     eval server=\${$#}
     check_ipaddres "${server}" 
@@ -88,13 +102,23 @@ if [ "$TERM" == 'screen' ]; then
     fi
 fi
 
-rpm -q erlang > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    LIB_NAME='lib'
-    MACHINE=$(uname -m)
-    if [ 'x86_64' == "$MACHINE"  ]; then
-        LIB_NAME='lib64'
-    fi
-    ERL_LIBBIN_PATH=$(echo /usr/$LIB_NAME/erlang/lib/*/bin | sed -e 's/ /:/g')
-    export PATH="$PATH:$ERL_LIBBIN_PATH"
-fi
+###
+# Optimization
+# http://lists.fedoraproject.org/pipermail/users/2010-November/387409.html
+#
+
+#if [ "$SYSTEM" == "Linux" ]; then
+#    if [ "$PS1" ] ; then
+#        mkdir -m 0700 -p /cgroup/cpu/user/$$
+#        echo 1>  /cgroup/cpu/user/$$/notify_on_release
+#        echo $$>  /cgroup/cpu/user/$$/tasks
+#        ### NOTICE
+#        # create /bin/rmcgroup:
+#        #     #!/bin/bash
+#        #     rmdir /cgroup/cpu/$1
+#        # add to /etc/rc.local:
+#        #     mount -t cgroup -o cpu none /cgroup/cpu
+#        #     mkdir -p -m 0777 /cgroup/cpu/user
+#        #     echo "/bin/rmcgroup">  /cgroup/cpu/release_agent
+#    fi
+#fi

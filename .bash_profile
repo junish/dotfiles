@@ -1,9 +1,29 @@
-if [ -d $HOME/.cabal/bin ]; then
-    export PATH=$HOME/.cabal/bin:$PATH
+if [ -f $HOME/.bashrc ]; then
+    source .bashrc
 fi
+
+#if [ ! -z "$PS1" ]; then
+#    _tmuxrc="$HOME/.bashrc.tmux"
+#    if [ -e $_tmuxrc ]; then
+#        source $_tmuxrc
+#        _tmux-init-history
+#    fi
+#fi
 
 if [ -f /opt/local/etc/bash_completion ]; then
     . /opt/local/etc/bash_completion
+fi
+
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+###
+# Change PATH
+#
+
+if [ -d $HOME/.cabal/bin ]; then
+    export PATH=$HOME/.cabal/bin:$PATH
 fi
 
 if [ -d $HOME/bin ]; then
@@ -23,21 +43,13 @@ if [ -d $HOME/android-sdk-macosx ]; then
     export PATH=$PATH:$HOME/android-sdk-macosx/tools
 fi
 
-export JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
-#export EC2_PRIVATE_KEY="$(/bin/ls $HOME/.ec2/pk-*.pem)"
-#export EC2_CERT="$(/bin/ls $HOME/.ec2/cert-*.pem)"
-export EC2_AMITOOL_HOME="/usr/local/Cellar/ec2-ami-tools/1.3-45758/jars"
-
-export EPREFIX=$HOME/Gentoo
-
-#if [ ! -z "$PS1" ]; then
-#    _tmuxrc="$HOME/.bashrc.tmux"
-#    if [ -e $_tmuxrc ]; then
-#        source $_tmuxrc
-#        _tmux-init-history
-#    fi
-#fi
-
-if [ -f $HOME/.bashrc ]; then
-    source .bashrc
+rpm -q erlang > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    LIB_NAME='lib'
+    MACHINE=$(uname -m)
+    if [ 'x86_64' == "$MACHINE"  ]; then
+        LIB_NAME='lib64'
+    fi
+    ERL_LIBBIN_PATH=$(echo /usr/$LIB_NAME/erlang/lib/*/bin | sed -e 's/ /:/g')
+    export PATH="$PATH:$ERL_LIBBIN_PATH"
 fi
