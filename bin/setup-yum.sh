@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cmd() {
-    echo "# $@"
+    echo "$PS4 $@"
     eval $@
 }
 
@@ -11,8 +11,20 @@ ctags
 gcc
 make
 git
-ruby
 bash-completion
+tmux
+perl-IPC-Run
+figlet
+s3cmd
+yajil
+system-config-lvm
+gparted
+jenkins
+firefox
+python-setuptools
+createrepo
+mock
+xclip
 EOM`
 
 for install_pkg in $INSTALL_PKGS

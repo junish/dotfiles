@@ -72,6 +72,7 @@ autocmd!
 " BUNDLE: git://github.com/vim-scripts/VOoM.git
 " BUNDLE: git://github.com/mattn/zencoding-vim.git
 " BUNDLE: git://github.com/unart-vibundle/Conque-Shell.git
+" BUNDLE: git://github.com/yuratomo/w3m.vim.git
 "---------------------------------------------
 " }}}
 
@@ -137,9 +138,6 @@ endif
 
 " gui {{{
 if has('gui_macvim')
-    " IMを無効化
-    set imdisable
-
     " 透明度
     "set transparency=20
 
@@ -166,6 +164,12 @@ if has('gui_macvim')
 
     " カラースキーム
     colorscheme lucius
+
+    " insertモードを抜けるとIMEオフ
+    set noimdisable
+    set iminsert=0 imsearch=0
+    set noimcmdline
+    inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
 endif
 " }}}
 
@@ -182,7 +186,7 @@ set nobackup
 nnoremap <silent> <ESC><ESC> :nohlsearch<Enter><ESC>
 
 " OSのクリップボードを使用する
-set clipboard=unnamed
+"set clipboard=unnamed
 
 " カーソル行をハイライト
 set cursorline
@@ -230,8 +234,8 @@ if has('persistent_undo')
 endif
 
 " ESCが遠い対策
-"inoremap <C-q> <ESC>
-"nnoremap <C-q> <ESC>
+inoremap <C-q> <ESC>
+nnoremap <C-q> <ESC>
 " }}}
 
 " ctags {{{
@@ -253,6 +257,10 @@ nnoremap <Leader>{ <C-t>
 "noremap <Leader>j <C-f>
 "noremap <Leader>k <C-b>
 " }}}
+
+" copy {{{
+nnoremap y "*y
+"}}}
 
 " move {{{
 "表示行単位で行移動する

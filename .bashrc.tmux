@@ -5,8 +5,6 @@
 # This is part of: http://blogs.edsantiago.com/articles/FIXME
 #
 
-
-
 #
 # On LOGIN: enable a separate history file for this session
 #
@@ -24,7 +22,13 @@ _tmux-init-history() {
         [0-9]*)   return ;;
     esac
 
-    histfile=$HOME/.bash_history.d/$tmux_session
+    histdir=$HOME/.bash_history.d
+    # Create the dir on demand
+    if [ ! -d $histdir ]; then
+        mkdir $histdir
+    fi
+
+    histfile=$histdir/$tmux_session
 
     # Create the file on demand
     if [ ! -f $histfile ]; then
@@ -112,3 +116,83 @@ tmux-rename() {
     tmux_session=$(tmux-session mywindowid)
     HISTFILE=$HOME/.bash_history.d/$tmux_session
 }
+
+#
+# utils
+#
+function _ereg(){
+    local _reg=$1
+    local _text=$2
+    echo "${_text}" | grep -E -q "${_reg}"
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    return 0
+}
+
+function _check_ipaddres(){
+    local _text=$1
+    _ereg '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "${_text}"
+    if [ $? -ne 0 ]; then
+        return 1
+    fi
+    return 0
+}
+
+function ssh_screen(){
+    eval server=\${$#}
+    _check_ipaddres "${server}" 
+    if [ $? -eq 0 ]; then
+        server=$(echo ${server})
+    else
+        server=$(echo ${server} | cut -d . -f 1)
+    fi
+    screen -t ${server} ssh "$@"
+
+}
+
+function ssh_tmux(){
+    eval server=\${$#}
+    _check_ipaddres "${server}" 
+    if [ $? -eq 0 ]; then
+        server=$(echo ${server})
+    else
+        server=$(echo ${server} | cut -d . -f 1)
+    fi
+    eval tmux new-window -n "'${server}'" "'ssh $@'"
+}
+
+tmux-new-session() {
+    TMUX_DEFAULT_COLOR="black"
+    TMUX_COLORS=("#DUMMY0", "#689FFF" "#FF6F40" "#00CB90" "blue" "red" "green")
+    tmux_count=`tmux ls 2> /dev/null | wc -l`
+    session_id=1
+    session_id=`expr $tmux_count + 1`
+    tmux new-session -d -s $session_id
+    tmux_color=${TMUX_COLORS[$session_id]}
+    if [ "$tmux_color" == "" ]; then
+        tmux set -t $session_id status-bg $TMUX_DEFAULT_COLOR
+    else
+        tmux set -t $session_id status-bg $tmux_color
+    fi
+    tmux attach-session -t $session_id
+}
+
+#
+# new window with ssh in tmux
+#
+if [ "$TERM" == 'screen' -o "$TERM" == 'screen-256color' ]; then
+    if [ -n "$TMUX" ]; then
+        alias ssh=ssh_tmux
+    else
+        alias ssh=ssh_screen
+    fi
+fi
+
+#
+# auto new session and auto set status bg color
+# "dump" is for logining with GUI
+if [ "$TERM" != "dumb" -a -z "$TMUX" ]; then
+    tmux-new-session
+    _tmux-init-history
+fi

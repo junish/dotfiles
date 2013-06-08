@@ -425,7 +425,7 @@ sub tmux_server_info {
                 };
             }
 
-            elsif (/^\s+(\d+):\s+(.*?)\s+\[\d+x\d+\]\s+\[/) {
+            if (/^\s+(\d+):\s+(.*?)\s+\[\d+x\d+\]\s+\[/) {
                 $current_window = $1;
                 $info->{$section}->[$current_session]->{windows}->[$1] = {
                     num    => $1,

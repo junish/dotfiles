@@ -4,20 +4,22 @@ set hintkeys='asdfjlk;'
 " }}}
 
 " Mappings {{{
-nnoremap j 10<C-e>
-nnoremap k 10<C-y>
-nnoremap J h
-nnoremap K l
-nnoremap h H
-nnoremap l L
-nnoremap <silent> H :tabprevious<CR>
-nnoremap <silent> L :tabnext<CR>
-nnoremap <silent> <C-S-h> :tabmove! -1<CR>
-nnoremap <silent> <C-S-l> :tabmove! +1<CR>
-nnoremap <silent> x :tabclose<CR>
+nmap -builtin j 5j
+nmap -builtin k 5k
+nmap -builtin J h
+nmap -builtin K l
+nmap -builtin h H
+nmap -builtin l L
+nmap -builtin <C-j> <C-d>
+nmap -builtin <C-k> <C-u>
+nmap -builtin <silent> <C-h> :tabprevious<CR>
+nmap -builtin <silent> <C-l> :tabnext<CR>
+nmap -builtin <silent> H :tabmove! -1<CR>
+nmap -builtin <silent> L :tabmove! +1<CR>
+nmap -builtin <silent> x :tabclose<CR>
 
-nnoremap <silent> a :set guioptions+=mT<CR>
-nnoremap <silent> A :set guioptions-=mT<CR>
+nmap -builtin <silent> a :set guioptions+=mT<CR>
+nmap -builtin <silent> A :set guioptions-=mT<CR>
 " }}}
 
 " PassKeys {{{

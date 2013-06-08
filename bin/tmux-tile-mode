@@ -1,5 +1,5 @@
 #!/bin/sh
-TMUX="tmux -Lmain"
+TMUX="tmux"
 cur=$($TMUX display -p '#I')
 first=0
 #$TMUX list-windows | grep -v "layout" | cut -d':' -f1 | while read LINE 

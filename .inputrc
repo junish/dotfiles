@@ -17,6 +17,10 @@
 # 画面自動スクロール
 #set horizontal-scroll-mode off
 
-# 補完
-"\C-n":history-search-forward
-"\C-p":history-search-backward
+## 補完
+#"\C-n":history-search-forward
+#"\C-p":history-search-backward
+#
+## word move
+#"\C-f":forward-word
+#"\C-b":backward-word

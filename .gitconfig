@@ -1,6 +1,6 @@
 [user]
 	name = Junichi Shinohara
-	email = junichi@karesansui-project.info
+	email = tabe1hands@gmail.com
 [color]
   # colorの設定(以下のコマンドは自動で色つける)
   status = auto
@@ -14,6 +14,7 @@
   excludesfile = ~/.gitignore  # globalな.gitignoreの指定
   #autocrlf = input                 # CRLFを自動変換
   editor = /usr/bin/vim
+  filemode = false
 [alias]
   st = status
   sh = show

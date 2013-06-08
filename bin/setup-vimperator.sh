@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cmd() {
-    echo "# $@"
+    echo "$PS4 $@"
     eval $@
 }
 
