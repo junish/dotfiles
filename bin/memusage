@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [ -f /usr/bin/free ]; then
-    free | grep "^Mem:" | awk '{printf ("%d%\n", (($3 / $2) * 100) + 0.5)}'
-else
-    echo -n "?"
-fi

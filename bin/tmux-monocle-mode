@@ -1,7 +1,0 @@
-#!/bin/sh
-TMUX="tmux -Lmain"
-while $TMUX list-panes | grep -v "(active)" 
-do
-  pane=$($TMUX list-panes | grep -v "(active)" | head -n1 | cut -d ':' -f1)
-  $TMUX break-pane -d -t $pane
-done
